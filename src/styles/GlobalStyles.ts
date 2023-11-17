@@ -12,16 +12,23 @@ const GlobalStyles = createGlobalStyle`
      font-style: normal;
   }
  
+ 
   @font-face {
-  font-family: "SpaceMono";
-  src: local("SpaceMono"), url("src/fonts/SpaceMono-Regular.ttf") format('truetype');
-  font-weight: normal;
+  font-family: "NotoSans";
+  src: local("NotoSans"), url("src/fonts/NotoSansMono_Condensed-Regular.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+ }
+ @font-face {
+  font-family: "NotoSansMedium";
+  src: local("NotoSansMedium"), url("src/fonts/NotoSansMono_Condensed-Medium.ttf") format('truetype');
+  font-weight: 500;
   font-style: normal;
  }
   @font-face {
-  font-family: "SpaceMono-Bold";
-  src: local("SpaceMono-Bold"), url("src/fonts/SpaceMono-Bold.ttf") format('truetype');
-  font-weight: 700;
+  font-family: "NotoSans";
+  src: local("NotoSans"), url("src/fonts/NotoSansMono_Condensed-SemiBold.ttf") format('truetype');
+  font-weight: 600;
   font-style: normal;
  }
 
@@ -48,7 +55,7 @@ const GlobalStyles = createGlobalStyle`
   --color-indigo-100: #e0e7ff;
   --color-indigo-700: #4338ca;
 
-  --color-red-100: #fee2e2;
+  --color-red-100: #C3322Fff;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
@@ -62,6 +69,7 @@ const GlobalStyles = createGlobalStyle`
   --shadow-img: 0 1rem 1.5rem 5px  rgba(0,0,0,0.15);
 
   --shadow-item: 0 0.2rem 1rem 2px rgba(0,0,0,0.1);
+  --color-black-100: #1E2022ff;
 
   --image-grayscale: 0;
   --image-opacity: 100%;
@@ -90,8 +98,8 @@ const GlobalStyles = createGlobalStyle`
 --color-indigo-100: #3730a3;
 --color-indigo-700: #e0e7ff;
 
---color-black-100: #111;
---color-red-100: #fee2e2;
+--color-black-100: #1E2022ff;
+--color-red-100: #C3322Fff;
 --color-red-700: #b91c1c;
 --color-red-800: #991b1b;
 
@@ -164,7 +172,7 @@ html {
 }
 
 body {
-  font-family: 'SpaceMono', sans-serif;
+  font-family: 'NotoSans', sans-serif;
   color: var(--color-grey-200);
   transition: color 0.3s, background-color 0.4s;
   transition-delay: 0.25s;
@@ -174,7 +182,7 @@ body {
   font-weight: 400;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color: #111;
+  background-color: #151515ff;
 }
 
 input,
@@ -240,7 +248,7 @@ ul {
 }
 
 p {
-  font-family: 'Lato', sans-serif;
+
   font-weight: 500;
 }
 

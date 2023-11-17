@@ -4,6 +4,7 @@ import MainImportant from "./MainImportant";
 import MainNav from "./MainNav";
 import StyledHeader from "../../UI/Header";
 import StyledHeading from "../../UI/Heading";
+import Button from "../../UI/Button";
 
 const StledAppLayout = styled.div``;
 
@@ -15,6 +16,7 @@ function MainLayout() {
         <StyledHeading as={"h1"}>What's up, Aleksandar!</StyledHeading>
       </StyledHeader>
       <MainImportant />
+      <Button></Button>
     </StledAppLayout>
   );
 }

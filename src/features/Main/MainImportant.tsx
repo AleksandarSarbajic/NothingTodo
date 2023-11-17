@@ -1,16 +1,39 @@
 import styled from "styled-components";
 import TaskListItem from "../TaskList/TaskListItem";
-import { FaBeer } from "react-icons/fa";
-const StyledContainer = styled.div``;
+
+import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 4.4rem 0 2rem 0;
+`;
 
 function MainImportant() {
   return (
     <StyledContainer>
       <TaskListItem>
-        <p>dsd</p>
-        <h1>dasds</h1>
+        <div>
+          <HiOutlineStar />
+          <p>Important</p>
+        </div>
+        <span>1</span>
       </TaskListItem>
-      <FaBeer />
+      <TaskListItem>
+        <div>
+          <HiOutlineCalendarDays />
+          <p>Planned</p>
+        </div>
+        <span>69</span>
+      </TaskListItem>
+      <TaskListItem>
+        <div>
+          <HiCheck />
+          <p>TaskList</p>
+        </div>
+        <span>834</span>
+      </TaskListItem>
     </StyledContainer>
   );
 }

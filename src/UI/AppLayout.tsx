@@ -10,8 +10,8 @@ import styled from "styled-components";
 // `;
 
 const Main = styled.main`
-  background-color: #111;
-  padding: 1.5rem;
+  background-color: #151515ff;
+  padding: 2rem;
 `;
 
 const Container = styled.div`
