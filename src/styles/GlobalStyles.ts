@@ -6,8 +6,8 @@ const GlobalStyles = createGlobalStyle`
 &, &.light-mode{
 
   @font-face {
-    font-family: "Ndot";
-    src: local("ndot"), url('src/fonts/ndot.ttf') format('truetype');
+    font-family: "ndot-47-inspired-by-nothing";
+    src: local("ndot-47-inspired-by-nothing"), url('src/fonts/ndot-47-inspired-by-nothing.ttf') format('truetype');
     /* font-weight: normal; */
      font-style: normal;
   }
