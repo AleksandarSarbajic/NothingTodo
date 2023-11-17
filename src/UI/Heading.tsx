@@ -30,7 +30,7 @@ const StyledHeading = styled.h1<HeadingProps>`
 
       text-align: center;
     `}
-  font-family: "ndot-47-inspired-by-nothing", sans-serif;
+  font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
   line-height: 1.1;
   font-weight: 100;
 `;
