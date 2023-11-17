@@ -10,7 +10,7 @@ import styled from "styled-components";
 // `;
 
 const Main = styled.main`
-  background-color: #151515ff;
+  background-color: var(--bg-color);
   padding: 2rem;
 `;
 

@@ -7,7 +7,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  padding: 4.4rem 0 2rem 0;
+  padding: 4.4rem 0 4rem 0;
+  border-bottom: 1px solid rgb(255, 255, 255, 0.1);
 `;
 
 function MainImportant() {

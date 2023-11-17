@@ -4,7 +4,7 @@ interface HeadingProps {
   as?: string;
 }
 
-const StyledHeading = styled.h1<HeadingProps>`
+const Heading = styled.h1<HeadingProps>`
   ${(props) =>
     props.as === "h1" &&
     css`
@@ -35,4 +35,4 @@ const StyledHeading = styled.h1<HeadingProps>`
   font-weight: 100;
 `;
 
-export default StyledHeading;
+export default Heading;

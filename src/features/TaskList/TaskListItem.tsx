@@ -7,7 +7,7 @@ const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   padding: 2.5rem 2rem;
-  border-radius: 1.4rem;
+  border-radius: var(--border-radius-md);
   background-color: var(--color-black-100);
 
   &:hover,
@@ -19,7 +19,7 @@ const StyledLink = styled(Link)`
     font-weight: 500;
   }
   span {
-    font-family: "ndot", sans-serif;
+    font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
     font-size: 2.2rem;
   }
   svg {
