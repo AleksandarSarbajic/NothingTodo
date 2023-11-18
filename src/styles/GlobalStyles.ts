@@ -39,7 +39,8 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
   --color-grey-100: #f3f4f6;
-  --color-grey-200: #e5e7eb;
+  --color-grey-200: #e6e6e6;
+  --color-grey-300: #c1c2c3;
 
   
 
@@ -87,6 +88,7 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-lg: 9px;
 
 
+  --color-red-50: #c94744;
   --color-red-100: #C3322Fff;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
@@ -118,7 +120,7 @@ html {
 
 body {
   font-family: 'NotoSans', sans-serif;
-  color: var(--color-grey-200);
+  color: var(--color-grey-300);
   transition: color 0.3s, background-color 0.4s;
   transition-delay: 0.25s;
   min-height: 100vh;
@@ -129,8 +131,8 @@ body {
   overflow-x: hidden;
   background-color: var(--bg-color);
 }
-
 input,
+a,
 button,
 textarea,
 select {
@@ -203,6 +205,8 @@ h6 {
   overflow-wrap: break-word;
   hyphens:auto;
 }
+
+
 
 img {
   max-width: 100%;

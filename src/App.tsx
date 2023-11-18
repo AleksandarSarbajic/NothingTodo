@@ -11,6 +11,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./UI/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
+import SignUpPage from "./pages/SignUpPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,34 +26,28 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <>
-        <ProtectedRoute>
-          <AppLayout />
-        </ProtectedRoute>
-      </>
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
     ),
     children: [
       {
         index: true,
-        element: (
-          <>
-            <Navigate replace to={"/dashboard"} />
-          </>
-        ),
+        element: <Navigate replace to={"/dashboard"} />,
       },
       {
         path: "/dashboard",
-        element: (
-          <>
-            <MainPage />
-          </>
-        ),
+        element: <MainPage />,
       },
     ],
   },
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignUpPage />,
   },
 ]);
 
@@ -62,6 +58,27 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
         <GlobalStyles />
         <RouterProvider router={router} />
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontFamily: "NotoSans, sans-serif",
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              backgroundColor: "#1E2022ff",
+              color: "#c1c2c3",
+            },
+          }}
+        />
       </QueryClientProvider>
     </>
   );

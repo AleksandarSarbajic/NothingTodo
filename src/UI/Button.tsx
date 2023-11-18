@@ -5,6 +5,7 @@ interface Style {
 }
 
 interface Button {
+  onClick: () => void;
   type?: string;
   children: React.ReactNode;
 }
@@ -19,6 +20,8 @@ const StyledButton = styled.button<Style>`
       background-color: var(--color-red-100);
       padding: 2.4rem;
       border-radius: var(--border-radius-md--2);
+      color: #fff;
+      ,
       svg {
         width: 3.6rem;
         height: 3.6rem;
@@ -33,11 +36,21 @@ const StyledButton = styled.button<Style>`
       font-weight: 600;
       background-color: var(--color-red-100);
       border-radius: 3rem;
+      color: #fff;
+      height: 7.5rem;
+
+      &:hover {
+        background-color: var(--color-red-50);
+      }
     `}
 `;
 
-function Button({ type = "add", children }: Button) {
-  return <StyledButton $type={type}>{children}</StyledButton>;
+function Button({ onClick, type = "add", children }: Button) {
+  return (
+    <StyledButton onClick={onClick} $type={type}>
+      {children}
+    </StyledButton>
+  );
 }
 
 export default Button;

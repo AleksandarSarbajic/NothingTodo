@@ -2,26 +2,28 @@ import FormRowVertical from "../../UI/FormRowVertical";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 
-import { useLogin } from "./useLogin";
 import SpinnerMini from "../../UI/SpinnerMini";
 import Form from "../../UI/Form";
 import FormLink from "../../UI/FormLink";
 import LineThru from "../../UI/LineThru";
-import { useForm } from "react-hook-form";
 
-interface FormData {
+import { useForm } from "react-hook-form";
+import useSignup from "./useSignup";
+
+interface Cred {
+  userName: string;
   email: string;
   password: string;
 }
 
-function LoginForm() {
-  const { register, reset, formState, handleSubmit } = useForm<FormData>();
+function SignUpForm() {
+  const { register, formState, handleSubmit, reset } = useForm<Cred>();
   const { errors } = formState;
+  const { signup, isPending } = useSignup();
 
-  const { login, isPending } = useLogin();
-  function onSubmitHandler({ email, password }: FormData) {
-    login(
-      { email, password },
+  function onSubmitHandler({ userName, email, password }: Cred) {
+    signup(
+      { userName, email, password },
       {
         onSettled: () => reset(),
       }
@@ -30,6 +32,19 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
+      <FormRowVertical
+        label="Username"
+        error={errors?.userName?.message?.toString()}
+      >
+        <Input
+          type="text"
+          id="userName"
+          autoComplete="userName"
+          {...register("userName", { required: "This field is required" })}
+          disabled={isPending}
+        />
+      </FormRowVertical>
+
       <FormRowVertical
         label="Email address"
         error={errors?.email?.message?.toString()}
@@ -50,7 +65,7 @@ function LoginForm() {
       </FormRowVertical>
 
       <FormRowVertical
-        label="Password"
+        label="Password (min 8 characters)"
         error={errors?.password?.message?.toString()}
       >
         <Input
@@ -68,7 +83,7 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button type="form">{!isPending ? "Log in" : <SpinnerMini />}</Button>
+        <Button type="form">{!isPending ? "Sign up" : <SpinnerMini />}</Button>
       </FormRowVertical>
       <FormLink
         type="small"
@@ -79,12 +94,12 @@ function LoginForm() {
       <LineThru $margin={"form"} />
       <FormLink
         type="medium"
-        text="Don't Have an Account?"
-        link="/signup"
-        linkText=" Create it."
+        text="Already have an account?"
+        link="/login"
+        linkText=" Log in."
       />
     </Form>
   );
 }
 
-export default LoginForm;
+export default SignUpForm;
