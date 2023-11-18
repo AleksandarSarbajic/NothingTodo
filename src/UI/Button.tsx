@@ -1,10 +1,15 @@
 import styled, { css } from "styled-components";
-import { HiPlus } from "react-icons/hi2";
-interface Button {
+
+interface Style {
   $type: string;
 }
 
-const StyledButton = styled.button<Button>`
+interface Button {
+  type?: string;
+  children: React.ReactNode;
+}
+
+const StyledButton = styled.button<Style>`
   ${(props) =>
     props.$type === "add" &&
     css`
@@ -19,14 +24,20 @@ const StyledButton = styled.button<Button>`
         height: 3.6rem;
       }
     `}
+  ${(props) =>
+    props.$type === "form" &&
+    css`
+      font-size: 2rem;
+      text-transform: uppercase;
+      padding: 2.2rem;
+      font-weight: 600;
+      background-color: var(--color-red-100);
+      border-radius: 3rem;
+    `}
 `;
 
-function Button() {
-  return (
-    <StyledButton $type="add">
-      <HiPlus />
-    </StyledButton>
-  );
+function Button({ type = "add", children }: Button) {
+  return <StyledButton $type={type}>{children}</StyledButton>;
 }
 
 export default Button;
