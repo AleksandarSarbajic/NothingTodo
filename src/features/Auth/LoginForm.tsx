@@ -68,7 +68,9 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button type="form">{!isPending ? "Log in" : <SpinnerMini />}</Button>
+        <Button primary="form" type="submit">
+          {!isPending ? "Log in" : <SpinnerMini />}
+        </Button>
       </FormRowVertical>
       <FormLink
         type="small"

@@ -9,6 +9,8 @@ import { HiPlus } from "react-icons/hi2";
 import { useUser } from "../Auth/useUser";
 // import useLogOut from "../Auth/useLogOut";
 import Modal from "../../UI/Modal";
+import AddList from "../TaskList/AddList";
+
 const StledAppLayout = styled.div`
   max-height: 100dvh;
 `;
@@ -16,6 +18,7 @@ const StledAppLayout = styled.div`
 function MainLayout() {
   const { user } = useUser();
   // const { logout } = useLogOut();
+
   return (
     <StledAppLayout>
       <MainNav />
@@ -31,7 +34,7 @@ function MainLayout() {
           </Button>
         </Modal.Open>
         <Modal.Window name="delete">
-          <Heading as="h1">Hello There!</Heading>
+          <AddList />
         </Modal.Window>
       </Modal>
     </StledAppLayout>

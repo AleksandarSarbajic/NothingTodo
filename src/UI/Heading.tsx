@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface HeadingProps {
   as?: string;
   $caps?: boolean;
+  $margin?: number;
 }
 
 const Heading = styled.h1<HeadingProps>`
@@ -37,7 +38,18 @@ const Heading = styled.h1<HeadingProps>`
       text-transform: uppercase;
     `}
 
+    ${(props) =>
+    props.as === "h5" &&
+    css`
+      font-size: 2.4rem;
+    `}
+    ${(props) =>
+    props.$caps &&
+    css`
+      text-transform: uppercase;
+    `}
 
+    margin-bottom: ${(props) => props.$margin}rem;
 
   font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
   line-height: 1.1;

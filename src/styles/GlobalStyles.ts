@@ -38,13 +38,18 @@ const GlobalStyles = createGlobalStyle`
   /* Grey */
   --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
-  --color-grey-100: #f3f4f6;
+  --color-grey-100: #f0f1f3;
   --color-grey-200: #e6e6e6;
   --color-grey-300: #c1c2c3;
+  --color-grey-400: #a8adb3;
+  --color-grey-500: #c1c7ce;
+  --color-grey-600: #434647;
+  --color-grey-700: #2e3133;
 
   
 
   --color-black-100: #1E2022ff;
+  --color-black-200: #1d2022;
   --bg-color: #151515ff;
   
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -120,7 +125,7 @@ html {
 
 body {
   font-family: 'NotoSans', sans-serif;
-  color: var(--color-grey-300);
+  color: var(--color-grey-100);
   transition: color 0.3s, background-color 0.4s;
   transition-delay: 0.25s;
   min-height: 100vh;
@@ -159,19 +164,19 @@ li{
   list-style: none;
 } 
 
-/* select:disabled,
+select:disabled,
 input:disabled {
   background-color: var(--color-grey-200);
   color: var(--color-grey-500);
-} */
+}
 
-/* input:focus,
+input:focus,
 button:focus,
 textarea:focus,
 select:focus {
   outline: 2px solid var(--color-brand-600);
   outline-offset: -1px;
-} */
+} 
 
 
 button:has(svg) {

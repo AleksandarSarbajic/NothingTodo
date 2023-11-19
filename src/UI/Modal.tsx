@@ -81,7 +81,7 @@ const Button = styled.button`
   }
 `;
 
-const ModalContext = createContext<ContextType>({} as ContextType);
+const ModalContext = createContext({} as ContextType);
 
 function Modal({ children }: ChildrenType) {
   const [openName, setOpenName] = useState("");

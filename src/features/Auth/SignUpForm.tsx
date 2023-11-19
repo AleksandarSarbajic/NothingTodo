@@ -83,7 +83,9 @@ function SignUpForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button type="form">{!isPending ? "Sign up" : <SpinnerMini />}</Button>
+        <Button primary="form" type="submit">
+          {!isPending ? "Sign up" : <SpinnerMini />}
+        </Button>
       </FormRowVertical>
       <FormLink
         type="small"
