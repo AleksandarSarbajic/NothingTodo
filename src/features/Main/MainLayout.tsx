@@ -14,7 +14,7 @@ const StledAppLayout = styled.div`
 
 function MainLayout() {
   const { user } = useUser();
-  const { logout, isPending } = useLogOut();
+  const { logout } = useLogOut();
   return (
     <StledAppLayout>
       <MainNav />
