@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 
@@ -31,6 +31,19 @@ interface WindowType extends ChildrenType {
   name: string;
 }
 
+const Jump = keyframes`
+0%{
+  opacity: 0;
+  transform:translate(-50%, -50%) scale(0.7);
+ 
+}
+
+100%{
+  opacity: 1;
+  transform:translate(-50%, -50%) scale(1);
+}
+`;
+
 const StyledModal = styled.div`
   position: fixed;
   top: 50%;
@@ -41,7 +54,8 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-md);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
-  width: 80%;
+  width: 85%;
+  animation: ${Jump} 0.35s;
 `;
 
 const Overlay = styled.div`
