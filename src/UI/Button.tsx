@@ -5,7 +5,7 @@ interface Style {
 }
 
 interface Button {
-  onClick: () => void;
+  onClick?: () => void;
   type?: string;
   children: React.ReactNode;
 }
