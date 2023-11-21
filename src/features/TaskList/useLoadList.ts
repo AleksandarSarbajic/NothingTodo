@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getList } from "../../services/apiTaskList";
+import { getAllLists } from "../../services/apiTaskList";
+
 function useLoadList() {
   const {
     data: taskList,
@@ -7,7 +8,7 @@ function useLoadList() {
     error,
   } = useQuery({
     queryKey: ["task list"],
-    queryFn: getList,
+    queryFn: getAllLists,
   });
 
   if (error) throw new Error(error.message);

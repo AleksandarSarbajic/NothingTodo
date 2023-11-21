@@ -4,7 +4,7 @@ import TaskListItem from "./TaskListItem";
 
 import { HiListBullet } from "react-icons/hi2";
 import useLoadList from "./useLoadList";
-// import SpinnerMini from "../../UI/SpinnerMini";
+
 const StyledContainer = styled.div`
   margin: 4rem 0;
   display: flex;
@@ -15,24 +15,29 @@ const StyledContainer = styled.div`
 `;
 
 function TaskList() {
-  const { taskList, isLoading } = useLoadList();
-  console.log(isLoading);
-
-  // if (isLoading) return <SpinnerMini />;
+  const { taskList } = useLoadList();
 
   return (
     <StyledContainer>
-      {taskList?.map((task) => {
-        return (
-          <TaskListItem key={task.id}>
-            <div>
-              <HiListBullet />
-              <p>{task.list_name}</p>
-            </div>
-            {/* <span>1</span> */}
-          </TaskListItem>
-        );
-      })}
+      {taskList
+        ?.slice()
+        .sort((a, b) => {
+          return (
+            new Date(b.edited_at).getTime() - new Date(a.edited_at).getTime()
+          );
+        })
+        ?.sort((a, b) => b.edited_at - a.edited_at)
+        .map((task) => {
+          return (
+            <TaskListItem key={task.id} path="list_" link={task.id}>
+              <div>
+                <HiListBullet />
+                <p>{task.list_name}</p>
+              </div>
+              {/* <span>1</span> */}
+            </TaskListItem>
+          );
+        })}
     </StyledContainer>
   );
 }

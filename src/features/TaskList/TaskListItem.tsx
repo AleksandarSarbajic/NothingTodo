@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ChildrenProps } from "../../types/ChildrenType";
 
+interface Types extends ChildrenProps {
+  link?: string;
+  path?: string;
+}
+
 const StyledListItem = styled.li``;
 const StyledLink = styled(Link)`
   display: flex;
@@ -34,10 +39,10 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function TaskListItem({ children }: ChildrenProps) {
+function TaskListItem({ children, link, path }: Types) {
   return (
     <StyledListItem>
-      <StyledLink to={"/"}>{children}</StyledLink>
+      <StyledLink to={`/${path}${link}`}>{children}</StyledLink>
     </StyledListItem>
   );
 }

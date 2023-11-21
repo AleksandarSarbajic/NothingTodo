@@ -29,8 +29,8 @@ const GlobalStyles = createGlobalStyle`
   font-style: normal;
  }
   @font-face {
-  font-family: "NotoSans";
-  src: local("NotoSans"), url("src/fonts/NotoSansMono_Condensed-SemiBold.ttf") format('truetype');
+  font-family: "NotoSans-SemiBold";
+  src: local("NotoSans-SemiBold"), url("src/fonts/NotoSansMono_Condensed-SemiBold.ttf") format('truetype');
   font-weight: 600;
   font-style: normal;
  }
@@ -44,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-400: #a8adb3;
   --color-grey-500: #c1c7ce;
   --color-grey-600: #434647;
+  --color-grey-650: #585a5c;
   --color-grey-700: #2e3133;
 
   
@@ -87,7 +88,7 @@ const GlobalStyles = createGlobalStyle`
 
 
   --border-radius-tiny: 3px;
-  --border-radius-sm: 5px;
+  --border-radius-sm: 8px;
   --border-radius-md: 1.4rem;
   --border-radius-md--2: 1.5rem;
   --border-radius-lg: 9px;

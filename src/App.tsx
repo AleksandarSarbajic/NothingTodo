@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./UI/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import SignUpPage from "./pages/SignUpPage";
+import TaskListPage from "./pages/TaskListPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <MainPage />,
+      },
+      {
+        path: "/:list",
+        id: "list",
+        element: <TaskListPage />,
       },
     ],
   },

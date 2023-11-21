@@ -54,7 +54,8 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-md);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
-  width: 85%;
+  width: 90%;
+  max-width: 45rem;
   animation: ${Jump} 0.35s;
 `;
 
@@ -63,7 +64,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   background-color: var(--backdrop-color);
   backdrop-filter: blur(4px);
   z-index: 1000;
@@ -118,7 +119,7 @@ function Open({ children, opens: opensWindowName }: Opentype) {
 
 function Window({ children, name }: WindowType) {
   const { openName, close } = useContext(ModalContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick<HTMLDivElement>(close);
 
   if (name !== openName) return null;
 

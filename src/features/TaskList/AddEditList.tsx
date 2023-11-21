@@ -6,6 +6,8 @@ import Button from "../../UI/Button";
 import { useState } from "react";
 import useCreateList from "./useCreateList";
 import SpinnerMini from "../../UI/SpinnerMini";
+import useUpdateList from "./useUpdateList";
+import { toast } from "react-hot-toast";
 
 const StyledAddList = styled.div``;
 
@@ -19,27 +21,52 @@ const StyledButtonRow = styled.div`
 interface List {
   onCloseModal?: () => void;
   disabled?: boolean;
+  rename?: boolean;
+  inputValue?: string;
+  id?: number;
 }
 
-function AddList({ onCloseModal, disabled }: List) {
-  const [listName, setListName] = useState("");
-  const { createList, isPending } = useCreateList();
+function AddEditList({
+  onCloseModal,
+  disabled,
+  rename,
+  inputValue = "",
+  id,
+}: List) {
+  const [listName, setListName] = useState(inputValue);
+  const { createList, isPending: isCreating } = useCreateList();
+  const { updateList, isPending: isUpdating } = useUpdateList(id);
+
   function onSubmitHandler(e: React.FormEvent) {
     e.preventDefault();
     if (!listName) return;
 
-    createList(listName, {
-      onSuccess: () => {
-        onCloseModal?.();
-        setListName("");
-      },
-    });
+    if (!rename) {
+      createList(listName, {
+        onSuccess: () => {
+          onCloseModal?.();
+          setListName("");
+        },
+      });
+    } else {
+      if (inputValue === listName)
+        return toast.error("You are using the same name");
+      updateList(
+        { listName: listName, id: id },
+        {
+          onSuccess: () => {
+            onCloseModal?.();
+            setListName("");
+          },
+        }
+      );
+    }
   }
 
   return (
     <StyledAddList>
       <Heading as="h5" $margin={1}>
-        New List
+        {rename ? "Rename List" : "New List"}
       </Heading>
       <form onSubmit={onSubmitHandler}>
         <FormRowVertical>
@@ -61,7 +88,13 @@ function AddList({ onCloseModal, disabled }: List) {
             secondary="modalRed"
             disabled={listName.length === 0 || disabled}
           >
-            {!isPending ? " Create List" : <SpinnerMini />}
+            {isCreating || isUpdating ? (
+              <SpinnerMini />
+            ) : !rename ? (
+              "Create List"
+            ) : (
+              "Save"
+            )}
           </Button>
         </StyledButtonRow>
       </form>
@@ -69,4 +102,4 @@ function AddList({ onCloseModal, disabled }: List) {
   );
 }
 
-export default AddList;
+export default AddEditList;

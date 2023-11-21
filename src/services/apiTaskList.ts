@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export async function addEditList(listName: string) {
+export async function addList(listName: string) {
   const { data, error } = await supabase
     .from("Task List")
     .insert([{ list_name: listName }])
@@ -13,9 +13,52 @@ export async function addEditList(listName: string) {
 
   return data;
 }
+export async function updateList({
+  listName,
+  id,
+}: {
+  listName: string;
+  id?: number;
+}) {
+  const date = new Date().toISOString();
+  console.log(date);
+  const { data, error } = await supabase
+    .from("Task List")
+    .update({ list_name: listName, edited_at: date })
+    .eq("id", id)
+    .select();
 
-export async function getList() {
+  if (error) {
+    console.error(error);
+    throw new Error("List could not be updated");
+  }
+
+  return data;
+}
+export async function deleteList(id: number) {
+  const { error } = await supabase.from("Task List").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("List could not be updated");
+  }
+}
+
+export async function getAllLists() {
   const { data, error } = await supabase.from("Task List").select("*");
+
+  if (error) {
+    console.error(error);
+    throw new Error("List could not be loaded");
+  }
+
+  return data;
+}
+export async function getList(query: string) {
+  const { data, error } = await supabase
+    .from("Task List")
+    .select()
+    .eq("id", query);
 
   if (error) {
     console.error(error);

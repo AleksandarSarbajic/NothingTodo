@@ -7,6 +7,11 @@ interface HeadingProps {
 }
 
 const Heading = styled.h1<HeadingProps>`
+  font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
+  line-height: 1.1;
+  font-weight: 100;
+  color: #e6e6e6;
+
   ${(props) =>
     props.as === "h1" &&
     css`
@@ -16,7 +21,8 @@ const Heading = styled.h1<HeadingProps>`
   ${(props) =>
     props.as === "h2" &&
     css`
-      font-size: 2rem;
+      font-size: 6rem;
+      line-height: 1.2;
     `}
     
     ${(props) =>
@@ -50,11 +56,6 @@ const Heading = styled.h1<HeadingProps>`
     `}
 
     margin-bottom: ${(props) => props.$margin}rem;
-
-  font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
-  line-height: 1.1;
-  font-weight: 100;
-  color: #e6e6e6;
 `;
 
 export default Heading;
