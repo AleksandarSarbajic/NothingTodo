@@ -9,8 +9,8 @@ function useDeleteList() {
   const { mutate: deleteList, isPending } = useMutation({
     mutationFn: deleteListApi,
     onSuccess: () => {
-      toast.success("Successfully deleted a list");
       queryClient.invalidateQueries({ queryKey: ["task list"] });
+      toast.success("Successfully deleted a list");
       navigate("/dashboard", { replace: true });
     },
   });

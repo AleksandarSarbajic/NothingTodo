@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MainImportant from "./MainImportant";
 import TaskList from "../TaskList/TaskList";
-import MainNav from "./MainNav";
+
 import StyledHeader from "../../UI/Header";
 import Heading from "../../UI/Heading";
 import Button from "../../UI/Button";
@@ -10,6 +10,7 @@ import { useUser } from "../Auth/useUser";
 
 import Modal from "../../UI/Modal";
 import AddEditList from "../TaskList/AddEditList";
+import MainNav from "../../UI/MainNav";
 
 const StledAppLayout = styled.div`
   max-height: 100dvh;
@@ -17,10 +18,10 @@ const StledAppLayout = styled.div`
 
 function MainLayout() {
   const { user } = useUser();
-
+  console.log(user);
   return (
     <StledAppLayout>
-      <MainNav />
+      <MainNav name={user?.user_metadata.userName} id={user?.id} />
       <StyledHeader>
         <Heading as={"h1"}>What's up, {user?.user_metadata.userName}!</Heading>
       </StyledHeader>

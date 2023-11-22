@@ -1,0 +1,215 @@
+import styled, { css } from "styled-components";
+import Heading from "./Heading";
+import { Link, useLocation } from "react-router-dom";
+import {
+  HiBars3,
+  HiOutlineBell,
+  HiOutlineCog6Tooth,
+  HiXMark,
+} from "react-icons/hi2";
+import Search from "./Search";
+import { useEffect, useState } from "react";
+
+interface UserProps {
+  name: string;
+  id?: string;
+}
+interface MobileProps {
+  $open?: boolean;
+  $type?: string;
+}
+
+const StyledNav = styled.nav`
+  max-width: 135rem;
+  padding-bottom: 2rem;
+`;
+
+const StyledLayout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & svg {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
+
+const StyledMenu = styled.button<MobileProps>`
+  margin-left: -0.5rem;
+  position: relative;
+  & svg {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  ${(props) =>
+    props.$type &&
+    css`
+      display: none;
+    `}
+
+  ${(props) =>
+    props.$open &&
+    css`
+      display: inline-block;
+      position: fixed;
+      top: 2%;
+      right: 6%;
+      border-radius: 50%;
+      padding: 0.5rem;
+
+      &:hover {
+        color: var(--color-grey-100);
+        background-color: var(--color-red-100);
+      }
+      & svg {
+        width: 3.6rem;
+        height: 3.6rem;
+      }
+    `}
+`;
+
+const StyledList = styled.ul`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  gap: 2rem;
+  order: 3;
+`;
+const StyledHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-bottom: 3.6rem;
+`;
+const StyledAvatar = styled.img`
+  width: 10rem;
+  margin-bottom: 3rem;
+`;
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  gap: 1.4rem;
+`;
+
+const StyledMobileBox = styled.div<MobileProps>`
+  display: flex;
+  flex-direction: column;
+
+  padding: 15dvh 5dvw 0 35dvw;
+  width: 100%;
+  position: fixed;
+
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  height: 100dvh;
+  width: 100%;
+  /* max-width: 40rem; */
+  background-color: var(--color-black-100);
+  border-top-right-radius: 5rem;
+  border-bottom-right-radius: 5rem;
+  z-index: 5;
+
+  ${(props) =>
+    !props.$open &&
+    css`
+      left: -50%;
+      transform: translate(-50%, -50%);
+    `}
+  transition:all 0.4s;
+`;
+
+const StyledSearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const Layout = styled.div<MobileProps>`
+  display: none;
+  z-index: 1;
+  content: " ";
+  ${(props) =>
+    props.$open &&
+    css`
+      display: block;
+      width: 100%;
+      height: 100dvh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `}
+`;
+
+function MainNav({ name }: UserProps) {
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const open = () => {
+    setIsOpen((cur) => !cur);
+  };
+
+  console.log(isOpen);
+  useEffect(() => {
+    setIsOpen(false);
+    console.log(location.pathname);
+  }, [location.pathname]);
+
+  return (
+    <StyledNav>
+      <Layout $open={isOpen} onClick={open}></Layout>
+      <StyledLayout>
+        <StyledMenu $open={false} onClick={() => setIsOpen((cur) => !cur)}>
+          <HiBars3 />
+        </StyledMenu>
+
+        <StyledMobileBox $open={isOpen}>
+          <StyledHeader>
+            <StyledAvatar src="/profile-pic.png" />
+            <Heading as="h3">{name}</Heading>
+          </StyledHeader>
+          <StyledList>
+            <li>
+              <StyledLink to={"/"}>
+                <HiOutlineCog6Tooth /> Settings
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink to={"/"}>
+                <HiOutlineCog6Tooth /> Settings
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink to={"/"}>
+                <HiOutlineCog6Tooth /> Settings
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink to={"/"}>
+                <HiOutlineCog6Tooth /> Settings
+              </StyledLink>
+            </li>
+          </StyledList>
+          <StyledMenu
+            $type="cross"
+            $open={isOpen}
+            onClick={() => setIsOpen((cur) => !cur)}
+          >
+            <HiXMark />
+          </StyledMenu>
+        </StyledMobileBox>
+        <StyledSearchBox>
+          <Search />
+          <HiOutlineBell />
+        </StyledSearchBox>
+      </StyledLayout>
+    </StyledNav>
+  );
+}
+
+export default MainNav;

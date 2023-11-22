@@ -7,6 +7,7 @@ function useCreateList() {
   const { mutate: createList, isPending } = useMutation({
     mutationFn: addList,
     onSuccess: () => {
+      toast.success("New List successfully created");
       queryClient.invalidateQueries({ queryKey: ["task list"] });
     },
     onError: (err) => toast.error(err.message),

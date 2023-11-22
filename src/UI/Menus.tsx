@@ -29,6 +29,7 @@ interface IdProps extends ChildrenProps {
 interface ButtonProps extends ChildrenProps {
   icon: React.ReactElement;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const ShowUp = keyframes`
@@ -155,7 +156,7 @@ function List({ id, children }: IdProps) {
   );
 }
 
-function Button({ children, icon, onClick }: ButtonProps) {
+function Button({ children, icon, onClick, disabled = false }: ButtonProps) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {
@@ -165,7 +166,7 @@ function Button({ children, icon, onClick }: ButtonProps) {
 
   return (
     <li>
-      <StyledButton onClick={handleClick}>
+      <StyledButton onClick={handleClick} disabled={disabled}>
         {icon}
         <span>{children}</span>
       </StyledButton>

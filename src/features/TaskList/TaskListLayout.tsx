@@ -16,7 +16,7 @@ function TaskListLayout() {
   if (isLoading) return <Spinner />;
 
   return (
-    <TaskLayout id={list?.[0].id} name={list?.[0].list_name}>
+    <TaskLayout list={list?.[0]}>
       <Modal>
         <StyledHeader $use="list">
           <Heading as="h2">{list?.[0].list_name}</Heading>
