@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface Style {
   $primary: string;
   $secondary?: string;
+  $cased?: boolean;
 }
 
 interface Button {
@@ -12,6 +13,7 @@ interface Button {
   disabled?: boolean;
   children: React.ReactNode;
   primary?: string;
+  cased?: boolean;
 }
 
 const StyledButton = styled.button<Style>`
@@ -34,7 +36,6 @@ const StyledButton = styled.button<Style>`
     props.$primary === "form" &&
     css`
       font-size: 2rem;
-      text-transform: uppercase;
       padding: 2.2rem;
       font-weight: 600;
       background-color: var(--color-red-100);
@@ -73,6 +74,11 @@ const StyledButton = styled.button<Style>`
         border: 1px solid var(--color-grey-700);
       }
     `}
+  ${(props) =>
+    props.$cased &&
+    css`
+      text-transform: uppercase;
+    `}
 `;
 
 function Button({
@@ -82,6 +88,7 @@ function Button({
   secondary,
   disabled,
   primary = "add",
+  cased = false,
 }: Button) {
   return (
     <StyledButton
@@ -90,6 +97,7 @@ function Button({
       onClick={onClick}
       $primary={primary}
       $secondary={secondary}
+      $cased={cased}
     >
       {children}
     </StyledButton>

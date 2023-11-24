@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 interface HeadingProps {
   as?: string;
   $caps?: boolean;
+  $create?: boolean;
   $margin?: number;
 }
 
@@ -53,6 +54,13 @@ const Heading = styled.h1<HeadingProps>`
     props.$caps &&
     css`
       text-transform: uppercase;
+    `}
+
+    ${(props) =>
+    props.$create &&
+    css`
+      flex: 1 1 0%;
+      text-align: center;
     `}
 
     margin-bottom: ${(props) => props.$margin}rem;

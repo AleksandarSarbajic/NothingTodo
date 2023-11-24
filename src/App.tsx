@@ -14,6 +14,7 @@ import ProtectedRoute from "./UI/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import SignUpPage from "./pages/SignUpPage";
 import TaskListPage from "./pages/TaskListPage";
+import TaskPage from "./pages/TaskPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
         path: "/:list",
         id: "list",
         element: <TaskListPage />,
+      },
+      {
+        path: "/:list/createTask",
+        id: "task",
+        element: <TaskPage />,
       },
     ],
   },

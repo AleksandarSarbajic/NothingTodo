@@ -9,6 +9,7 @@ import {
 } from "react-icons/hi2";
 import Search from "./Search";
 import { useEffect, useState } from "react";
+import Logout from "./Logout";
 
 interface UserProps {
   name: string;
@@ -110,8 +111,8 @@ const StyledMobileBox = styled.div<MobileProps>`
   width: 100%;
   /* max-width: 40rem; */
   background-color: var(--color-black-100);
-  border-top-right-radius: 5rem;
-  border-bottom-right-radius: 5rem;
+  border-top-right-radius: 4rem;
+  border-bottom-right-radius: 4rem;
   z-index: 5;
 
   ${(props) =>
@@ -120,7 +121,7 @@ const StyledMobileBox = styled.div<MobileProps>`
       left: -50%;
       transform: translate(-50%, -50%);
     `}
-  transition:all 0.4s;
+  transition:all 0.3s;
 `;
 
 const StyledSearchBox = styled.div`
@@ -193,6 +194,9 @@ function MainNav({ name }: UserProps) {
               <StyledLink to={"/"}>
                 <HiOutlineCog6Tooth /> Settings
               </StyledLink>
+            </li>
+            <li>
+              <Logout />
             </li>
           </StyledList>
           <StyledMenu

@@ -29,7 +29,7 @@ function TaskLayout({ children, list }: TaskProps) {
   const navigate = useNavigate();
   return (
     <StyledTaskLayout>
-      <TaskNav>
+      <TaskNav center={false}>
         <Modal>
           <Menus>
             <Menus.Menu>

@@ -83,7 +83,7 @@ function SignUpForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button primary="form" type="submit">
+        <Button primary="form" type="submit" cased={true}>
           {!isPending ? "Sign up" : <SpinnerMini />}
         </Button>
       </FormRowVertical>

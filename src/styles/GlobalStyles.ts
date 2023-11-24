@@ -1,9 +1,12 @@
 import { createGlobalStyle } from "styled-components";
-
+import { fontFace } from "./NotoSansMonoRegular";
+import { PickerStyles } from "./DatepickerStyle";
 const GlobalStyles = createGlobalStyle`
 :root {
  
 &, &.light-mode{
+
+  ${fontFace}
 
   @font-face {
     font-family: 'NDOT 47 (inspired by NOTHING)';
@@ -16,24 +19,20 @@ const GlobalStyles = createGlobalStyle`
 }
 
  
-  @font-face {
-  font-family: "NotoSans";
-  src: local("NotoSans"), url("src/fonts/NotoSansMono_Condensed-Regular.ttf") format('truetype');
-  font-weight: 400;
-  font-style: normal;
- }
- @font-face {
-  font-family: "NotoSansMedium";
-  src: local("NotoSansMedium"), url("src/fonts/NotoSansMono_Condensed-Medium.ttf") format('truetype');
-  font-weight: 500;
-  font-style: normal;
- }
-  @font-face {
-  font-family: "NotoSans-SemiBold";
-  src: local("NotoSans-SemiBold"), url("src/fonts/NotoSansMono_Condensed-SemiBold.ttf") format('truetype');
-  font-weight: 600;
-  font-style: normal;
- }
+@font-face {
+    font-family: 'Noto Sans Mono Condensed';
+    src: local('Noto Sans Mono Condensed'), local('NotoSansMonoCondensed-Regular'),
+        url('src/fonts/NotoSansMonoCondensed-Regular.woff2') format('woff2'),
+        url('src/fonts/NotoSansMonoCondensed-Regular.woff') format('woff'),
+        url('src/fonts/NotoSansMonoCondensed-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+
 
   /* Grey */
   --color-grey-0: #fff;
@@ -125,7 +124,7 @@ html {
 }
 
 body {
-  font-family: 'NotoSans', sans-serif;
+  font-family: 'Noto Sans Mono', sans-serif;
   color: var(--color-grey-100);
   transition: color 0.3s, background-color 0.4s;
   transition-delay: 0.25s;
@@ -141,6 +140,7 @@ input,
 a,
 button,
 textarea,
+label,
 select {
   font: inherit;
   color: inherit;
@@ -220,7 +220,7 @@ img {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
-
+${PickerStyles}
 
 `;
 
