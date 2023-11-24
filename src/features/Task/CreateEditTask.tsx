@@ -8,9 +8,15 @@ import Button from "../../UI/Button";
 import ReactDatePicker from "react-datepicker";
 
 // import SpinnerMini from "../../UI/SpinnerMini";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
-const StyledPicker = styled(ReactDatePicker)`
+interface PickerTypes {
+  value?: string;
+  onClick?: () => void;
+}
+
+const StyledInput = styled.button`
+  text-align: left;
   border: none;
   background-color: var(--color-grey-700);
   border-radius: var(--border-radius-md);
@@ -43,7 +49,13 @@ function CreateEditTask() {
     const dated = new Date(date);
     console.log(title, dated.toISOString(), description);
   }
-
+  const ExampleCustomInput = forwardRef<HTMLButtonElement, PickerTypes>(
+    ({ value, onClick }, ref) => (
+      <StyledInput type="button" onClick={onClick} ref={ref}>
+        {value}
+      </StyledInput>
+    )
+  );
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>
       <FormRowVertical label="Title" error={errors?.title?.message?.toString()}>
@@ -73,12 +85,13 @@ function CreateEditTask() {
         label="Add due date"
         error={errors?.date?.message?.toString()}
       >
-        <StyledPicker
+        <ReactDatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           withPortal
           portalId="root-portal"
           formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
+          customInput={<ExampleCustomInput />}
         />
       </FormRowVertical>
       <FormRowVertical
