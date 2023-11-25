@@ -4,15 +4,14 @@ import Input from "../../UI/Input";
 import styled, { css } from "styled-components";
 import TextArea from "../../UI/TextArea";
 import Button from "../../UI/Button";
-import ReactDatePicker, { registerLocale } from "react-datepicker";
+import ReactDatePicker from "react-datepicker";
 import SpinnerMini from "../../UI/SpinnerMini";
 import { forwardRef, useState } from "react";
-import en from "date-fns/locale/en-GB";
+
 import { format, set, subDays } from "date-fns";
 import useCreateTask from "./useCreateTask";
 import { useSearchParams } from "react-router-dom";
 import useUpdateList from "../TaskList/useUpdateList";
-registerLocale("en-GB", en);
 
 interface PickerTypes {
   value?: string;
@@ -157,7 +156,6 @@ function CreateEditTask() {
           portalId="root-portal"
           formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
           customInput={<ExampleCustomInput />}
-          locale="en-GB"
           minDate={subDays(new Date(), 0)}
         />
       </FormRowVertical>
