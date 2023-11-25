@@ -12,6 +12,7 @@ const StyledFormRow = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 1.4rem 0;
+  width: 100%;
 `;
 
 const Label = styled.label`
@@ -20,7 +21,7 @@ const Label = styled.label`
 
 const Error = styled.span`
   font-size: 1.4rem;
-  color: var(--color-red-700);
+  color: var(--color-red-100);
 `;
 
 function FormRowVertical({ label, error, children }: Props) {

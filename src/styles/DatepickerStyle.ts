@@ -1,6 +1,39 @@
 import { css } from "styled-components";
 
 export const PickerStyles = css`
+  .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item:hover {
+    cursor: pointer;
+    background-color: var(--color-grey-100);
+    color: var(--bg-color);
+  }
+
+  .react-datepicker__time-container .react-datepicker__time {
+    background-color: #1c1c1cff;
+  }
+
+  .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item {
+    color: var(--color-grey-100);
+  }
+
+  .react-datepicker-time__header {
+    font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: var(--color-grey-100);
+  }
+  .react-datepicker__header--time {
+    background-color: #1c1c1cff;
+    border-bottom: 1px solid #1c1c1cff;
+  }
+
   .react-datepicker {
     font-size: 1.8rem;
     font-weight: 500;
@@ -24,6 +57,17 @@ export const PickerStyles = css`
       height: 3.9rem;
       border-radius: 50%;
       line-height: 3rem;
+    }
+  }
+  .react-datepicker__day--disabled,
+  .react-datepicker__month-text--disabled,
+  .react-datepicker__quarter-text--disabled,
+  .react-datepicker__year-text--disabled {
+    cursor: not-allowed;
+    color: var(--color-grey-700) !important;
+    @media (max-width: 400px), (max-height: 550px) {
+      cursor: not-allowed;
+      color: var(--color-grey-700) !important;
     }
   }
 
@@ -111,5 +155,15 @@ export const PickerStyles = css`
   .react-datepicker__year-text:hover {
     background-color: var(--color-grey-100);
     color: var(--bg-color) !important;
+  }
+
+  .react-datepicker__day--disabled:hover,
+  .react-datepicker__month-text--disabled:hover,
+  .react-datepicker__quarter-text--disabled:hover,
+  .react-datepicker__year-text--disabled:hover {
+    cursor: not-allowed;
+    color: var(--color-grey-200) !important;
+    color: var(--color-grey-700) !important;
+    background-color: transparent !important;
   }
 `;

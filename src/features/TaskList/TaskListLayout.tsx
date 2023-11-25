@@ -21,7 +21,7 @@ function TaskListLayout() {
       </StyledHeader>
       <EditedAt date={list?.[0].edited_at} />
 
-      <Button onClick={() => navigate("createTask")}>
+      <Button onClick={() => navigate(`createTask?q=${list?.[0].id}`)}>
         <HiPlus />
       </Button>
     </TaskLayout>

@@ -15,17 +15,17 @@ export async function addList(listName: string) {
 }
 
 export async function updateList({
-  listName,
+  newList,
   id,
 }: {
-  listName: string;
+  newList?: { list_name: string };
   id?: number;
 }) {
   const date = new Date().toISOString();
-  console.log(date);
+
   const { data, error } = await supabase
     .from("Task List")
-    .update({ list_name: listName, edited_at: date })
+    .update({ ...newList, edited_at: date })
     .eq("id", id)
     .select();
 

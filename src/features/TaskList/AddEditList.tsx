@@ -33,26 +33,26 @@ function AddEditList({
   inputValue = "",
   id,
 }: List) {
-  const [listName, setListName] = useState(inputValue);
+  const [list_name, setListName] = useState(inputValue);
   const { createList, isPending: isCreating } = useCreateList();
   const { updateList, isPending: isUpdating } = useUpdateList(id);
 
   function onSubmitHandler(e: React.FormEvent) {
     e.preventDefault();
-    if (!listName) return;
+    if (!list_name) return;
 
     if (!rename) {
-      createList(listName, {
+      createList(list_name, {
         onSuccess: () => {
           onCloseModal?.();
           setListName("");
         },
       });
     } else {
-      if (inputValue === listName)
+      if (inputValue === list_name)
         return toast.error("You are using the same name");
       updateList(
-        { listName: listName, id: id },
+        { newList: { list_name }, id },
         {
           onSuccess: () => {
             onCloseModal?.();
@@ -74,7 +74,7 @@ function AddEditList({
             id="listName"
             name="listName"
             placeholder="Enter list title"
-            value={listName}
+            value={list_name}
             onChange={(e) => setListName(e.target.value)}
           />
         </FormRowVertical>
@@ -86,7 +86,7 @@ function AddEditList({
             type="submit"
             primary="modal"
             secondary="modalRed"
-            disabled={listName.length === 0 || disabled}
+            disabled={list_name.length === 0 || disabled}
           >
             {isCreating || isUpdating ? (
               <SpinnerMini />

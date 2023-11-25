@@ -51,31 +51,46 @@ export interface Database {
       };
       Tasks: {
         Row: {
+          category: string | null;
+          created_at: string | null;
           description: string | null;
           due_date: string | null;
+          edited_at: string | null;
+          end_time: string | null;
           id: number;
           ListId: number | null;
           priority: string | null;
+          start_time: string | null;
           status: string | null;
-          task_name: string;
+          task_name: string | null;
           user_id: string | null;
         };
         Insert: {
+          category?: string | null;
+          created_at?: string | null;
           description?: string | null;
           due_date?: string | null;
+          edited_at?: string | null;
+          end_time?: string | null;
           id?: number;
           ListId?: number | null;
           priority?: string | null;
+          start_time?: string | null;
           status?: string | null;
           task_name: string;
           user_id?: string | null;
         };
         Update: {
+          category?: string | null;
+          created_at?: string | null;
           description?: string | null;
           due_date?: string | null;
+          edited_at?: string | null;
+          end_time?: string | null;
           id?: number;
           ListId?: number | null;
           priority?: string | null;
+          start_time?: string | null;
           status?: string | null;
           task_name?: string;
           user_id?: string | null;
