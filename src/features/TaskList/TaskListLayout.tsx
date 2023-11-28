@@ -7,6 +7,7 @@ import Spinner from "../../UI/Spinner";
 import TaskLayout from "../../UI/TaskLayout";
 import useLoadSingleList from "./useLoadSingleList";
 import { useNavigate } from "react-router-dom";
+import Tasks from "../Task/Tasks";
 
 function TaskListLayout() {
   const { list, isLoading } = useLoadSingleList();
@@ -20,7 +21,7 @@ function TaskListLayout() {
         <Heading as="h2">{list?.[0].list_name}</Heading>
       </StyledHeader>
       <EditedAt date={list?.[0].edited_at} />
-
+      <Tasks />
       <Button onClick={() => navigate(`createTask?q=${list?.[0].id}`)}>
         <HiPlus />
       </Button>

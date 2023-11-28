@@ -4,6 +4,7 @@ import TaskListItem from "./TaskListItem";
 
 import { HiListBullet } from "react-icons/hi2";
 import useLoadList from "./useLoadList";
+import useLoadAllTasks from "../Task/useLoadAllTasks";
 
 const StyledContainer = styled.div`
   margin: 4rem 0;
@@ -16,6 +17,7 @@ const StyledContainer = styled.div`
 
 function TaskList() {
   const { taskList } = useLoadList();
+  const { tasks } = useLoadAllTasks();
 
   return (
     <StyledContainer>
@@ -34,7 +36,9 @@ function TaskList() {
                 <HiListBullet />
                 <p>{task.list_name}</p>
               </div>
-              {/* <span>1</span> */}
+              <span>
+                {tasks?.filter((item) => item.ListId === task.id).length}
+              </span>
             </TaskListItem>
           );
         })}

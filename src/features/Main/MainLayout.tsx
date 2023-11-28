@@ -18,7 +18,7 @@ const StledAppLayout = styled.div`
 
 function MainLayout() {
   const { user } = useUser();
-  console.log(user);
+
   return (
     <StledAppLayout>
       <MainNav name={user?.user_metadata.userName} id={user?.id} />

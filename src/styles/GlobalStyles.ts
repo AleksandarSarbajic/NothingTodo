@@ -50,6 +50,7 @@ const GlobalStyles = createGlobalStyle`
 
   --color-black-100: #1E2022ff;
   --color-black-200: #1d2022;
+  --color-black-300: #191a1b;
   --bg-color: #151515ff;
   
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
