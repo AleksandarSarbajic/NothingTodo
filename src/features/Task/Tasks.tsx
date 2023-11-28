@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import Tut from "./TUTORIAL";
+
+import DraggableContainer from "./DraggableContainer";
 
 const StyledTasks = styled.div`
   overflow: hidden;
@@ -12,7 +13,7 @@ const StyledTasks = styled.div`
 function Tasks() {
   return (
     <StyledTasks>
-      <Tut />
+      <DraggableContainer />
     </StyledTasks>
   );
 }

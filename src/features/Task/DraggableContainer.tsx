@@ -20,7 +20,7 @@ interface ItemStyles {
   [itemId: number]: React.CSSProperties;
 }
 
-function Tut() {
+function DraggableContainer() {
   const { tasks, isLoading } = useLoadTasks();
   const { deleteTask, isPending } = useDeleteTask();
   const sensors = useSensors(
@@ -46,7 +46,7 @@ function Tut() {
         -(event.active.data.current?.width / 2 + ADDITION_WIDTH)
       );
 
-      // deleteTask(+event.active.id);
+      deleteTask(+event.active.id);
 
       setDraggedItemStyle((prevStyles) => ({
         ...prevStyles,
@@ -96,4 +96,4 @@ function Tut() {
   );
 }
 
-export default Tut;
+export default DraggableContainer;
