@@ -46,13 +46,13 @@ function Tut() {
         -(event.active.data.current?.width / 2 + ADDITION_WIDTH)
       );
 
-      deleteTask(+event.active.id);
+      // deleteTask(+event.active.id);
 
       setDraggedItemStyle((prevStyles) => ({
         ...prevStyles,
         [event.active.id]: {
           transform: `translate3d(${
-            -event.active.data.current?.width - 50
+            -event.active.data.current?.width - ADDITION_WIDTH
           }px, ${0}px, 0)`,
         },
       }));
