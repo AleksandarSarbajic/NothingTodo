@@ -15,6 +15,7 @@ import useDeleteTask from "./useDeleteTask";
 import { ADDITION_WIDTH } from "../../utils/constants";
 import { useState } from "react";
 import { Database } from "../../services/supabase";
+import { useCloseMenus } from "../../UI/Menus";
 
 interface ItemStyles {
   [itemId: number]: React.CSSProperties;
@@ -23,6 +24,7 @@ interface ItemStyles {
 function DraggableContainer() {
   const { tasks, isLoading } = useLoadTasks();
   const { deleteTask, isPending } = useDeleteTask();
+  const { close } = useCloseMenus();
   const sensors = useSensors(
     useSensor(TouchSensor, {
       activationConstraint: {
@@ -41,12 +43,7 @@ function DraggableContainer() {
     if (
       event.delta.x < -(event.active.data.current?.width / 2 + ADDITION_WIDTH)
     ) {
-      console.log(
-        event.delta.x,
-        -(event.active.data.current?.width / 2 + ADDITION_WIDTH)
-      );
-
-      deleteTask(+event.active.id);
+      deleteTask({ id: +event.active.id });
 
       setDraggedItemStyle((prevStyles) => ({
         ...prevStyles,
@@ -57,6 +54,10 @@ function DraggableContainer() {
         },
       }));
     }
+  }
+
+  function handleDragStart() {
+    close();
   }
 
   function sortByStatus(
@@ -79,6 +80,7 @@ function DraggableContainer() {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
       modifiers={[restrictToHorizontalAxis]}
     >
       {tasks

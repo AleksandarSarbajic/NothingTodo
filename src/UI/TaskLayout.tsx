@@ -8,6 +8,7 @@ import ConfirmDelete from "./ConfrmDelete";
 import useDeleteList from "../features/TaskList/useDeleteList";
 import useCreateList from "../features/TaskList/useCreateList";
 import { useNavigate } from "react-router-dom";
+import useDeleteTask from "../features/Task/useDeleteTask";
 
 const StyledTaskLayout = styled.div``;
 
@@ -24,8 +25,9 @@ interface TaskProps {
 }
 
 function TaskLayout({ children, list }: TaskProps) {
-  const { deleteList, isPending: isDeleting } = useDeleteList();
+  const { deleteList, isPending: isDeletingList } = useDeleteList();
   const { createList, isPending: isCreating } = useCreateList();
+  const { deleteTask, isPending: isDeletingTask } = useDeleteTask();
   const navigate = useNavigate();
   return (
     <StyledTaskLayout>
@@ -65,8 +67,13 @@ function TaskLayout({ children, list }: TaskProps) {
           <Modal.Window name="delete">
             <ConfirmDelete
               resourceName={list.list_name}
-              disabled={isDeleting}
-              onConfirm={() => deleteList(list.id)}
+              disabled={isDeletingList || isDeletingTask}
+              onConfirm={() => {
+                deleteTask({ ListId: list.id });
+                setTimeout(() => {
+                  deleteList(list.id);
+                }, 100);
+              }}
             />
           </Modal.Window>
         </Modal>

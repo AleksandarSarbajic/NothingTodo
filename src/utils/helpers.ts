@@ -24,6 +24,17 @@ export const formatDistanceFromNow = (dateStr: string) =>
 //   return today.toISOString();
 // };
 
+export function formatTimeToDate(time: string) {
+  const [hours, minutes, seconds] = time.split(":");
+
+  const currentDate = new Date();
+  currentDate.setHours(Number(hours));
+  currentDate.setMinutes(Number(minutes));
+  currentDate.setSeconds(Number(seconds));
+
+  return currentDate;
+}
+
 export const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value

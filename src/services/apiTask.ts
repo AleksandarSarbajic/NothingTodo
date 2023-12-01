@@ -16,6 +16,32 @@ export async function createTask(
 
   return data;
 }
+export async function getTask(
+  id: number | null
+): Promise<Database["public"]["Tables"]["Tasks"]["Row"] | null> {
+  if (id === 0 || typeof id !== "number" || id < 0) {
+    return null;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("Tasks")
+      .select()
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      console.error("Supabase error:", error);
+      throw new Error("Task could not be loaded");
+    }
+
+    return data ?? null;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    throw new Error("An unexpected error occurred while fetching the task");
+  }
+}
+
 export async function getAllTasks() {
   const { data, error } = await supabase.from("Tasks").select("*");
 
@@ -39,8 +65,17 @@ export async function getTasks(id: number) {
 
   return data;
 }
-export async function deleteTask(id: number) {
-  const { error } = await supabase.from("Tasks").delete().eq("id", id);
+export async function deleteTask({
+  id,
+  ListId,
+}: {
+  id?: number | null;
+  ListId?: number | null;
+}) {
+  const { error } = await supabase
+    .from("Tasks")
+    .delete()
+    .eq(id ? "id" : "ListId", id ? id : ListId);
 
   if (error) {
     console.error(error);

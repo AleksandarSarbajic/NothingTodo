@@ -24,6 +24,7 @@ interface MenusProps {
 
 interface IdProps extends ChildrenProps {
   id: string | number;
+  icon?: React.ReactElement;
 }
 
 interface ButtonProps extends ChildrenProps {
@@ -75,6 +76,7 @@ const StyledList = styled.ul<ListPostion>`
 
   right: ${(props) => props.$position?.x ?? 0}px;
   top: ${(props) => props.$position?.y ?? 0}px;
+  z-index: 9999999999999999999999999;
 `;
 
 const StyledButton = styled.button`
@@ -101,6 +103,12 @@ const StyledButton = styled.button`
   }
 `;
 
+const CustomIcon = styled.span`
+  & svg {
+    color: var(--color-grey-600);
+  }
+`;
+
 const MenusContext = createContext({} as MenusProps);
 
 function Menus({ children }: ChildrenProps) {
@@ -119,7 +127,7 @@ function Menus({ children }: ChildrenProps) {
   );
 }
 
-function Toggle({ id }: IdProps) {
+function Toggle({ id, icon }: IdProps) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -137,7 +145,7 @@ function Toggle({ id }: IdProps) {
 
   return (
     <StyledToggle onClick={handleClick}>
-      <HiEllipsisVertical />
+      {icon ? <CustomIcon>{icon}</CustomIcon> : <HiEllipsisVertical />}
     </StyledToggle>
   );
 }
@@ -174,6 +182,15 @@ function Button({ children, icon, onClick, disabled = false }: ButtonProps) {
   );
 }
 
+interface CloseMenusHook {
+  close: () => void;
+}
+
+export function useCloseMenus(): CloseMenusHook {
+  const { close } = useContext(MenusContext);
+
+  return { close };
+}
 Menus.Menu = Menu;
 Menus.Toggle = Toggle;
 Menus.List = List;

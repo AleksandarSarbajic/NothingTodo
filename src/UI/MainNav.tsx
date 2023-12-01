@@ -155,10 +155,8 @@ function MainNav({ name }: UserProps) {
     setIsOpen((cur) => !cur);
   };
 
-  console.log(isOpen);
   useEffect(() => {
     setIsOpen(false);
-    console.log(location.pathname);
   }, [location.pathname]);
 
   return (

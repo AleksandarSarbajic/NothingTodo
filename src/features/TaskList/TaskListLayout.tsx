@@ -22,7 +22,7 @@ function TaskListLayout() {
       </StyledHeader>
       <EditedAt date={list?.[0].edited_at} />
       <Tasks />
-      <Button onClick={() => navigate(`createTask?q=${list?.[0].id}`)}>
+      <Button onClick={() => navigate(`createEditTask?q=${list?.[0].id}`)}>
         <HiPlus />
       </Button>
     </TaskLayout>

@@ -6,12 +6,15 @@ import TextArea from "../../UI/TextArea";
 import Button from "../../UI/Button";
 import ReactDatePicker from "react-datepicker";
 import SpinnerMini from "../../UI/SpinnerMini";
-import { forwardRef, useState } from "react";
+import { forwardRef, useState, useEffect } from "react";
 
 import { format, set, subDays } from "date-fns";
 import useCreateTask from "./useCreateTask";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useUpdateList from "../TaskList/useUpdateList";
+import useLoadTask from "./useLoadTask";
+import { formatTimeToDate } from "../../utils/helpers";
+import useUpdateTask from "./useUpdateTask";
 
 interface PickerTypes {
   value?: string;
@@ -19,7 +22,6 @@ interface PickerTypes {
 }
 interface FormData {
   task_name: string;
-  date: string;
   description: string;
   category: string;
 }
@@ -59,44 +61,100 @@ const StyledForm = styled.form`
 `;
 
 function CreateEditTask() {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
+  //params
   const [useParams] = useSearchParams();
   const id = useParams.get("q");
-  const { register, formState, reset, handleSubmit } = useForm<FormData>();
-  const { errors } = formState;
-  const { createTask, isPending: isCreating } = useCreateTask();
+  const navigate = useNavigate();
+  // task
+  const { task } = useLoadTask();
+  const { updateTask, isPending: isUpdating } = useUpdateTask();
   const { updateList } = useUpdateList(Number(id));
+  const { createTask, isPending: isCreating } = useCreateTask();
+
+  // form
+  const { register, formState, reset, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      task_name: "",
+      category: "",
+      description: "",
+    },
+  });
+
+  const { errors } = formState;
+
+  useEffect(() => {
+    if (task) {
+      const { task_name, description, category } = task;
+
+      reset({
+        task_name: task_name || undefined,
+        description: description || undefined,
+        category: category || undefined,
+      });
+    }
+  }, [task, reset]);
+
+  const [startDate, setStartDate] = useState<Date | null | undefined>(
+    task?.due_date ? new Date(task?.due_date) : null
+  );
+  const [startTime, setStartTime] = useState<Date | null | undefined>(
+    task?.start_time ? formatTimeToDate(task?.start_time) : null
+  );
+  const [endTime, setEndTime] = useState<Date | null | undefined>(
+    task?.end_time ? formatTimeToDate(task?.end_time) : null
+  );
 
   function onSubmitHandler({ task_name, description, category }: FormData) {
-    createTask(
-      {
-        task_name,
-        description: description.length === 0 ? null : description,
-        category,
-        due_date: startDate
-          ? set(startDate, {
-              hours: 0,
-              minutes: 0,
-              seconds: 0,
-              milliseconds: 0,
-            }).toISOString()
-          : null,
-        edited_at: new Date().toISOString(),
-        start_time: startTime ? format(startTime, "HH:mm") : null,
-        end_time: endTime ? format(endTime, "HH:mm") : null,
-        ListId: Number(id),
-      },
-      {
-        onSettled: () => {
-          reset();
-          setStartDate(null);
-          setStartTime(null);
-          setEndTime(null);
+    const newTask = {
+      task_name,
+      description: description.length === 0 ? null : description,
+      category,
+      due_date: startDate
+        ? set(startDate, {
+            hours: 23,
+            minutes: 59,
+            seconds: 59,
+            milliseconds: 999,
+          }).toISOString()
+        : null,
+      edited_at: new Date().toISOString(),
+      start_time: startTime ? format(startTime, "HH:mm") : null,
+      end_time: endTime ? format(endTime, "HH:mm") : null,
+      ListId: Number(id),
+    };
+    if (!task) {
+      createTask(
+        {
+          ...newTask,
         },
-      }
-    );
+        {
+          onSettled: () => {
+            reset();
+            setStartDate(null);
+            setStartTime(null);
+            setEndTime(null);
+          },
+        }
+      );
+    } else {
+      updateTask(
+        {
+          newTask: {
+            ...newTask,
+          },
+          id: task.id,
+        },
+        {
+          onSettled: () => {
+            navigate(-1);
+            reset();
+            setStartDate(null);
+            setStartTime(null);
+            setEndTime(null);
+          },
+        }
+      );
+    }
     updateList({ id: Number(id) });
   }
   const ExampleCustomInput = forwardRef<HTMLButtonElement, PickerTypes>(
@@ -106,6 +164,7 @@ function CreateEditTask() {
       </StyledInput>
     )
   );
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>
       <FormRowVertical
@@ -171,13 +230,13 @@ function CreateEditTask() {
       </FormRowVertical>
       <FormRowVertical
         label="Description"
-        error={errors?.date?.message?.toString()}
+        error={errors?.description?.message?.toString()}
       >
         <TextArea id="description" {...register("description")} />
       </FormRowVertical>
       <FormRowVertical>
         <Button primary="form" type="submit" disabled={isCreating}>
-          {!isCreating ? "Create a new task" : <SpinnerMini />}
+          {!isCreating || !isUpdating ? "Create a new task" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
     </StyledForm>

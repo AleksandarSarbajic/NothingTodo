@@ -47,7 +47,7 @@ const router = createBrowserRouter([
         element: <TaskListPage />,
       },
       {
-        path: "/:list/createTask",
+        path: "/:list/createEditTask",
         id: "task",
         element: <TaskPage />,
       },

@@ -1,13 +1,21 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { PiDotsSixVerticalBold } from "react-icons/pi";
-import { HiOutlineCheckCircle, HiTrash } from "react-icons/hi2";
+import {
+  HiOutlineCheckCircle,
+  HiOutlineStar,
+  HiPencil,
+  HiStar,
+  HiTrash,
+} from "react-icons/hi2";
 import { Database } from "../../services/supabase";
 import { ADDITION_WIDTH } from "../../utils/constants";
 
 import { useMeasure } from "react-use";
 import useUpdateTask from "./useUpdateTask";
+import Menus from "../../UI/Menus";
+import { useNavigate } from "react-router-dom";
 interface ItemProps {
   item: Database["public"]["Tables"]["Tasks"]["Row"];
   disabled: boolean;
@@ -19,6 +27,17 @@ interface TaskProps extends ItemProps {
 interface Status {
   $status?: string | null;
 }
+
+const CloseAnimation = keyframes`
+0%{
+  opacity: 0;
+ transform: translate3d(-5px,0,0) ;
+}
+100%{
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+`;
 
 const StyledContainer = styled.div<Status>`
   height: 9.6rem;
@@ -36,6 +55,7 @@ const StyledContainer = styled.div<Status>`
       color: var(--color-grey-600);
       background-color: var(--color-black-300);
       text-decoration: line-through;
+      animation: ${CloseAnimation} 0.5s;
     `}
 `;
 
@@ -65,13 +85,6 @@ const StyledBox = styled.div`
 const StyledTitle = styled.p`
   font-size: 1.8rem;
 `;
-const Handle = styled.button`
-  & svg {
-    width: 3rem;
-    height: 3rem;
-    color: var(--color-grey-600);
-  }
-`;
 
 const DeleteContainer = styled.div`
   position: absolute;
@@ -94,6 +107,7 @@ const Box = styled.div`
   position: relative;
 `;
 function Task({ item, disabled, draggedItemStyle }: TaskProps) {
+  const navigate = useNavigate();
   const { updateTask, isPending } = useUpdateTask();
 
   const [ref, { width }] = useMeasure();
@@ -108,24 +122,33 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
 
   const draggerStyle = {
     transform: CSS.Transform.toString(transform),
-    transition: "transform 0.1s ease-out",
+    transition: "transform 0.1s ",
   };
   const deleteStyle = transform
     ? {
         transform: `translate3d(${transform.x + width + ADDITION_WIDTH}px, ${
           transform.y
         }px, 0)`,
-        transition: "transform 0.1s ease-out",
+        transition: "transform 0.1s ",
       }
     : undefined;
 
-  function handleChecked() {
-    updateTask({
-      newTask: {
-        status: item.status === "completed" ? "incomplete" : "completed",
-      },
-      id: item.id,
-    });
+  function handleChecked(type: string = "status") {
+    if (type === "status") {
+      updateTask({
+        newTask: {
+          status: item.status === "completed" ? "incomplete" : "completed",
+        },
+        id: item.id,
+      });
+    } else {
+      updateTask({
+        newTask: {
+          priority: !item.priority,
+        },
+        id: item.id,
+      });
+    }
   }
 
   return (
@@ -141,14 +164,35 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
         {...listeners}
       >
         <StyledBox>
-          <StyledCircle onClick={handleChecked} $status={item.status}>
+          <StyledCircle
+            onClick={() => handleChecked("status")}
+            $status={item.status}
+          >
             {item.status !== "incomplete" && <HiOutlineCheckCircle />}
           </StyledCircle>
           <StyledTitle>{item.task_name}</StyledTitle>
         </StyledBox>
-        <Handle>
-          {item.status === "incomplete" && <PiDotsSixVerticalBold />}
-        </Handle>
+        {item.status === "incomplete" && (
+          <Menus.Menu>
+            <Menus.Toggle id={item.id} icon={<PiDotsSixVerticalBold />} />
+            <Menus.List id={item.id}>
+              <Menus.Button
+                icon={<HiPencil />}
+                onClick={() => {
+                  navigate(`createEditTask?q=${item.ListId}&task=${item.id}`);
+                }}
+              >
+                Edit
+              </Menus.Button>
+              <Menus.Button
+                icon={!item.priority ? <HiOutlineStar /> : <HiStar />}
+                onClick={() => handleChecked("priority")}
+              >
+                Favorite
+              </Menus.Button>
+            </Menus.List>
+          </Menus.Menu>
+        )}
       </StyledContainer>
       <DeleteContainer style={{ ...draggedItemStyle, ...deleteStyle }}>
         <HiTrash />

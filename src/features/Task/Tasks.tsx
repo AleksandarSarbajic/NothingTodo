@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import DraggableContainer from "./DraggableContainer";
+import Menus from "../../UI/Menus";
 
 const StyledTasks = styled.div`
   overflow: hidden;
@@ -12,9 +13,11 @@ const StyledTasks = styled.div`
 
 function Tasks() {
   return (
-    <StyledTasks>
-      <DraggableContainer />
-    </StyledTasks>
+    <Menus>
+      <StyledTasks>
+        <DraggableContainer />
+      </StyledTasks>
+    </Menus>
   );
 }
 
