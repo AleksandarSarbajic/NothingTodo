@@ -2,6 +2,7 @@ import styled from "styled-components";
 import TaskListItem from "../TaskList/TaskListItem";
 
 import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
+import useLoadFavorites from "../Favorite/useLoadFavorites";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -12,14 +13,16 @@ const StyledContainer = styled.div`
 `;
 
 function MainImportant() {
+  const { tasks = [] } = useLoadFavorites();
+
   return (
     <StyledContainer>
-      <TaskListItem>
+      <TaskListItem path={""} link={"favorites"}>
         <div>
           <HiOutlineStar />
-          <p>Important</p>
+          <p>Favorite</p>
         </div>
-        <span>1</span>
+        <span>{tasks.length}</span>
       </TaskListItem>
       <TaskListItem>
         <div>

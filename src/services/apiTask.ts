@@ -52,7 +52,22 @@ export async function getAllTasks() {
 
   return data;
 }
-export async function getTasks(id: number) {
+export async function getFavorites() {
+  const { data, error } = await supabase
+    .from("Tasks")
+    .select()
+    .eq("priority", true);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Favorite Tasks could not be loaded");
+  }
+
+  return data;
+}
+export async function getTasks(
+  id: number
+): Promise<Database["public"]["Tables"]["Tasks"]["Row"][]> {
   const { data, error } = await supabase
     .from("Tasks")
     .select()
@@ -63,7 +78,7 @@ export async function getTasks(id: number) {
     throw new Error("Tasks could not be loaded");
   }
 
-  return data;
+  return data as Database["public"]["Tables"]["Tasks"]["Row"][];
 }
 export async function deleteTask({
   id,

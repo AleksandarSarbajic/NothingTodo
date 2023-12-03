@@ -10,19 +10,24 @@ import {
 
 import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import Task from "./Task";
-import useLoadTasks from "./useLoadTasks";
+
 import useDeleteTask from "./useDeleteTask";
 import { ADDITION_WIDTH } from "../../utils/constants";
 import { useState } from "react";
 import { Database } from "../../services/supabase";
 import { useCloseMenus } from "../../UI/Menus";
+import EmptyTasks from "../../UI/EmptyTasks";
 
 interface ItemStyles {
   [itemId: number]: React.CSSProperties;
 }
 
-function DraggableContainer() {
-  const { tasks, isLoading } = useLoadTasks();
+interface PropsTypes {
+  tasks: Database["public"]["Tables"]["Tasks"]["Row"][];
+  isLoading: boolean;
+}
+
+function DraggableContainer({ tasks, isLoading }: PropsTypes) {
   const { deleteTask, isPending } = useDeleteTask();
   const { close } = useCloseMenus();
   const sensors = useSensors(
@@ -73,7 +78,19 @@ function DraggableContainer() {
     }
   }
 
+  function sortByEditedAt(
+    a: Database["public"]["Tables"]["Tasks"]["Row"],
+    b: Database["public"]["Tables"]["Tasks"]["Row"]
+  ) {
+    const dateA = a.edited_at ? new Date(a.edited_at).getTime() : 0;
+    const dateB = b.edited_at ? new Date(b.edited_at).getTime() : 0;
+
+    return dateB - dateA;
+  }
+
   if (isLoading || !tasks) return <p>Loading...</p>;
+
+  if (tasks.length === 0) return <EmptyTasks />;
 
   return (
     <DndContext
@@ -85,7 +102,9 @@ function DraggableContainer() {
     >
       {tasks
         ?.slice()
+        .sort(sortByEditedAt)
         .sort(sortByStatus)
+
         .map((item) => (
           <Task
             key={item.id}

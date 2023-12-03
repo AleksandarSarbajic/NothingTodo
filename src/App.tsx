@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import SignUpPage from "./pages/SignUpPage";
 import TaskListPage from "./pages/TaskListPage";
 import TaskPage from "./pages/TaskPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <MainPage />,
+      },
+      {
+        path: "/favorites",
+        element: <FavoritesPage />,
       },
       {
         path: "/:list",

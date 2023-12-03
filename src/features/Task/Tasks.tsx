@@ -1,22 +1,15 @@
-import styled from "styled-components";
-
 import DraggableContainer from "./DraggableContainer";
 import Menus from "../../UI/Menus";
-
-const StyledTasks = styled.div`
-  overflow: hidden;
-  display: flex;
-  gap: 3rem;
-  flex-direction: column;
-  margin: 3rem 0;
-`;
+import useLoadTasks from "./useLoadTasks";
+import TasksColumn from "../../UI/TasksColumn";
 
 function Tasks() {
+  const { tasks = [], isLoading } = useLoadTasks();
   return (
     <Menus>
-      <StyledTasks>
-        <DraggableContainer />
-      </StyledTasks>
+      <TasksColumn>
+        <DraggableContainer tasks={tasks} isLoading={isLoading} />
+      </TasksColumn>
     </Menus>
   );
 }

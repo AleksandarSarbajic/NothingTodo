@@ -26,6 +26,7 @@ interface TaskProps extends ItemProps {
 
 interface Status {
   $status?: string | null;
+  $priority?: boolean | null;
 }
 
 const CloseAnimation = keyframes`
@@ -48,7 +49,13 @@ const StyledContainer = styled.div<Status>`
   border-radius: var(--border-radius-md);
   background-color: var(--color-black-200);
   z-index: 2;
-
+  transition: all 0.3s;
+  ${(props) =>
+    props.$priority &&
+    css`
+      color: var(--color-grey-100);
+      background-color: var(--color-black-50);
+    `}
   ${(props) =>
     props.$status === "completed" &&
     css`
@@ -155,11 +162,15 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
     <Box>
       <StyledContainer
         $status={item.status}
+        $priority={item.priority}
         ref={(node) => {
           setNodeRef(node);
           ref(node!);
         }}
-        style={{ ...draggerStyle, ...draggedItemStyle }}
+        style={{
+          ...draggerStyle,
+          ...draggedItemStyle,
+        }}
         {...attributes}
         {...listeners}
       >

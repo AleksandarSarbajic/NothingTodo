@@ -64,6 +64,7 @@ function CreateEditTask() {
   //params
   const [useParams] = useSearchParams();
   const id = useParams.get("q");
+  const favorite = useParams.get("f");
   const navigate = useNavigate();
   // task
   const { task } = useLoadTask();
@@ -121,6 +122,13 @@ function CreateEditTask() {
       start_time: startTime ? format(startTime, "HH:mm") : null,
       end_time: endTime ? format(endTime, "HH:mm") : null,
       ListId: Number(id),
+      priority: task
+        ? task.priority
+        : favorite
+        ? false
+        : favorite === "true"
+        ? true
+        : false,
     };
     if (!task) {
       createTask(
