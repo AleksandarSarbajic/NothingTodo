@@ -150,8 +150,9 @@ li{
 
 select:disabled,
 input:disabled {
-  background-color: var(--color-grey-200);
-  color: var(--color-grey-500);
+  background-color: var(--color-black-100);
+  color: var(--color-grey-650);
+  cursor: not-allowed;
 }
 
 input:focus,

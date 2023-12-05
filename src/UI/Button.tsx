@@ -49,7 +49,7 @@ const StyledButton = styled.button<Style>`
   ${(props) =>
     props.$primary === "modal" &&
     css`
-      font-weight: 600;
+      font-weight: 500;
       background-color: var(--color-grey-700);
       padding: 1.2rem 1.8rem;
       border-radius: var(--border-radius-md);

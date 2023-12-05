@@ -21,7 +21,11 @@ function MainLayout() {
 
   return (
     <StledAppLayout>
-      <MainNav name={user?.user_metadata.userName} id={user?.id} />
+      <MainNav
+        name={user?.user_metadata.userName}
+        id={user?.id}
+        avatar={user?.user_metadata.avatar}
+      />
       <StyledHeader>
         <Heading as={"h1"}>What's up, {user?.user_metadata.userName}!</Heading>
       </StyledHeader>

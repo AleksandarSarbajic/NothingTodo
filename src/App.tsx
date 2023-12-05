@@ -16,6 +16,7 @@ import SignUpPage from "./pages/SignUpPage";
 import TaskListPage from "./pages/TaskListPage";
 import TaskPage from "./pages/TaskPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,9 +44,14 @@ const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
+        path: "/settings",
+        element: <SettingsPage />,
+      },
+      {
         path: "/favorites",
         element: <FavoritesPage />,
       },
+
       {
         path: "/:list",
         id: "list",

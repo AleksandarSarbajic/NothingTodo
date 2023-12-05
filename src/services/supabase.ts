@@ -17,6 +17,42 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      settings: {
+        Row: {
+          all: boolean;
+          completed: boolean;
+          created_at: string;
+          dueToday: boolean;
+          id: number;
+          newTaskOnTop: boolean;
+          planned: boolean;
+          primary: boolean;
+          primaryTaskOnTop: boolean;
+        };
+        Insert: {
+          all?: boolean;
+          completed?: boolean;
+          created_at?: string;
+          dueToday?: boolean;
+          id?: number;
+          newTaskOnTop?: boolean;
+          planned?: boolean;
+          primary?: boolean;
+          primaryTaskOnTop?: boolean;
+        };
+        Update: {
+          all?: boolean;
+          completed?: boolean;
+          created_at?: string;
+          dueToday?: boolean;
+          id?: number;
+          newTaskOnTop?: boolean;
+          planned?: boolean;
+          primary?: boolean;
+          primaryTaskOnTop?: boolean;
+        };
+        Relationships: [];
+      };
       "Task List": {
         Row: {
           created_at: string;

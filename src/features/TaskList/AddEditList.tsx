@@ -8,15 +8,9 @@ import useCreateList from "./useCreateList";
 import SpinnerMini from "../../UI/SpinnerMini";
 import useUpdateList from "./useUpdateList";
 import { toast } from "react-hot-toast";
+import ButtonRow from "../../UI/ButtonRow";
 
 const StyledAddList = styled.div``;
-
-const StyledButtonRow = styled.div`
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-end;
-  gap: 1.2rem;
-`;
 
 interface List {
   onCloseModal?: () => void;
@@ -78,7 +72,7 @@ function AddEditList({
             onChange={(e) => setListName(e.target.value)}
           />
         </FormRowVertical>
-        <StyledButtonRow>
+        <ButtonRow>
           <Button primary="modal" onClick={onCloseModal}>
             Cancel
           </Button>
@@ -96,7 +90,7 @@ function AddEditList({
               "Save"
             )}
           </Button>
-        </StyledButtonRow>
+        </ButtonRow>
       </form>
     </StyledAddList>
   );

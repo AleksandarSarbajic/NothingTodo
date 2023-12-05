@@ -14,6 +14,7 @@ import Logout from "./Logout";
 interface UserProps {
   name: string;
   id?: string;
+  avatar: string;
 }
 interface MobileProps {
   $open?: boolean;
@@ -86,8 +87,10 @@ const StyledHeader = styled.div`
   margin-bottom: 3.6rem;
 `;
 const StyledAvatar = styled.img`
-  width: 10rem;
+  width: 12rem;
+  height: 12rem;
   margin-bottom: 3rem;
+  border-radius: 50%;
 `;
 const StyledLink = styled(Link)`
   display: flex;
@@ -147,7 +150,7 @@ const Layout = styled.div<MobileProps>`
     `}
 `;
 
-function MainNav({ name }: UserProps) {
+function MainNav({ name, avatar }: UserProps) {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -169,7 +172,7 @@ function MainNav({ name }: UserProps) {
 
         <StyledMobileBox $open={isOpen}>
           <StyledHeader>
-            <StyledAvatar src="/profile-pic.png" />
+            <StyledAvatar src={avatar || "default-user.jpg"} />
             <Heading as="h3">{name}</Heading>
           </StyledHeader>
           <StyledList>
@@ -189,7 +192,7 @@ function MainNav({ name }: UserProps) {
               </StyledLink>
             </li>
             <li>
-              <StyledLink to={"/"}>
+              <StyledLink to={"/settings"}>
                 <HiOutlineCog6Tooth /> Settings
               </StyledLink>
             </li>
