@@ -4,6 +4,7 @@ import { useState } from "react";
 
 interface ToggleState {
   text: string;
+  state?: boolean;
 }
 
 const StyledRow = styled.li`
@@ -16,11 +17,11 @@ const StyledText = styled.p`
   font-weight: 500;
 `;
 
-function ToggleRow({ text }: ToggleState) {
-  const [isChecked, setChecked] = useState(false);
+function ToggleRow({ text, state }: ToggleState) {
+  const [isChecked, setChecked] = useState(state);
 
   const handleChange = () => {
-    setChecked(!isChecked);
+    setChecked((prevChecked) => !prevChecked);
   };
 
   return (

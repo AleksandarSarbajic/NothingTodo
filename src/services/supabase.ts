@@ -19,39 +19,50 @@ export interface Database {
     Tables: {
       settings: {
         Row: {
-          all: boolean;
-          completed: boolean;
+          all_lists: boolean;
+          completed_lists: boolean;
           created_at: string;
           dueToday: boolean;
           id: number;
           newTaskOnTop: boolean;
-          planned: boolean;
-          primary: boolean;
+          planned_lists: boolean;
+          primary_lists: boolean;
           primaryTaskOnTop: boolean;
+          user_id: string | null;
         };
         Insert: {
-          all?: boolean;
-          completed?: boolean;
+          all_lists?: boolean;
+          completed_lists?: boolean;
           created_at?: string;
           dueToday?: boolean;
           id?: number;
           newTaskOnTop?: boolean;
-          planned?: boolean;
-          primary?: boolean;
+          planned_lists?: boolean;
+          primary_lists?: boolean;
           primaryTaskOnTop?: boolean;
+          user_id?: string | null;
         };
         Update: {
-          all?: boolean;
-          completed?: boolean;
+          all_lists?: boolean;
+          completed_lists?: boolean;
           created_at?: string;
           dueToday?: boolean;
           id?: number;
           newTaskOnTop?: boolean;
-          planned?: boolean;
-          primary?: boolean;
+          planned_lists?: boolean;
+          primary_lists?: boolean;
           primaryTaskOnTop?: boolean;
+          user_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "settings_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       "Task List": {
         Row: {

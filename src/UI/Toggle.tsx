@@ -63,7 +63,7 @@ const Slider = styled.span<{ checked: boolean }>`
 `;
 
 interface ToggleProps {
-  checked: boolean;
+  checked?: boolean;
   onChange: () => void;
 }
 

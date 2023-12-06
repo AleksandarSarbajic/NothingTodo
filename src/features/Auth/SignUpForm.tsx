@@ -9,23 +9,37 @@ import LineThru from "../../UI/LineThru";
 
 import { useForm } from "react-hook-form";
 import useSignup from "./useSignup";
+import useCreateSettings from "../settings/useCreateSettings";
 
 interface Cred {
   userName: string;
   email: string;
   password: string;
 }
+interface User {
+  id: string;
+}
 
+interface Session {}
 function SignUpForm() {
   const { register, formState, handleSubmit, reset } = useForm<Cred>();
   const { errors } = formState;
   const { signup, isPending } = useSignup();
+  const { insertSettings, isPending: isCreating } = useCreateSettings();
 
   function onSubmitHandler({ userName, email, password }: Cred) {
     signup(
       { userName, email, password },
       {
-        onSettled: () => reset(),
+        onSettled: (
+          result: { user: User | null; session: Session | null } | undefined
+        ) => {
+          reset();
+
+          if (result?.user && result.user.id) {
+            insertSettings(result.user.id);
+          }
+        },
       }
     );
   }
@@ -84,7 +98,7 @@ function SignUpForm() {
       </FormRowVertical>
       <FormRowVertical>
         <Button primary="form" type="submit" cased={true}>
-          {!isPending ? "Sign up" : <SpinnerMini />}
+          {!isPending || !isCreating ? "Sign up" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
       <FormLink
