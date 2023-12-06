@@ -69,7 +69,7 @@ const StyledList = styled.ul<ListPostion>`
   max-width: 100%;
   position: fixed;
 
-  background-color: var(--color-grey-700);
+  background-color: var(--color-grey-750);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-sm);
   animation: ${ShowUp} 0.3s;

@@ -50,7 +50,7 @@ const StyledButton = styled.button<Style>`
     props.$primary === "modal" &&
     css`
       font-weight: 500;
-      background-color: var(--color-grey-700);
+      background-color: var(--color-grey-750);
       padding: 1.2rem 1.8rem;
       border-radius: var(--border-radius-md);
       color: var(--color-grey-100);
@@ -71,7 +71,7 @@ const StyledButton = styled.button<Style>`
       &:disabled {
         background-color: var(--color-black-200);
         color: var(--color-grey-600);
-        border: 1px solid var(--color-grey-700);
+        border: 1px solid var(--color-grey-750);
       }
     `}
   ${(props) =>

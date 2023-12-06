@@ -35,7 +35,7 @@ const StyledBox = styled.div`
 const Styledd = css`
   text-align: left;
   border: none;
-  background-color: var(--color-grey-700);
+  background-color: var(--color-grey-750);
   border-radius: var(--border-radius-md);
   padding: 1.4rem;
   box-shadow: var(--shadow-sm);

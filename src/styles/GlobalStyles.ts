@@ -14,7 +14,6 @@ const GlobalStyles = createGlobalStyle`
 
 
 
-
   /* Grey */
   --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
@@ -23,11 +22,16 @@ const GlobalStyles = createGlobalStyle`
   --color-grey-300: #c1c2c3;
   --color-grey-400: #a8adb3;
   --color-grey-500: #c1c7ce;
+  --color-grey-550: #8f9193;
   --color-grey-600: #434647;
   --color-grey-650: #585a5c;
-  --color-grey-700: #2e3133;
+  --color-grey-700: #454749;
+  --color-grey-750: #2e3133;
+ 
 
-  
+  --color-blue-50:  #6a7c8a;
+  --color-blue-200:#d2e5f4;
+  --color-blue-500: #c6e7ff;
 
   --color-black-50: #232426;
   --color-black-100: #1E2022ff;

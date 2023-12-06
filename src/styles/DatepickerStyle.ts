@@ -64,10 +64,10 @@ export const PickerStyles = css`
   .react-datepicker__quarter-text--disabled,
   .react-datepicker__year-text--disabled {
     cursor: not-allowed;
-    color: var(--color-grey-700) !important;
+    color: var(--color-grey-750) !important;
     @media (max-width: 400px), (max-height: 550px) {
       cursor: not-allowed;
-      color: var(--color-grey-700) !important;
+      color: var(--color-grey-750) !important;
     }
   }
 
@@ -163,7 +163,7 @@ export const PickerStyles = css`
   .react-datepicker__year-text--disabled:hover {
     cursor: not-allowed;
     color: var(--color-grey-200) !important;
-    color: var(--color-grey-700) !important;
+    color: var(--color-grey-750) !important;
     background-color: transparent !important;
   }
 `;

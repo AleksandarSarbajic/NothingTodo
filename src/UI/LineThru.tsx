@@ -5,7 +5,7 @@ const LineThru = styled.div<{ $margin: string }>`
   height: 1px;
 
   text-align: center;
-  background: var(--color-grey-300);
+  background: var(--color-grey-600);
   ${(props) =>
     props.$margin === "form" &&
     css`

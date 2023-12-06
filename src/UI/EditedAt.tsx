@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { formatDistanceFromNow } from "../utils/helpers";
 
 const StyledDate = styled.p`
-  color: var(--color-grey-700);
+  color: var(--color-grey-750);
   font-weight: 600;
   font-size: 1.8rem;
 `;

@@ -51,6 +51,11 @@ const Heading = styled.h1<HeadingProps>`
       font-size: 2.4rem;
     `}
     ${(props) =>
+    props.as === "h6" &&
+    css`
+      font-size: 2rem;
+    `}
+    ${(props) =>
     props.$caps &&
     css`
       text-transform: uppercase;

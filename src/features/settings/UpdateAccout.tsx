@@ -82,6 +82,7 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
               onChange={(e) => setFullName(e.target.value)}
             />
           </FormRowVertical>
+
           <FormRowVertical
             label="New password (min 8 chars)"
             error={errors?.password?.message?.toString()}
