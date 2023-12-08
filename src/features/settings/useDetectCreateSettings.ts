@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { detectCreateSettings } from "../../services/apiSettings";
 function useDetectCreateSettings() {
-  const queryCliet = useQueryClient();
+  const queryClient = useQueryClient();
   const { mutate: insertSettings, isPending } = useMutation({
     mutationFn: detectCreateSettings,
     onSuccess: (settings) => {
-      queryCliet.setQueryData(["settings"], settings);
+      queryClient.setQueryData(["settings"], settings);
     },
   });
 

@@ -36,33 +36,40 @@ export async function createSettings(id?: string | undefined) {
   return data;
 }
 export async function detectCreateSettings() {
-  const { data: userData, error: userError } = await supabase.auth.getUser();
+  try {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
 
-  if (userError) throw new Error(userError.message);
+    if (userError) {
+      throw new Error(`Error getting user data: ${userError.message}`);
+    }
 
-  const existingSettings = await supabase
-    .from("settings")
-    .select()
-    .eq("user_id", userData.user.id)
-    .single();
+    const existingSettings = await supabase
+      .from("settings")
+      .select()
+      .eq("user_id", userData.user.id)
+      .single();
 
-  if (existingSettings.data) {
-    return existingSettings.data;
+    if (existingSettings.data) {
+      return existingSettings.data;
+    }
+
+    const { data, error } = await supabase
+      .from("settings")
+      .insert([
+        { created_at: new Date().toISOString(), user_id: userData.user.id },
+      ])
+      .select();
+
+    if (error) {
+      console.error("Error creating settings:", error);
+      throw new Error("Settings could not be created");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+    throw error;
   }
-
-  const { data, error } = await supabase
-    .from("settings")
-    .insert([
-      { created_at: new Date().toISOString(), user_id: userData.user.id },
-    ])
-    .select();
-
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be created");
-  }
-
-  return data;
 }
 
 interface Settings {
