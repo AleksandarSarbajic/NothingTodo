@@ -42,7 +42,7 @@ export async function outhLogin({
   });
 
   if (error) throw new Error(error.message);
-
+  console.log(data);
   return data;
 }
 

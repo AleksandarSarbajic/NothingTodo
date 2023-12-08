@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useOuthLogin } from "../features/Auth/useOuthLogin";
 import { Provider } from "@supabase/supabase-js";
+// import useCreateSettings from "../features/settings/useCreateSettings";
 
 const StyledProviderItem = styled.button`
   display: flex;
@@ -30,18 +31,11 @@ function ProviderItem({
   provider: string;
 }) {
   const { login, isPending } = useOuthLogin();
-
+  // const { insertSettings } = useCreateSettings();
   function onOuthLoginHandler() {
     const convertedProvider: Provider = provider as Provider;
 
-    login(
-      { provider: convertedProvider },
-      {
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      }
-    );
+    login({ provider: convertedProvider });
   }
 
   return (
