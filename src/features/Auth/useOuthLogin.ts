@@ -12,6 +12,7 @@ export function useOuthLogin() {
     onSuccess: (user) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       queryClient.setQueryData(["user"], (user as any).user);
+      console.log(user);
       navigate("/dashboard", { replace: true });
     },
     onError: (err) => {
