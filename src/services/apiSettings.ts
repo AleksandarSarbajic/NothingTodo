@@ -22,10 +22,39 @@ export async function loadSettings(): Promise<
 }
 export async function createSettings(id?: string | undefined) {
   if (id === undefined) return null;
-  console.log("ree");
+
   const { data, error } = await supabase
     .from("settings")
     .insert([{ created_at: new Date().toISOString(), user_id: id }])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be created");
+  }
+
+  return data;
+}
+export async function detectCreateSettings() {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) throw new Error(userError.message);
+
+  const existingSettings = await supabase
+    .from("settings")
+    .select()
+    .eq("user_id", userData.user.id)
+    .single();
+
+  if (existingSettings.data) {
+    return existingSettings.data;
+  }
+
+  const { data, error } = await supabase
+    .from("settings")
+    .insert([
+      { created_at: new Date().toISOString(), user_id: userData.user.id },
+    ])
     .select();
 
   if (error) {

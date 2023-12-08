@@ -11,13 +11,23 @@ import { useUser } from "../Auth/useUser";
 import Modal from "../../UI/Modal";
 import AddEditList from "../TaskList/AddEditList";
 import MainNav from "../../UI/MainNav";
+import useDetectCreateSettings from "../settings/useDetectCreateSettings";
+import { useEffect } from "react";
 
 const StledAppLayout = styled.div`
   max-height: 100dvh;
 `;
 
 function MainLayout() {
+  const { insertSettings, isPending } = useDetectCreateSettings();
+
+  useEffect(() => {
+    insertSettings();
+  }, [insertSettings]);
+
   const { user } = useUser();
+
+  if (isPending) return <p>loading...</p>;
 
   return (
     <StledAppLayout>
