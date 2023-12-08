@@ -25,6 +25,7 @@ function MainLayout() {
     const fetchData = async () => {
       try {
         await insertSettings();
+        window.location.reload();
       } catch (error) {
         console.error("Error inserting settings:", error);
       }
