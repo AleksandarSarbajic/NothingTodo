@@ -18,7 +18,11 @@ function TaskListLayout() {
   return (
     <TaskLayout list={list?.[0]}>
       <StyledHeader $use="list">
-        <Heading as="h2">{list?.[0].list_name}</Heading>
+        <Heading as="h2">
+          {list?.[0].list_name.length < 55
+            ? list?.[0].list_name
+            : `${list?.[0].list_name.slice(0, 55)}...`}
+        </Heading>
       </StyledHeader>
       <EditedAt date={list?.[0].edited_at} />
       <Tasks />

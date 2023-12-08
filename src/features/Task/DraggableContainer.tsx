@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Database } from "../../services/supabase";
 import { useCloseMenus } from "../../UI/Menus";
 import EmptyTasks from "../../UI/EmptyTasks";
+import useLoadSettings from "../settings/useLoadSettings";
 
 interface ItemStyles {
   [itemId: number]: React.CSSProperties;
@@ -28,6 +29,7 @@ interface PropsTypes {
 }
 
 function DraggableContainer({ tasks, isLoading }: PropsTypes) {
+  const { settings } = useLoadSettings();
   const { deleteTask, isPending } = useDeleteTask();
   const { close } = useCloseMenus();
   const sensors = useSensors(
@@ -84,8 +86,19 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
   ) {
     const dateA = a.edited_at ? new Date(a.edited_at).getTime() : 0;
     const dateB = b.edited_at ? new Date(b.edited_at).getTime() : 0;
+    if (settings?.newTaskOnTop) return dateB - dateA;
 
-    return dateB - dateA;
+    return dateA - dateB;
+  }
+
+  function sortByPriority(
+    a: Database["public"]["Tables"]["Tasks"]["Row"],
+    b: Database["public"]["Tables"]["Tasks"]["Row"]
+  ) {
+    if (settings?.primaryTaskOnTop)
+      return a.priority === b.priority ? 0 : a.priority ? -1 : 1;
+
+    return a.priority === b.priority ? 0 : a.priority ? 1 : -1;
   }
 
   if (isLoading || !tasks) return <p>Loading...</p>;
@@ -103,6 +116,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
       {tasks
         ?.slice()
         .sort(sortByEditedAt)
+        .sort(sortByPriority)
         .sort(sortByStatus)
 
         .map((item) => (

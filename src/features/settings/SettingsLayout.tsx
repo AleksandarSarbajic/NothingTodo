@@ -24,7 +24,7 @@ const StyledGeneralSettings = styled.ul`
 
 function SettingsLayout() {
   const { user } = useUser();
-  const { settings = [], isLoading } = useLoadSettings(user?.id);
+  const { settings = [], isLoading } = useLoadSettings();
 
   const filterKeys = (targetWord: string) =>
     Object.entries(settings)
@@ -47,6 +47,8 @@ function SettingsLayout() {
         {filterKeys("Task").map((item, i) => {
           return (
             <ToggleRow
+              id={user?.id}
+              type={item.key}
               key={item.key}
               state={item.value as boolean}
               text={generalArray[i]}
@@ -55,10 +57,15 @@ function SettingsLayout() {
         })}
       </StyledGeneralSettings>
       <LineThru $margin={"form"} />
+      <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>
+        Smart Lists
+      </Heading>
       <StyledGeneralSettings>
         {[...filterKeys("lists")].map((item, i) => {
           return (
             <ToggleRow
+              id={user?.id}
+              type={item.key}
               state={item.value as boolean}
               key={item.key}
               text={listsArray[i]}

@@ -8,6 +8,7 @@ import Form from "../../UI/Form";
 import FormLink from "../../UI/FormLink";
 import LineThru from "../../UI/LineThru";
 import { useForm } from "react-hook-form";
+import ProviderRow from "../../UI/ProviderRow";
 
 interface FormData {
   email: string;
@@ -30,6 +31,10 @@ function LoginForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
+      <ProviderRow />
+
+      <LineThru $margin={"form"} />
+
       <FormRowVertical
         label="Email address"
         error={errors?.email?.message?.toString()}

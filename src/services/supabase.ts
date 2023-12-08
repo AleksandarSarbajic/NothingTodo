@@ -22,7 +22,7 @@ export interface Database {
           all_lists: boolean;
           completed_lists: boolean;
           created_at: string;
-          dueToday: boolean;
+          dueTodayTask: boolean;
           id: number;
           newTaskOnTop: boolean;
           planned_lists: boolean;
@@ -34,7 +34,7 @@ export interface Database {
           all_lists?: boolean;
           completed_lists?: boolean;
           created_at?: string;
-          dueToday?: boolean;
+          dueTodayTask?: boolean;
           id?: number;
           newTaskOnTop?: boolean;
           planned_lists?: boolean;
@@ -46,7 +46,7 @@ export interface Database {
           all_lists?: boolean;
           completed_lists?: boolean;
           created_at?: string;
-          dueToday?: boolean;
+          dueTodayTask?: boolean;
           id?: number;
           newTaskOnTop?: boolean;
           planned_lists?: boolean;

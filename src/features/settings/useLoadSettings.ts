@@ -8,7 +8,7 @@ function useLoadSettings(id?: string) {
     error,
   } = useQuery({
     queryKey: ["settings", id],
-    queryFn: () => loadSettings(id),
+    queryFn: loadSettings,
   });
 
   if (error) throw new Error(error.message);

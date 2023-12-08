@@ -65,12 +65,18 @@ const Slider = styled.span<{ checked: boolean }>`
 interface ToggleProps {
   checked?: boolean;
   onChange: () => void;
+  disabled: boolean;
 }
 
-function Toggle({ checked = true, onChange }: ToggleProps) {
+function Toggle({ checked = true, onChange, disabled }: ToggleProps) {
   return (
     <ToggleLabel>
-      <ToggleInput type="checkbox" checked={checked} onChange={onChange} />
+      <ToggleInput
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+      />
       <Slider checked={checked} />
     </ToggleLabel>
   );

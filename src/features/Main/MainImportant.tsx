@@ -2,7 +2,9 @@ import styled from "styled-components";
 import TaskListItem from "../TaskList/TaskListItem";
 
 import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
-import useLoadFavorites from "../Favorite/useLoadFavorites";
+import { PiInfinity } from "react-icons/pi";
+import useLoadSettings from "../settings/useLoadSettings";
+import useLoadAllTasks from "../Task/useLoadAllTasks";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -13,31 +15,48 @@ const StyledContainer = styled.div`
 `;
 
 function MainImportant() {
-  const { tasks = [] } = useLoadFavorites();
-
+  const { settings } = useLoadSettings();
+  const { tasks = [] } = useLoadAllTasks();
   return (
     <StyledContainer>
-      <TaskListItem path={""} link={"favorites"}>
-        <div>
-          <HiOutlineStar />
-          <p>Favorite</p>
-        </div>
-        <span>{tasks.length}</span>
-      </TaskListItem>
-      <TaskListItem>
-        <div>
-          <HiOutlineCalendarDays />
-          <p>Planned</p>
-        </div>
-        <span>69</span>
-      </TaskListItem>
-      <TaskListItem>
-        <div>
-          <HiCheck />
-          <p>TaskList</p>
-        </div>
-        <span>834</span>
-      </TaskListItem>
+      {settings?.all_lists && (
+        <TaskListItem path={""} link={"favorites"}>
+          <div>
+            <PiInfinity />
+            <p>All</p>
+          </div>
+          <span>{tasks.length}</span>
+        </TaskListItem>
+      )}
+      {settings?.primary_lists && (
+        <TaskListItem path={""} link={"favorites"}>
+          <div>
+            <HiOutlineStar />
+            <p>Favorite</p>
+          </div>
+          <span> {tasks.filter((item) => item.priority).length}</span>
+        </TaskListItem>
+      )}
+      {settings?.planned_lists && (
+        <TaskListItem>
+          <div>
+            <HiOutlineCalendarDays />
+            <p>Planned</p>
+          </div>
+          <span>69</span>
+        </TaskListItem>
+      )}
+      {settings?.completed_lists && (
+        <TaskListItem>
+          <div>
+            <HiCheck />
+            <p>Completed</p>
+          </div>
+          <span>
+            {tasks.filter((item) => item.status === "completed").length}
+          </span>
+        </TaskListItem>
+      )}
     </StyledContainer>
   );
 }

@@ -37,6 +37,7 @@ function TaskList() {
             <TaskListItem key={task.id} path="list_" link={task.id}>
               <div>
                 <HiListBullet />
+
                 <p>{task.list_name}</p>
               </div>
               <span>

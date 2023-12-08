@@ -67,10 +67,12 @@ const StyledContainer = styled.div<Status>`
 `;
 
 const StyledCircle = styled.button<Status>`
+  min-width: 4rem;
   width: 4rem;
   ${(props) =>
     props.$status === "incomplete" &&
     css`
+      min-width: 4rem;
       width: 4rem;
       height: 4rem;
       border-radius: 50%;
@@ -78,6 +80,7 @@ const StyledCircle = styled.button<Status>`
     `}
 
   & svg {
+    min-width: 4rem;
     width: 4rem;
     height: 4rem;
   }
@@ -87,10 +90,15 @@ const StyledBox = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  overflow: hidden;
+  height: 4rem;
 `;
 
 const StyledTitle = styled.p`
   font-size: 1.8rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const DeleteContainer = styled.div`
@@ -105,6 +113,7 @@ const DeleteContainer = styled.div`
   padding: 3rem 2.5rem;
   border-radius: 2rem;
   & svg {
+    min-width: 3rem;
     width: 3rem;
     height: 3rem;
   }
@@ -199,7 +208,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
                 icon={!item.priority ? <HiOutlineStar /> : <HiStar />}
                 onClick={() => handleChecked("priority")}
               >
-                Favorite
+                {!item.priority ? "Favorite" : "Unfavorite"}
               </Menus.Button>
             </Menus.List>
           </Menus.Menu>

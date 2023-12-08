@@ -1,3 +1,4 @@
+import { Provider } from "@supabase/supabase-js";
 import supabase, { supabaseUrl } from "./supabase";
 
 interface Credidentials {
@@ -24,6 +25,16 @@ export async function login({ email, password }: Credidentials) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
+export async function outhLogin(provider: Provider = "google") {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: provider,
   });
 
   if (error) throw new Error(error.message);
