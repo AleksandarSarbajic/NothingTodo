@@ -41,7 +41,7 @@ function ProviderItem({
     <StyledProviderItem
       type="button"
       onClick={onOuthLoginHandler}
-      disabled={isPending || isCreating}
+      disabled={isPending}
     >
       <StyledIconBox>{icon}</StyledIconBox>
     </StyledProviderItem>
