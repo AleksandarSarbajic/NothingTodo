@@ -91,6 +91,7 @@ const StyledAvatar = styled.img`
   height: 12rem;
   margin-bottom: 3rem;
   border-radius: 50%;
+  object-fit: cover;
 `;
 const StyledLink = styled(Link)`
   display: flex;

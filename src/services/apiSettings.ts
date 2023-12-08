@@ -23,6 +23,15 @@ export async function loadSettings(): Promise<
 export async function createSettings(id?: string | undefined) {
   if (id === undefined) return null;
 
+  const { data: userData } = await supabase
+    .from("settings")
+    .select()
+    .eq("user_id", id);
+
+  if (userData && userData.length > 0) {
+    return null;
+  }
+
   const { data, error } = await supabase
     .from("settings")
     .insert([{ created_at: new Date().toISOString(), user_id: id }])

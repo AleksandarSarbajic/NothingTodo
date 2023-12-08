@@ -42,7 +42,7 @@ export async function outhLogin({
   });
 
   if (error) throw new Error(error.message);
-  console.log(data);
+
   return data;
 }
 
@@ -107,6 +107,7 @@ export async function updateUserAvatar({ avatar }: Update) {
   const { data: updatedUser, error: error2 } = await supabase.auth.updateUser({
     data: {
       avatar_url: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
+      profile_picture: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
     },
   });
 

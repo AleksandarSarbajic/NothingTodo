@@ -15,8 +15,11 @@ const StyledContainer = styled.div`
 `;
 
 function MainImportant() {
-  const { settings } = useLoadSettings();
+  const { settings, isLoading } = useLoadSettings();
   const { tasks = [] } = useLoadAllTasks();
+
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <StyledContainer>
       {settings?.all_lists && (

@@ -11,20 +11,39 @@ import { useUser } from "../Auth/useUser";
 import Modal from "../../UI/Modal";
 import AddEditList from "../TaskList/AddEditList";
 import MainNav from "../../UI/MainNav";
+import { useEffect } from "react";
+import useCreateSettings from "../settings/useCreateSettings";
+import Spinner from "../../UI/Spinner";
 
-const StledAppLayout = styled.div`
+const StyledAppLayout = styled.div`
   max-height: 100dvh;
 `;
 
 function MainLayout() {
   const { user } = useUser();
+  const { insertSettings, isPending } = useCreateSettings();
+  console.log(user);
+  useEffect(() => {
+    insertSettings(user?.id);
+  });
+
+  if (!isPending)
+    return (
+      <StyledAppLayout>
+        <Spinner />
+      </StyledAppLayout>
+    );
 
   return (
-    <StledAppLayout>
+    <StyledAppLayout>
       <MainNav
         name={user?.user_metadata.full_name}
         id={user?.id}
-        avatar={user?.user_metadata.avatar_url}
+        avatar={
+          user?.user_metadata.profile_picture
+            ? user?.user_metadata.profile_picture
+            : user?.user_metadata.avatar_url
+        }
       />
       <StyledHeader>
         <Heading as={"h1"}>What's up, {user?.user_metadata.full_name}!</Heading>
@@ -41,7 +60,7 @@ function MainLayout() {
           <AddEditList />
         </Modal.Window>
       </Modal>
-    </StledAppLayout>
+    </StyledAppLayout>
   );
 }
 
