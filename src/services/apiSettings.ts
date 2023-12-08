@@ -50,7 +50,7 @@ export async function detectCreateSettings() {
       .single();
 
     if (existingSettings.data) {
-      return existingSettings.data;
+      return null;
     }
 
     const { data, error } = await supabase

@@ -23,7 +23,7 @@ function MainLayout() {
 
   useEffect(() => {
     insertSettings();
-  }, [insertSettings]);
+  }, [insertSettings, isPending]);
 
   const { user } = useUser();
 
