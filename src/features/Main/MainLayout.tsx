@@ -22,16 +22,7 @@ function MainLayout() {
   const { insertSettings, isPending } = useDetectCreateSettings();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await insertSettings();
-        window.location.reload();
-      } catch (error) {
-        console.error("Error inserting settings:", error);
-      }
-    };
-
-    fetchData();
+    insertSettings();
   }, [insertSettings]);
 
   const { user } = useUser();
