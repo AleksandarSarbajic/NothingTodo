@@ -34,7 +34,14 @@ function ProviderItem({
   function onOuthLoginHandler() {
     const convertedProvider: Provider = provider as Provider;
 
-    login({ provider: convertedProvider });
+    login(
+      { provider: convertedProvider },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      }
+    );
   }
 
   return (
