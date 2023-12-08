@@ -31,13 +31,12 @@ function SignUpForm() {
     signup(
       { userName, email, password },
       {
-        onSettled: (
+        onSuccess: (
           result: { user: User | null; session: Session | null } | undefined
         ) => {
-          reset();
-
           if (result?.user && result.user.id) {
             insertSettings(result.user.id);
+            reset();
           }
         },
       }

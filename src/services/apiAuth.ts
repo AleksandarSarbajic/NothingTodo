@@ -12,7 +12,7 @@ export async function signUp({ userName, email, password }: Credidentials) {
     email,
     password,
     options: {
-      data: { userName, avatar: "" },
+      data: { full_name: userName, avatar_url: "" },
     },
   });
 
@@ -32,7 +32,11 @@ export async function login({ email, password }: Credidentials) {
   return data;
 }
 
-export async function outhLogin(provider: Provider = "google") {
+export async function outhLogin({
+  provider = "google",
+}: {
+  provider: Provider;
+}) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: provider,
   });
@@ -102,7 +106,7 @@ export async function updateUserAvatar({ avatar }: Update) {
 
   const { data: updatedUser, error: error2 } = await supabase.auth.updateUser({
     data: {
-      avatar: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
+      avatar_url: `${supabaseUrl}/storage/v1/object/public/avatars/${fileName}`,
     },
   });
 

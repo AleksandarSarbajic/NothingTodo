@@ -36,8 +36,8 @@ function SettingsLayout() {
     <>
       <UpdateAccout
         email={user?.email}
-        fullName={user?.user_metadata.userName}
-        avatar={user?.user_metadata.avatar}
+        fullName={user?.user_metadata.full_name}
+        avatar={user?.user_metadata.avatar_url}
       />
       <LineThru $margin={"form"} />
       <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>

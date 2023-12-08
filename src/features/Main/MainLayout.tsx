@@ -18,16 +18,16 @@ const StledAppLayout = styled.div`
 
 function MainLayout() {
   const { user } = useUser();
-  console.log(user);
+
   return (
     <StledAppLayout>
       <MainNav
-        name={user?.user_metadata.userName}
+        name={user?.user_metadata.full_name}
         id={user?.id}
-        avatar={user?.user_metadata.avatar}
+        avatar={user?.user_metadata.avatar_url}
       />
       <StyledHeader>
-        <Heading as={"h1"}>What's up, {user?.user_metadata.userName}!</Heading>
+        <Heading as={"h1"}>What's up, {user?.user_metadata.full_name}!</Heading>
       </StyledHeader>
       <MainImportant />
       <TaskList />
