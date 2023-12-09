@@ -113,7 +113,6 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       modifiers={[restrictToHorizontalAxis]}
-      autoScroll={false}
     >
       {tasks
         ?.slice()
