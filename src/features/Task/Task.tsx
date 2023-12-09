@@ -122,6 +122,7 @@ const DeleteContainer = styled.div`
 const Box = styled.div`
   position: relative;
 `;
+
 function Task({ item, disabled, draggedItemStyle }: TaskProps) {
   const navigate = useNavigate();
   const { updateTask, isPending } = useUpdateTask();

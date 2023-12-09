@@ -5,6 +5,7 @@ import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
 import { PiInfinity } from "react-icons/pi";
 import useLoadSettings from "../settings/useLoadSettings";
 import useLoadAllTasks from "../Task/useLoadAllTasks";
+import ThreeDotsLoading from "../../UI/ThreeDotsLoading";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -16,14 +17,14 @@ const StyledContainer = styled.div`
 
 function MainImportant() {
   const { settings, isLoading } = useLoadSettings();
-  const { tasks = [] } = useLoadAllTasks();
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || isLoadingTasks) return <ThreeDotsLoading alone={true} />;
 
   return (
     <StyledContainer>
       {settings?.all_lists && (
-        <TaskListItem path={""} link={"favorites"}>
+        <TaskListItem path={""} link={"allTasks"}>
           <div>
             <PiInfinity />
             <p>All</p>
@@ -50,7 +51,7 @@ function MainImportant() {
         </TaskListItem>
       )}
       {settings?.completed_lists && (
-        <TaskListItem>
+        <TaskListItem path={""} link={"completed"}>
           <div>
             <HiCheck />
             <p>Completed</p>

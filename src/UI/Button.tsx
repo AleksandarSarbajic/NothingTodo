@@ -27,6 +27,7 @@ const StyledButton = styled.button<Style>`
       padding: 2.4rem;
       border-radius: var(--border-radius-md--2);
       color: var(--color-grey-100);
+      z-index: 3;
       svg {
         width: 3.6rem;
         height: 3.6rem;

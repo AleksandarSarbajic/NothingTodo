@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import FormRowVertical from "../../UI/FormRowVertical";
 import Input from "../../UI/Input";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import TextArea from "../../UI/TextArea";
 import Button from "../../UI/Button";
 import ReactDatePicker from "react-datepicker";
@@ -26,13 +26,27 @@ interface FormData {
   category: string;
 }
 
+const slideIn = keyframes`
+0%{
+  opacity:0;
+  transform: translateX(15%);
+}
+100%{
+  opacity:1;
+  transform: translateX(0%);
+}
+`;
+const StyledForm = styled.form`
+  margin-top: 2rem;
+  animation: ${slideIn} 0.5s;
+`;
 const StyledBox = styled.div`
   display: flex;
   gap: 4rem;
   height: 12.5rem;
 `;
 
-const Styledd = css`
+const StyledProps = css`
   text-align: left;
   border: none;
   background-color: var(--color-grey-750);
@@ -47,17 +61,13 @@ const Styledd = css`
 `;
 
 const StyledInput = styled.button`
-  ${Styledd}
+  ${StyledProps}
   width: 100%;
 `;
 
 const StyledPicker = styled(ReactDatePicker)`
-  ${Styledd}
+  ${StyledProps}
   width: 100%;
-`;
-
-const StyledForm = styled.form`
-  margin-top: 2rem;
 `;
 
 function CreateEditTask() {
@@ -65,6 +75,7 @@ function CreateEditTask() {
   const [useParams] = useSearchParams();
   const id = useParams.get("q");
   const favorite = useParams.get("f");
+  const status = useParams.get("c");
   const navigate = useNavigate();
   // task
   const { task } = useLoadTask();
@@ -122,9 +133,16 @@ function CreateEditTask() {
       start_time: startTime ? format(startTime, "HH:mm") : null,
       end_time: endTime ? format(endTime, "HH:mm") : null,
       ListId: Number(id),
+      status: task
+        ? task.status
+        : status === "false"
+        ? "incomplete"
+        : status === "true"
+        ? "completed"
+        : "incomplete",
       priority: task
         ? task.priority
-        : favorite
+        : favorite === "false"
         ? false
         : favorite === "true"
         ? true

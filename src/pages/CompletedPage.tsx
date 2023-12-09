@@ -1,9 +1,10 @@
 import GeneralTasksLayout from "../features/General/GeneralTasksLayout";
-import useLoadFavorites from "../features/General/useLoadFavorites";
+import useLoadCompleted from "../features/General/useLoadCompleted";
+
 import useLoadList from "../features/TaskList/useLoadList";
 
-function FavoritesPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadFavorites();
+function CompletedPage() {
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadCompleted();
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (
@@ -12,11 +13,11 @@ function FavoritesPage() {
       taskList={taskList}
       isLoadingList={isLoadingList}
       isLoadingTasks={isLoadingTasks}
-      name={"Favorites"}
-      id={"favorite"}
-      query={"f"}
+      name={"Completed Tasks"}
+      id={"completed"}
+      query="c"
     />
   );
 }
 
-export default FavoritesPage;
+export default CompletedPage;

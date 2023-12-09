@@ -13,7 +13,6 @@ import AddEditList from "../TaskList/AddEditList";
 import MainNav from "../../UI/MainNav";
 import { useEffect } from "react";
 import useCreateSettings from "../settings/useCreateSettings";
-import Spinner from "../../UI/Spinner";
 
 const StyledAppLayout = styled.div`
   max-height: 100dvh;
@@ -21,23 +20,19 @@ const StyledAppLayout = styled.div`
 
 function MainLayout() {
   const { user } = useUser();
-  const { insertSettings, isPending } = useCreateSettings();
-  console.log(user);
+  const { insertSettings } = useCreateSettings();
+  const userName = user?.user_metadata.userName
+    ? user?.user_metadata.userName
+    : user?.user_metadata.full_name;
+
   useEffect(() => {
     insertSettings(user?.id);
   });
 
-  if (!isPending)
-    return (
-      <StyledAppLayout>
-        <Spinner />
-      </StyledAppLayout>
-    );
-
   return (
     <StyledAppLayout>
       <MainNav
-        name={user?.user_metadata.full_name}
+        name={userName}
         id={user?.id}
         avatar={
           user?.user_metadata.profile_picture
@@ -46,7 +41,7 @@ function MainLayout() {
         }
       />
       <StyledHeader>
-        <Heading as={"h1"}>What's up, {user?.user_metadata.full_name}!</Heading>
+        <Heading as={"h1"}>What's up, {userName}!</Heading>
       </StyledHeader>
       <MainImportant />
       <TaskList />

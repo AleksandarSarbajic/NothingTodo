@@ -36,7 +36,11 @@ function SettingsLayout() {
     <>
       <UpdateAccout
         email={user?.email}
-        fullName={user?.user_metadata.full_name}
+        fullName={
+          user?.user_metadata.userName
+            ? user?.user_metadata.userName
+            : user?.user_metadata.full_name
+        }
         avatar={
           user?.user_metadata.profile_picture
             ? user?.user_metadata.profile_picture

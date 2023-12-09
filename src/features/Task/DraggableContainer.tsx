@@ -1,3 +1,4 @@
+import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import {
   DndContext,
   closestCenter,
@@ -8,7 +9,6 @@ import {
   DragEndEvent,
 } from "@dnd-kit/core";
 
-import { restrictToHorizontalAxis } from "@dnd-kit/modifiers";
 import Task from "./Task";
 
 import useDeleteTask from "./useDeleteTask";
@@ -18,6 +18,7 @@ import { Database } from "../../services/supabase";
 import { useCloseMenus } from "../../UI/Menus";
 import EmptyTasks from "../../UI/EmptyTasks";
 import useLoadSettings from "../settings/useLoadSettings";
+import ThreeDotsLoading from "../../UI/ThreeDotsLoading";
 
 interface ItemStyles {
   [itemId: number]: React.CSSProperties;
@@ -35,7 +36,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
   const sensors = useSensors(
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
+        delay: 0,
         distance: 10,
       },
     }),
@@ -101,7 +102,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
     return a.priority === b.priority ? 0 : a.priority ? 1 : -1;
   }
 
-  if (isLoading || !tasks) return <p>Loading...</p>;
+  if (isLoading || !tasks) return <ThreeDotsLoading alone={true} />;
 
   if (tasks.length === 0) return <EmptyTasks />;
 
@@ -112,6 +113,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       modifiers={[restrictToHorizontalAxis]}
+      autoScroll={false}
     >
       {tasks
         ?.slice()

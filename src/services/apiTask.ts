@@ -65,6 +65,19 @@ export async function getFavorites() {
 
   return data;
 }
+export async function getCompleted() {
+  const { data, error } = await supabase
+    .from("Tasks")
+    .select()
+    .eq("status", "completed");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Favorite Tasks could not be loaded");
+  }
+
+  return data;
+}
 export async function getTasks(
   id: number
 ): Promise<Database["public"]["Tables"]["Tasks"]["Row"][]> {
