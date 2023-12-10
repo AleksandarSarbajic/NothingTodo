@@ -16,6 +16,7 @@ import { useMeasure } from "react-use";
 import useUpdateTask from "./useUpdateTask";
 import Menus from "../../UI/Menus";
 import { useNavigate } from "react-router-dom";
+import { compareTimes, isSameAsCurrentDate } from "../../utils/helpers";
 interface ItemProps {
   item: Database["public"]["Tables"]["Tasks"]["Row"];
   disabled: boolean;
@@ -27,6 +28,7 @@ interface TaskProps extends ItemProps {
 interface Status {
   $status?: string | null;
   $priority?: boolean | null;
+  $timeHasPassed?: boolean | null;
 }
 
 const CloseAnimation = keyframes`
@@ -55,6 +57,13 @@ const StyledContainer = styled.div<Status>`
     css`
       color: var(--color-grey-100);
       background-color: var(--color-black-50);
+    `}
+  ${(props) =>
+    props.$timeHasPassed &&
+    css`
+      color: var(--color-grey-300);
+      background-color: rgba(153, 27, 27, 0.3);
+      text-decoration: line-through;
     `}
   ${(props) =>
     props.$status === "completed" &&
@@ -168,11 +177,20 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
     }
   }
 
+  const comparedDates = isSameAsCurrentDate(item.due_date);
+  const comparedTimes = compareTimes(item.end_time) === -1 ? true : false;
   return (
     <Box>
       <StyledContainer
         $status={item.status}
         $priority={item.priority}
+        $timeHasPassed={
+          item.due_date && item.end_time
+            ? comparedDates
+              ? comparedTimes
+              : false
+            : false
+        }
         ref={(node) => {
           setNodeRef(node);
           ref(node!);

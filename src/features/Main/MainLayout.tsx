@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import MainImportant from "./MainImportant";
 import TaskList from "../TaskList/TaskList";
 
@@ -14,10 +13,6 @@ import MainNav from "../../UI/MainNav";
 import { useEffect } from "react";
 import useCreateSettings from "../settings/useCreateSettings";
 
-const StyledAppLayout = styled.div`
-  max-height: 100dvh;
-`;
-
 function MainLayout() {
   const { user } = useUser();
   const { insertSettings } = useCreateSettings();
@@ -30,7 +25,7 @@ function MainLayout() {
   });
 
   return (
-    <StyledAppLayout>
+    <div>
       <MainNav
         name={userName}
         id={user?.id}
@@ -55,7 +50,7 @@ function MainLayout() {
           <AddEditList />
         </Modal.Window>
       </Modal>
-    </StyledAppLayout>
+    </div>
   );
 }
 

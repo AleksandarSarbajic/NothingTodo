@@ -78,7 +78,7 @@ function CreateEditTask() {
   const status = useParams.get("c");
   const navigate = useNavigate();
   // task
-  const { task } = useLoadTask();
+  const { task, isLoading: isLoadingTask } = useLoadTask();
   const { updateTask, isPending: isUpdating } = useUpdateTask();
   const { updateList } = useUpdateList(Number(id));
   const { createTask, isPending: isCreating } = useCreateTask();
@@ -94,18 +94,6 @@ function CreateEditTask() {
 
   const { errors } = formState;
 
-  useEffect(() => {
-    if (task) {
-      const { task_name, description, category } = task;
-
-      reset({
-        task_name: task_name || undefined,
-        description: description || undefined,
-        category: category || undefined,
-      });
-    }
-  }, [task, reset]);
-
   const [startDate, setStartDate] = useState<Date | null | undefined>(
     task?.due_date ? new Date(task?.due_date) : null
   );
@@ -116,6 +104,20 @@ function CreateEditTask() {
     task?.end_time ? formatTimeToDate(task?.end_time) : null
   );
 
+  useEffect(() => {
+    if (task) {
+      const { task_name, description, category } = task;
+      reset({
+        task_name: task_name || undefined,
+        description: description || undefined,
+        category: category || undefined,
+      });
+      setStartDate(task.due_date ? new Date(task.due_date) : null);
+      setStartTime(task.start_time ? formatTimeToDate(task.start_time) : null);
+      setEndTime(task.end_time ? formatTimeToDate(task.end_time) : null);
+    }
+  }, [task, reset]);
+
   function onSubmitHandler({ task_name, description, category }: FormData) {
     const newTask = {
       task_name,
@@ -123,6 +125,13 @@ function CreateEditTask() {
       category,
       due_date: startDate
         ? set(startDate, {
+            hours: 23,
+            minutes: 59,
+            seconds: 59,
+            milliseconds: 999,
+          }).toISOString()
+        : task?.due_date
+        ? set(new Date(task?.due_date), {
             hours: 23,
             minutes: 59,
             seconds: 59,
@@ -262,7 +271,11 @@ function CreateEditTask() {
       </FormRowVertical>
       <FormRowVertical>
         <Button primary="form" type="submit" disabled={isCreating}>
-          {!isCreating || !isUpdating ? "Create a new task" : <SpinnerMini />}
+          {!isCreating || !isUpdating || !isLoadingTask ? (
+            "Create a new task"
+          ) : (
+            <SpinnerMini />
+          )}
         </Button>
       </FormRowVertical>
     </StyledForm>

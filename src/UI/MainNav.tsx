@@ -10,6 +10,7 @@ import {
 import Search from "./Search";
 import { useEffect, useState } from "react";
 import Logout from "./Logout";
+import NavProgressBar from "./NavProgressBar";
 
 interface UserProps {
   name: string;
@@ -151,6 +152,10 @@ const Layout = styled.div<MobileProps>`
     `}
 `;
 
+const AvatarBox = styled.div`
+  position: relative;
+`;
+
 function MainNav({ name, avatar }: UserProps) {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -165,7 +170,7 @@ function MainNav({ name, avatar }: UserProps) {
 
   return (
     <StyledNav>
-      <Layout $open={isOpen} onClick={open}></Layout>
+      <Layout $open={isOpen} onClick={open} />
       <StyledLayout>
         <StyledMenu $open={false} onClick={() => setIsOpen((cur) => !cur)}>
           <HiBars3 />
@@ -173,22 +178,25 @@ function MainNav({ name, avatar }: UserProps) {
 
         <StyledMobileBox $open={isOpen}>
           <StyledHeader>
-            <StyledAvatar src={avatar || "default-user.jpg"} />
+            <AvatarBox>
+              <NavProgressBar />
+              <StyledAvatar src={avatar || "default-user.jpg"} />
+            </AvatarBox>
             <Heading as="h3">{name}</Heading>
           </StyledHeader>
           <StyledList>
             <li>
-              <StyledLink to={"/"}>
+              <StyledLink to={"/settings"}>
                 <HiOutlineCog6Tooth /> Settings
               </StyledLink>
             </li>
             <li>
-              <StyledLink to={"/"}>
+              <StyledLink to={"/settings"}>
                 <HiOutlineCog6Tooth /> Settings
               </StyledLink>
             </li>
             <li>
-              <StyledLink to={"/"}>
+              <StyledLink to={"/settings"}>
                 <HiOutlineCog6Tooth /> Settings
               </StyledLink>
             </li>

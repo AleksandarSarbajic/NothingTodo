@@ -20,13 +20,17 @@ function MainImportant() {
   const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
 
   if (isLoading || isLoadingTasks) return <ThreeDotsLoading alone={true} />;
-  const shouldHide = settings?.autohide_lists ? tasks.length === 0 : false;
-
-  console.log(shouldHide);
+  const shouldHideTasks = settings?.autohide_lists ? tasks.length !== 0 : true;
+  const shouldHidePriority = settings?.autohide_lists
+    ? tasks.filter((item) => item.priority).length !== 0
+    : true;
+  const shouldHideCompleted = settings?.autohide_lists
+    ? tasks.filter((item) => item.status === "completed").length !== 0
+    : true;
 
   return (
     <StyledContainer>
-      {settings?.all_lists ? (
+      {settings?.all_lists && shouldHideTasks ? (
         <TaskListItem path={""} link={"allTasks"}>
           <div>
             <PiInfinity />
@@ -37,7 +41,7 @@ function MainImportant() {
       ) : (
         ""
       )}
-      {settings?.primary_lists && (
+      {settings?.primary_lists && shouldHidePriority ? (
         <TaskListItem path={""} link={"favorites"}>
           <div>
             <HiOutlineStar />
@@ -45,6 +49,8 @@ function MainImportant() {
           </div>
           <span> {tasks.filter((item) => item.priority).length}</span>
         </TaskListItem>
+      ) : (
+        ""
       )}
       {settings?.planned_lists && (
         <TaskListItem>
@@ -55,7 +61,7 @@ function MainImportant() {
           <span>69</span>
         </TaskListItem>
       )}
-      {settings?.completed_lists && (
+      {settings?.completed_lists && shouldHideCompleted ? (
         <TaskListItem path={""} link={"completed"}>
           <div>
             <HiCheck />
@@ -65,6 +71,8 @@ function MainImportant() {
             {tasks.filter((item) => item.status === "completed").length}
           </span>
         </TaskListItem>
+      ) : (
+        ""
       )}
     </StyledContainer>
   );
