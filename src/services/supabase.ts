@@ -20,6 +20,7 @@ export interface Database {
       settings: {
         Row: {
           all_lists: boolean;
+          autohide_lists: boolean | null;
           completed_lists: boolean;
           created_at: string;
           dueTodayTask: boolean;
@@ -32,6 +33,7 @@ export interface Database {
         };
         Insert: {
           all_lists?: boolean;
+          autohide_lists?: boolean | null;
           completed_lists?: boolean;
           created_at?: string;
           dueTodayTask?: boolean;
@@ -44,6 +46,7 @@ export interface Database {
         };
         Update: {
           all_lists?: boolean;
+          autohide_lists?: boolean | null;
           completed_lists?: boolean;
           created_at?: string;
           dueTodayTask?: boolean;

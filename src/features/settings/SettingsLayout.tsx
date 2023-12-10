@@ -7,20 +7,30 @@ import ToggleRow from "../../UI/ToggleRow";
 import { useUser } from "../Auth/useUser";
 import UpdateAccout from "./UpdateAccout";
 import useLoadSettings from "./useLoadSettings";
+import {
+  ABOUT_SETTINGS_ARRAY,
+  CONNECT_SETTINGS_ARRAY,
+  GENERAL_SETTINGS_ARRAY,
+  HELP_SETTINGS_ARRAY,
+  LISTS_SETTINGS_ARRAY,
+} from "../../utils/constants";
+import SettingsLink from "../../UI/SettingsLink";
 
-const generalArray = [
-  "Add new tasks on top",
-  "Move starred tasks on top",
-  "Show 'Due Today' tasks",
-];
-const listsArray = ["All", "Important", "Planned", "Completed"];
-
+import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
+import { PiInfinity } from "react-icons/pi";
 const StyledGeneralSettings = styled.ul`
   margin: 2.4rem 0 0 0;
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
 `;
+
+const iconsArray = [
+  <PiInfinity />,
+  <HiOutlineStar />,
+  <HiOutlineCalendarDays />,
+  <HiCheck />,
+];
 
 function SettingsLayout() {
   const { user } = useUser();
@@ -59,7 +69,7 @@ function SettingsLayout() {
               type={item.key}
               key={item.key}
               state={item.value as boolean}
-              text={generalArray[i]}
+              text={GENERAL_SETTINGS_ARRAY[i]}
             />
           );
         })}
@@ -76,10 +86,38 @@ function SettingsLayout() {
               type={item.key}
               state={item.value as boolean}
               key={item.key}
-              text={listsArray[i]}
+              text={LISTS_SETTINGS_ARRAY[i]}
+              icon={iconsArray[i]}
             />
           );
         })}
+      </StyledGeneralSettings>
+      <LineThru $margin={"form"} />
+      <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>
+        Help & feedback
+      </Heading>
+      <StyledGeneralSettings>
+        {HELP_SETTINGS_ARRAY.map((item) => (
+          <SettingsLink link={item.link} text={item.text} key={item.text} />
+        ))}
+      </StyledGeneralSettings>
+      <LineThru $margin={"form"} />
+      <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>
+        Connect
+      </Heading>
+      <StyledGeneralSettings>
+        {CONNECT_SETTINGS_ARRAY.map((item) => (
+          <SettingsLink link={item.link} text={item.text} key={item.text} />
+        ))}
+      </StyledGeneralSettings>
+      <LineThru $margin={"form"} />
+      <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>
+        About
+      </Heading>
+      <StyledGeneralSettings>
+        {ABOUT_SETTINGS_ARRAY.map((item) => (
+          <SettingsLink link={item.link} text={item.text} key={item.text} />
+        ))}
       </StyledGeneralSettings>
     </>
   );

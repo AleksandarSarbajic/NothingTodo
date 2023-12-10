@@ -36,7 +36,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
   const sensors = useSensors(
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 0,
+        delay: 10,
         distance: 10,
       },
     }),
@@ -113,6 +113,7 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       modifiers={[restrictToHorizontalAxis]}
+      autoScroll={false}
     >
       {tasks
         ?.slice()

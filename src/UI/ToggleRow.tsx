@@ -8,6 +8,7 @@ interface ToggleState {
   state?: boolean;
   type: string;
   id?: string;
+  icon?: React.ReactElement;
 }
 
 const StyledRow = styled.li`
@@ -15,12 +16,22 @@ const StyledRow = styled.li`
   justify-content: space-between;
   align-items: center;
 `;
+const StyledBox = styled.div`
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  & svg {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
+
 const StyledText = styled.p`
   font-size: 1.8rem;
   font-weight: 500;
 `;
 
-function ToggleRow({ text, state, type, id }: ToggleState) {
+function ToggleRow({ text, state, type, id, icon }: ToggleState) {
   const [isChecked, setChecked] = useState(state);
   const { updateSetting, isPending } = useUpdateSettings();
   const handleChange = () => {
@@ -42,7 +53,10 @@ function ToggleRow({ text, state, type, id }: ToggleState) {
 
   return (
     <StyledRow>
-      <StyledText>{text}</StyledText>
+      <StyledBox>
+        {icon}
+        <StyledText>{text}</StyledText>
+      </StyledBox>
       <Toggle
         checked={isChecked}
         onChange={handleChange}

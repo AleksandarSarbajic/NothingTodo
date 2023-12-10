@@ -20,10 +20,13 @@ function MainImportant() {
   const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
 
   if (isLoading || isLoadingTasks) return <ThreeDotsLoading alone={true} />;
+  const shouldHide = settings?.autohide_lists ? tasks.length === 0 : false;
+
+  console.log(shouldHide);
 
   return (
     <StyledContainer>
-      {settings?.all_lists && (
+      {settings?.all_lists ? (
         <TaskListItem path={""} link={"allTasks"}>
           <div>
             <PiInfinity />
@@ -31,6 +34,8 @@ function MainImportant() {
           </div>
           <span>{tasks.length}</span>
         </TaskListItem>
+      ) : (
+        ""
       )}
       {settings?.primary_lists && (
         <TaskListItem path={""} link={"favorites"}>
