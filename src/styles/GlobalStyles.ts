@@ -139,7 +139,7 @@ button {
   cursor: pointer;
 }
 
-a,button,img{
+a,button,img,span{
   display: inline-block;
 }
 

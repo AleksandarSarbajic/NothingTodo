@@ -12,6 +12,7 @@ import AddEditList from "../TaskList/AddEditList";
 import MainNav from "../../UI/MainNav";
 import { useEffect } from "react";
 import useCreateSettings from "../settings/useCreateSettings";
+import CategoriesBox from "../../UI/CategoriesBox";
 
 function MainLayout() {
   const { user } = useUser();
@@ -38,6 +39,7 @@ function MainLayout() {
       <StyledHeader>
         <Heading as={"h1"}>What's up, {userName}!</Heading>
       </StyledHeader>
+      <CategoriesBox />
       <MainImportant />
       <TaskList />
       <Modal>

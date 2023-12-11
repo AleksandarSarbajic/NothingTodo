@@ -3,7 +3,7 @@ import { getList } from "../../services/apiTaskList";
 import { useLocation } from "react-router-dom";
 function useLoadSingleList() {
   const location = useLocation();
-  const query = location.pathname.slice(6, 8);
+  const query = location.pathname.slice(6, 10);
 
   const {
     data: list,

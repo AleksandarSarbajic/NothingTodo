@@ -4,9 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 import {
   HiBars3,
   HiOutlineBell,
+  HiOutlineChartPie,
   HiOutlineCog6Tooth,
   HiXMark,
 } from "react-icons/hi2";
+import { BiCategory } from "react-icons/bi";
 import Search from "./Search";
 import { useEffect, useState } from "react";
 import Logout from "./Logout";
@@ -78,7 +80,7 @@ const StyledList = styled.ul`
   flex-direction: column;
 
   justify-content: space-between;
-  gap: 2rem;
+  gap: 2.4rem;
   order: 3;
 `;
 const StyledHeader = styled.div`
@@ -98,7 +100,7 @@ const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   font-size: 1.8rem;
-  gap: 1.4rem;
+  gap: 1.6rem;
 `;
 
 const StyledMobileBox = styled.div<MobileProps>`
@@ -114,7 +116,7 @@ const StyledMobileBox = styled.div<MobileProps>`
   transform: translate(-50%, -50%);
   height: 100dvh;
   width: 100%;
-  /* max-width: 40rem; */
+
   background-color: var(--color-black-100);
   border-top-right-radius: 4rem;
   border-bottom-right-radius: 4rem;
@@ -187,17 +189,12 @@ function MainNav({ name, avatar }: UserProps) {
           <StyledList>
             <li>
               <StyledLink to={"/settings"}>
-                <HiOutlineCog6Tooth /> Settings
+                <BiCategory /> Categories
               </StyledLink>
             </li>
             <li>
               <StyledLink to={"/settings"}>
-                <HiOutlineCog6Tooth /> Settings
-              </StyledLink>
-            </li>
-            <li>
-              <StyledLink to={"/settings"}>
-                <HiOutlineCog6Tooth /> Settings
+                <HiOutlineChartPie /> Analytics
               </StyledLink>
             </li>
             <li>
