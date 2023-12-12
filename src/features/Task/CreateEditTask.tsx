@@ -15,6 +15,7 @@ import useUpdateList from "../TaskList/useUpdateList";
 import useLoadTask from "./useLoadTask";
 import { formatTimeToDate } from "../../utils/helpers";
 import useUpdateTask from "./useUpdateTask";
+import AddCategoryBox from "../../UI/AddCategoryBox";
 
 interface PickerTypes {
   value?: string;
@@ -75,6 +76,7 @@ function CreateEditTask() {
   const [useParams] = useSearchParams();
   const id = useParams.get("q");
   const favorite = useParams.get("f");
+  const category = useParams.get("ca");
   const status = useParams.get("c");
   const navigate = useNavigate();
   // task
@@ -87,7 +89,7 @@ function CreateEditTask() {
   const { register, formState, reset, handleSubmit } = useForm<FormData>({
     defaultValues: {
       task_name: "",
-      category: "",
+      category: category || "",
       description: "",
     },
   });
@@ -263,6 +265,11 @@ function CreateEditTask() {
           {...register("category", { required: "This field is required" })}
         />
       </FormRowVertical>
+      <AddCategoryBox
+        onClick={(value) => {
+          reset({ category: value });
+        }}
+      />
       <FormRowVertical
         label="Description"
         error={errors?.description?.message?.toString()}

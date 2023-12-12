@@ -188,7 +188,7 @@ function MainNav({ name, avatar }: UserProps) {
           </StyledHeader>
           <StyledList>
             <li>
-              <StyledLink to={"/settings"}>
+              <StyledLink to={"/categories"}>
                 <BiCategory /> Categories
               </StyledLink>
             </li>

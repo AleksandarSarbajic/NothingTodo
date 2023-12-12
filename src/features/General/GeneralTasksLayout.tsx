@@ -10,9 +10,6 @@ import DraggableContainer from "../Task/DraggableContainer";
 import Menus from "../../UI/Menus";
 import Spinner from "../../UI/Spinner";
 import EmptyTasks from "../../UI/EmptyTasks";
-import styled from "styled-components";
-
-const StyledContainer = styled.div``;
 
 interface GeneralOptions {
   id: string;
@@ -22,7 +19,7 @@ interface GeneralOptions {
   taskList: any[];
   isLoadingTasks: boolean;
   isLoadingList: boolean;
-  name: string;
+  name: string | null;
   query: string;
 }
 
@@ -42,13 +39,13 @@ function GeneralTasksLayout({
   if (!taskList || taskList?.length === 0)
     return (
       <div>
-        <TaskNav></TaskNav>
+        <TaskNav />
         <EmptyTasks />
       </div>
     );
 
   return (
-    <StyledContainer>
+    <div>
       <Menus>
         <TaskNav>
           <Menus.Toggle id={id} />
@@ -71,13 +68,17 @@ function GeneralTasksLayout({
         </TasksColumn>
         <Button
           onClick={() =>
-            navigate(`createEditTask?q=${taskList[0].id}&${query}=true`)
+            navigate(
+              `createEditTask?q=${taskList[0].id}&${query}=${
+                query === "ca" ? name : true
+              }`
+            )
           }
         >
           <HiPlus />
         </Button>
       </Menus>
-    </StyledContainer>
+    </div>
   );
 }
 

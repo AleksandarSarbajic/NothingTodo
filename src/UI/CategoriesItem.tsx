@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import Heading from "./Heading";
+import { Link } from "react-router-dom";
 
-const StyledCategoriesItem = styled.div`
+const StyledCategoriesItem = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 2.4rem;
   background-color: var(--color-black-100);
   border-radius: var(--border-radius-md--2);
-  height: 20rem;
+  height: 21rem;
+  overflow: hidden;
+  transition: all 0.3s;
+  &:hover {
+    scale: 1.02;
+    background-color: var(--color-black-50);
+  }
 `;
 const StyledNumberOfTasks = styled.p`
   margin-top: 0.5rem;
@@ -38,17 +45,24 @@ const StyledPercentage = styled.span`
 interface CategoryProps {
   progress: number;
   name?: string;
+  number?: number;
 }
 
-function CategoriesItem({ progress = 10, name = "Web design" }: CategoryProps) {
+function CategoriesItem({
+  progress = 10,
+  name = "Web design",
+  number = 0,
+}: CategoryProps) {
   return (
-    <StyledCategoriesItem>
+    <StyledCategoriesItem to={`/category?ca=${name}`}>
       <div>
         <Heading as="h6">{name}</Heading>
-        <StyledNumberOfTasks>{progress} tasks</StyledNumberOfTasks>
+        <StyledNumberOfTasks>{number} tasks</StyledNumberOfTasks>
       </div>
       <div>
-        <StyledPercentage>{progress}%</StyledPercentage>
+        <StyledPercentage>
+          {progress === 100 ? "Completed" : `${progress}%`}
+        </StyledPercentage>
         <StyledProgressBar $progress={progress}>
           <div />
         </StyledProgressBar>

@@ -78,6 +78,19 @@ export async function getCompleted() {
 
   return data;
 }
+export async function getCategories({ query }: { query: string | null }) {
+  const { data, error } = await supabase
+    .from("Tasks")
+    .select()
+    .eq("category", query);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Favorite Tasks could not be loaded");
+  }
+
+  return data;
+}
 export async function getTasks(
   id: number
 ): Promise<Database["public"]["Tables"]["Tasks"]["Row"][]> {

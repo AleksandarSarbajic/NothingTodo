@@ -19,6 +19,8 @@ import FavoritesPage from "./pages/FavoritesPage";
 import SettingsPage from "./pages/SettingsPage";
 import AllPage from "./pages/AllPage";
 import CompletedPage from "./pages/CompletedPage";
+import CategoryPage from "./pages/CategoryPage";
+import CategoriesPage from "./pages/CategoriesPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/completed",
         element: <CompletedPage />,
+      },
+      {
+        path: "/category",
+        element: <CategoryPage />,
+      },
+      {
+        path: "/categories",
+        element: <CategoriesPage />,
       },
       {
         path: "/:list",
