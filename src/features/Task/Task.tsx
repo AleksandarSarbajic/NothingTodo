@@ -17,6 +17,8 @@ import useUpdateTask from "./useUpdateTask";
 import Menus from "../../UI/Menus";
 import { useNavigate } from "react-router-dom";
 import { compareTimes, isSameAsCurrentDate } from "../../utils/helpers";
+
+import useLoadSingleList from "../TaskList/useLoadSingleList";
 interface ItemProps {
   item: Database["public"]["Tables"]["Tasks"]["Row"];
   disabled: boolean;
@@ -132,9 +134,16 @@ const Box = styled.div`
   position: relative;
 `;
 
+const StyledListName = styled.p`
+  font-size: 1.4rem;
+  color: var(--color-grey-600);
+  font-weight: 600;
+`;
+
 function Task({ item, disabled, draggedItemStyle }: TaskProps) {
   const navigate = useNavigate();
   const { updateTask, isPending } = useUpdateTask();
+  const { list = [], equal } = useLoadSingleList(item.ListId?.toString());
 
   const [ref, { width }] = useMeasure();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -209,7 +218,10 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
           >
             {item.status !== "incomplete" && <HiOutlineCheckCircle />}
           </StyledCircle>
-          <StyledTitle>{item.task_name}</StyledTitle>
+          <div>
+            <StyledTitle>{item.task_name}</StyledTitle>
+            {equal && <StyledListName>{list[0]?.list_name}</StyledListName>}
+          </div>
         </StyledBox>
         {item.status === "incomplete" && (
           <Menus.Menu>

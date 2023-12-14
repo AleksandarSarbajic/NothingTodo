@@ -13,10 +13,15 @@ import MainNav from "../../UI/MainNav";
 import { useEffect } from "react";
 import useCreateSettings from "../settings/useCreateSettings";
 import CategoriesBox from "../../UI/CategoriesBox";
+import SearchPage from "../../UI/SearchPage";
+import { useSearchParams } from "react-router-dom";
 
 function MainLayout() {
   const { user } = useUser();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search");
   const { insertSettings } = useCreateSettings();
+
   const userName = user?.user_metadata.userName
     ? user?.user_metadata.userName
     : user?.user_metadata.full_name;
@@ -36,22 +41,28 @@ function MainLayout() {
             : user?.user_metadata.avatar_url
         }
       />
-      <StyledHeader>
-        <Heading as={"h1"}>What's up, {userName}!</Heading>
-      </StyledHeader>
-      <CategoriesBox />
-      <MainImportant />
-      <TaskList />
-      <Modal>
-        <Modal.Open opens="delete">
-          <Button>
-            <HiPlus />
-          </Button>
-        </Modal.Open>
-        <Modal.Window name="delete">
-          <AddEditList />
-        </Modal.Window>
-      </Modal>
+      {searchQuery === null ? (
+        <>
+          <StyledHeader>
+            <Heading as={"h1"}>What's up, {userName}!</Heading>
+          </StyledHeader>
+          <CategoriesBox />
+          <MainImportant />
+          <TaskList />
+          <Modal>
+            <Modal.Open opens="delete">
+              <Button>
+                <HiPlus />
+              </Button>
+            </Modal.Open>
+            <Modal.Window name="delete">
+              <AddEditList />
+            </Modal.Window>
+          </Modal>
+        </>
+      ) : (
+        <SearchPage query={searchQuery} />
+      )}
     </div>
   );
 }

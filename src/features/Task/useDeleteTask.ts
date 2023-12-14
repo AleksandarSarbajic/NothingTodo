@@ -7,7 +7,7 @@ function useDeleteTask() {
   const { mutate: deleteTask, isPending } = useMutation({
     mutationFn: deleteTaskApi,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries();
       toast.success("Successfully deleted a task");
     },
   });

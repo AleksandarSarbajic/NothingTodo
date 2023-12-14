@@ -55,7 +55,7 @@ export async function getAllLists() {
 
   return data;
 }
-export async function getList(query: string) {
+export async function getList(query: string | undefined) {
   const { data, error } = await supabase
     .from("Task List")
     .select()

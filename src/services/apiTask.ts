@@ -16,6 +16,50 @@ export async function createTask(
 
   return data;
 }
+export async function createDuplicatedTasks({
+  newId,
+  listId,
+}: {
+  newId: number;
+  listId: number;
+}) {
+  const { data: oldTasks, error: oldError } = await supabase
+    .from("Tasks")
+    .select()
+    .eq("ListId", listId);
+
+  if (oldError) {
+    console.error(oldError);
+    throw new Error("Task could not be created");
+  }
+
+  const newTasksData = oldTasks.map((task) => ({
+    ListId: newId,
+    task_name: `Copy of ${task.task_name}`,
+    category: task.category,
+    created_at: task.created_at,
+    description: task.description,
+    due_date: task.due_date,
+    edited_at: task.edited_at,
+    end_time: task.end_time,
+    priority: task.priority,
+    start_time: task.start_time,
+    status: task.status,
+    user_id: task.user_id,
+  }));
+
+  const { data, error } = await supabase
+    .from("Tasks")
+    .insert(newTasksData)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Task could not be created");
+  }
+
+  return data;
+}
 export async function getTask(
   id: number | null
 ): Promise<Database["public"]["Tables"]["Tasks"]["Row"] | null> {
@@ -145,4 +189,23 @@ export async function updateTask({
   }
 
   return data;
+}
+
+export async function searchTasks({ query }: { query: string | null }) {
+  try {
+    const { data, error } = await supabase
+      .from("Tasks")
+      .select()
+      .ilike("task_name", `%${query}%`);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Tasks could not be loaded");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    throw new Error("An unexpected error occurred while fetching tasks");
+  }
 }

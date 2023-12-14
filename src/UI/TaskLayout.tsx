@@ -9,6 +9,7 @@ import useDeleteList from "../features/TaskList/useDeleteList";
 import useCreateList from "../features/TaskList/useCreateList";
 import { useNavigate } from "react-router-dom";
 import useDeleteTask from "../features/Task/useDeleteTask";
+import useCreateTasks from "../features/Task/useCreateTasks";
 
 const StyledTaskLayout = styled.div``;
 
@@ -26,9 +27,20 @@ interface TaskProps {
 
 function TaskLayout({ children, list }: TaskProps) {
   const { deleteList, isPending: isDeletingList } = useDeleteList();
-  const { createList, isPending: isCreating } = useCreateList();
+  const { createList, isPending: isCreatingList } = useCreateList();
+  const { createTasks, isPending: isCreatingTasks } = useCreateTasks();
   const { deleteTask, isPending: isDeletingTask } = useDeleteTask();
   const navigate = useNavigate();
+
+  function onDuplicateHandler() {
+    createList(`Copy of ${list.list_name}`, {
+      onSuccess(data) {
+        createTasks({ listId: list.id, newId: data[0].id });
+        navigate(-1);
+      },
+    });
+  }
+
   return (
     <StyledTaskLayout>
       <TaskNav center={false}>
@@ -43,11 +55,8 @@ function TaskLayout({ children, list }: TaskProps) {
                 <Menus.Button icon={<HiEye />}>Sort by</Menus.Button>
                 <Menus.Button
                   icon={<HiSquare2Stack />}
-                  onClick={() => {
-                    createList(`Copy of ${list.list_name}`);
-                    navigate(-1);
-                  }}
-                  disabled={isCreating}
+                  onClick={() => onDuplicateHandler()}
+                  disabled={isCreatingList || isCreatingTasks}
                 >
                   Duplicate list
                 </Menus.Button>
