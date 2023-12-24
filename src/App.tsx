@@ -21,6 +21,12 @@ import AllPage from "./pages/AllPage";
 import CompletedPage from "./pages/CompletedPage";
 import CategoryPage from "./pages/CategoryPage";
 import CategoriesPage from "./pages/CategoriesPage";
+import EnterEmailPage from "./pages/EnterEmailPage";
+import ResetPassowordPage from "./pages/ResetPassowordPage";
+import ErrorFallback from "./UI/ErrorFallback";
+import { DarkModeProvider } from "./context/DarkModeContext";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import CompletedDatePage from "./pages/CompletedDatePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +44,7 @@ const router = createBrowserRouter([
         <AppLayout />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorFallback />,
     children: [
       {
         index: true,
@@ -72,6 +79,20 @@ const router = createBrowserRouter([
         element: <CategoriesPage />,
       },
       {
+        path: "/analytics",
+        element: <AnalyticsPage />,
+      },
+      {
+        path: "/analytics/:day",
+        id: "day",
+        element: <CompletedDatePage />,
+      },
+      {
+        path: "/analytics/:day/createEditTask",
+        id: "tasks",
+        element: <TaskPage />,
+      },
+      {
         path: "/:list",
         id: "list",
         element: <TaskListPage />,
@@ -86,42 +107,56 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: "/enterEmail",
+    element: <EnterEmailPage />,
+    errorElement: <ErrorFallback />,
+  },
+  {
+    path: "/resetPassword",
+    element: <ResetPassowordPage />,
+    errorElement: <ErrorFallback />,
   },
   {
     path: "/signup",
     element: <SignUpPage />,
+    errorElement: <ErrorFallback />,
   },
 ]);
 
 function App() {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <GlobalStyles />
-        <RouterProvider router={router} />
-        <Toaster
-          position="top-center"
-          gutter={12}
-          containerStyle={{ margin: "8px" }}
-          toastOptions={{
-            success: {
-              duration: 3000,
-            },
-            error: {
-              duration: 5000,
-            },
-            style: {
-              fontFamily: "NotoSans, sans-serif",
-              fontSize: "16px",
-              maxWidth: "500px",
-              padding: "16px 24px",
-              backgroundColor: "#1E2022ff",
-              color: "#c1c2c3",
-            },
-          }}
-        />
-      </QueryClientProvider>
+      <DarkModeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <GlobalStyles />
+          <RouterProvider router={router} />
+          <Toaster
+            position="top-center"
+            gutter={12}
+            containerStyle={{ margin: "8px" }}
+            toastOptions={{
+              success: {
+                duration: 3000,
+              },
+              error: {
+                duration: 5000,
+              },
+              style: {
+                fontFamily: "NotoSans, sans-serif",
+                fontSize: "16px",
+                maxWidth: "500px",
+                padding: "16px 24px",
+                backgroundColor: "#1E2022ff",
+                color: "#c1c2c3",
+              },
+            }}
+          />
+        </QueryClientProvider>
+      </DarkModeProvider>
     </>
   );
 }

@@ -25,6 +25,7 @@ interface MenusProps {
 interface IdProps extends ChildrenProps {
   id: string | number;
   icon?: React.ReactElement;
+  text?: React.ReactElement;
 }
 
 interface ButtonProps extends ChildrenProps {
@@ -92,7 +93,7 @@ const StyledButton = styled.button`
   gap: 1.6rem;
 
   &:hover {
-    background-color: var(--color-black-100);
+    background-color: var(--color-black-200);
   }
 
   & svg {
@@ -127,7 +128,7 @@ function Menus({ children }: ChildrenProps) {
   );
 }
 
-function Toggle({ id, icon }: IdProps) {
+function Toggle({ id, icon, text }: IdProps) {
   const { openId, close, open, setPosition } = useContext(MenusContext);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -145,7 +146,14 @@ function Toggle({ id, icon }: IdProps) {
 
   return (
     <StyledToggle onClick={handleClick}>
-      {icon ? <CustomIcon>{icon}</CustomIcon> : <HiEllipsisVertical />}
+      {icon ? (
+        <CustomIcon>{icon}</CustomIcon>
+      ) : text ? (
+        ""
+      ) : (
+        <HiEllipsisVertical />
+      )}
+      {text}
     </StyledToggle>
   );
 }

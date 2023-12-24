@@ -1,11 +1,12 @@
 import { HiArrowSmallLeft } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, To } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 import { ChildrenProps } from "../types/ChildrenType";
 
 interface NavTypes extends ChildrenProps {
   center?: boolean;
+  direction?: string;
 }
 
 const StyledTaskNav = styled.nav`
@@ -31,16 +32,26 @@ const StyledArrowButton = styled.button<{ $center: boolean }>`
       `}
   }
 `;
+
 const InvisibleDiv = styled.div`
   flex: 1 1 0%;
 `;
 
-function TaskNav({ children, center = false }: NavTypes) {
+function TaskNav({
+  children,
+  center = false,
+  direction = "default",
+}: NavTypes) {
   const navigate = useNavigate();
 
   return (
     <StyledTaskNav>
-      <StyledArrowButton $center={center} onClick={() => navigate(-1)}>
+      <StyledArrowButton
+        $center={center}
+        onClick={() =>
+          navigate(direction === "default" ? (-1 as To) : ("/dashboard" as To))
+        }
+      >
         <HiArrowSmallLeft />
       </StyledArrowButton>
       <>{children}</>

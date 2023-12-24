@@ -11,7 +11,58 @@ const GlobalStyles = createGlobalStyle`
   ${nothingFontFace}
  
 
+ /* Light Mode Colors */
 
+--color-grey-0: #191c1e;
+--color-grey-50: #f9fafb;
+--color-grey-100: #191c1e;
+--color-grey-200: #000;
+--color-grey-300: #c1c2c3;
+--color-grey-400: #a8adb3;
+--color-grey-500: #c1c7ce;
+--color-grey-550: #8f9193;
+--color-grey-600: #434647;
+--color-grey-650: #585a5c;
+--color-grey-700: #454749;
+--color-grey-750: #fff;
+
+--color-blue-50: #6a7c8a;
+--color-blue-200: #d2e5f4;
+--color-blue-500: #c6e7ff;
+
+--color-black-50: #fff;
+--color-black-100: #f9fafb;
+--color-black-200: #f0f1f3;
+--color-black-250: #e4e5e7;
+--color-black-300: #e6e6e6;
+
+--task-hover: #e4e5e7;
+--calendar-color: #fff;
+--calendar-disabled: #bbb;
+
+
+--bg-color: #f0f1f3;
+
+--line-color:rgb(0, 0, 0, 0.1);
+
+
+/* Shadows */
+--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+--shadow-md: 0px 0.4rem 1.4rem -0.1rem rgba(0, 0, 0, 0.1);
+--shadow-lg: 0 1rem 2.4rem rgba(0, 0, 0, 0.12);
+--shadow-img: 0 1rem 1.5rem 5px rgba(0, 0, 0, 0.15);
+--shadow-item: 0 0.2rem 1rem 2px rgba(0, 0, 0, 0.1);
+
+/* Image Effects */
+--image-grayscale: 10%;
+--image-opacity: 90%;
+
+
+  --image-grayscale: 0;
+  --image-opacity: 100%;
+}
+
+&.dark-mode{
 
 
   /* Grey */
@@ -36,9 +87,17 @@ const GlobalStyles = createGlobalStyle`
   --color-black-50: #232426;
   --color-black-100: #1E2022ff;
   --color-black-200: #1d2022;
+  --color-black-250: #282b2d;
   --color-black-300: #191a1b;
+
+  --task-hover: #1c1c1cff;
+
   --bg-color: #151515ff;
-  
+  --calendar-color:#1c1c1cff;
+  --calendar-disabled: #2e3133;
+
+  --line-color:rgb(255, 255, 255, 0.1);
+
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 1rem 2.4rem rgba(0, 0, 0, 0.12);
@@ -46,27 +105,8 @@ const GlobalStyles = createGlobalStyle`
 
   --shadow-item: 0 0.2rem 1rem 2px rgba(0,0,0,0.1);
 
-  --image-grayscale: 0;
-  --image-opacity: 100%;
-}
-
-&.dark-mode{
-
-
---color-black-100: #1E2022ff;
---bg-color:#151515ff;
-
---backdrop-color: rgba(0, 0, 0, 0.3);
---shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
---shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.3);
---shadow-lg: 0 1rem 2.4rem rgba(0, 0, 0, 0.4);
-
---shadow-img: 0 1rem 1.5rem 5px rgba(0,0,0,0.4);
-
---shadow-item: 0 1rem 2rem rgba(0,0,0,0.1);
-
---image-grayscale: 10%;
---image-opacity: 90%;
+  --image-grayscale: 10%;
+  --image-opacity: 90%;
 }
 
 
@@ -83,7 +123,7 @@ const GlobalStyles = createGlobalStyle`
   --color-red-50: #c94744;
   --color-red-100: #C3322Fff;
   --color-red-700: #b91c1c;
-  --color-red-800: #991b1b;
+  --color-red-800: #ff3333;
 }
 
 *,
@@ -93,7 +133,6 @@ const GlobalStyles = createGlobalStyle`
   padding: 0;
   margin: 0;
 
-  /* Creating animations for dark mode */
   transition: background-color 0.3s, border 0.3s;
 }
 

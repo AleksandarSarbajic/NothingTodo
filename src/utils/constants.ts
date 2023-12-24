@@ -5,6 +5,7 @@ export const GENERAL_SETTINGS_ARRAY = [
   "Move starred tasks on top",
   "Show 'Due Today' tasks",
 ];
+
 export const LISTS_SETTINGS_ARRAY = [
   "All",
   "Important",
@@ -12,6 +13,7 @@ export const LISTS_SETTINGS_ARRAY = [
   "Completed",
   "Auto-hide empty smart lists",
 ];
+
 export const HELP_SETTINGS_ARRAY = [
   { link: "/support", text: "Get support" },
   { link: "/faq", text: "FAQ" },
@@ -19,11 +21,13 @@ export const HELP_SETTINGS_ARRAY = [
   { link: "/session", text: "Copy session and user ID" },
   { link: "/sync", text: "Sync" },
 ];
+
 export const CONNECT_SETTINGS_ARRAY = [
   { link: "https://www.instagram.com/?hl=sr", text: "Follow us on Instagram" },
   { link: "https://www.facebook.com/", text: "Follow us on Facebook" },
   { link: "https://twitter.com/home", text: "Follow us on Twitter" },
 ];
+
 export const ABOUT_SETTINGS_ARRAY = [
   { link: "/privacy", text: "Privacy" },
   { link: "/export", text: "Export your info" },

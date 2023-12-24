@@ -7,15 +7,10 @@ interface ToggleState {
   text: string;
   state?: boolean;
   type: string;
-  id?: string;
+
   icon?: React.ReactElement;
 }
 
-const StyledRow = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 const StyledBox = styled.div`
   display: flex;
   gap: 2.4rem;
@@ -30,8 +25,19 @@ const StyledText = styled.p`
   font-size: 1.8rem;
   font-weight: 500;
 `;
+const StyledButton = styled.button`
+  width: 100%;
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: var(--border-radius-md);
+  &:hover {
+    background-color: var(--line-color);
+  }
+`;
 
-function ToggleRow({ text, state, type, id, icon }: ToggleState) {
+function ToggleRow({ text, state, type, icon }: ToggleState) {
   const [isChecked, setChecked] = useState(state);
   const { updateSetting, isPending } = useUpdateSettings();
   const handleChange = () => {
@@ -44,7 +50,6 @@ function ToggleRow({ text, state, type, id, icon }: ToggleState) {
         updatedSettings: {
           ...updatedObject,
         },
-        id: id,
       });
 
       return !prevChecked;
@@ -52,17 +57,19 @@ function ToggleRow({ text, state, type, id, icon }: ToggleState) {
   };
 
   return (
-    <StyledRow>
-      <StyledBox>
-        {icon}
-        <StyledText>{text}</StyledText>
-      </StyledBox>
-      <Toggle
-        checked={isChecked}
-        onChange={handleChange}
-        disabled={isPending}
-      />
-    </StyledRow>
+    <>
+      <StyledButton onClick={handleChange}>
+        <StyledBox>
+          {icon}
+          <StyledText>{text}</StyledText>
+        </StyledBox>
+        <Toggle
+          checked={isChecked}
+          onChange={handleChange}
+          disabled={isPending}
+        />
+      </StyledButton>
+    </>
   );
 }
 

@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components";
 import CategoriesItem from "./CategoriesItem";
 import Heading from "./Heading";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useLoadAllTasks from "../features/Task/useLoadAllTasks";
+import { sortByCategory, sortByProgress } from "../utils/helpers";
+import SortByIndicator from "./SortByIndicator";
 
 interface Props {
   $layout?: boolean;
@@ -15,7 +17,7 @@ const StyledBox = styled.div<Props>`
   align-items: center;
   justify-content: space-between;
   padding: 4rem 0 5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--line-color);
   ${(props) =>
     props.$layout &&
     css`
@@ -44,14 +46,78 @@ const StyledLink = styled(Link)`
     opacity: 1;
   }
 `;
+interface Task {
+  category: string;
+  status: string;
+}
+
+interface Props {
+  $layout?: boolean;
+}
+
+interface CategoryInfo {
+  progress: number;
+  number: number;
+}
+
+function calculateCategoryInfo(category: string, tasks: Task[]): CategoryInfo {
+  const numberOfTasks = tasks.filter((task) => task.category === category);
+  const completed = numberOfTasks.filter((item) => item.status === "completed");
+
+  return {
+    progress: (completed.length / numberOfTasks.length) * 100,
+    number: numberOfTasks.length,
+  };
+}
+
+// ... (previous code)
 
 function CategoriesBox({ layout = false }: { layout?: boolean }) {
-  const { tasks = [] } = useLoadAllTasks();
-  const uniqueCategories = [...new Set(tasks.map((task) => task.category))];
+  const [searchParams] = useSearchParams();
+  const sortQuery = searchParams.get("sortBy");
 
-  const numItems = layout ? uniqueCategories.length : 2;
+  const { tasks = [] } = useLoadAllTasks();
+  const uniqueCategories: string[] = [
+    ...new Set(tasks.map((task) => task.category)),
+  ];
+  const numItems: number = layout ? uniqueCategories.length : 2;
 
   if (tasks.length === 0) return null;
+
+  const sortedTasks =
+    sortQuery === "progress-asc"
+      ? tasks
+          .slice()
+          .sort((a, b) => sortByProgress(a, b, tasks, "completed", false))
+      : sortQuery === "progress-desc"
+      ? tasks
+          .slice()
+          .sort((a, b) => sortByProgress(a, b, tasks, "completed", true))
+      : sortQuery === "name-asc"
+      ? tasks.slice().sort((a, b) => sortByCategory(a, b, true))
+      : sortQuery === "name-desc"
+      ? tasks.slice().sort((a, b) => sortByCategory(a, b, false))
+      : sortQuery === "number-of-tasks-desc"
+      ? tasks
+          .slice()
+          .sort(
+            (a, b) =>
+              calculateCategoryInfo(a.category, tasks).number -
+              calculateCategoryInfo(b.category, tasks).number
+          )
+      : sortQuery === "number-of-tasks-asc"
+      ? tasks
+          .slice()
+          .sort(
+            (a, b) =>
+              calculateCategoryInfo(b.category, tasks).number -
+              calculateCategoryInfo(a.category, tasks).number
+          )
+      : tasks;
+
+  const sortedCategories: string[] = [
+    ...new Set(sortedTasks.map((task) => task.category)),
+  ];
 
   return (
     <>
@@ -59,19 +125,20 @@ function CategoriesBox({ layout = false }: { layout?: boolean }) {
         <Heading as={`${layout ? "h1" : "h4"}`}>Categories</Heading>
         {!layout && <StyledLink to={"/categories"}>View All</StyledLink>}
       </StyledRow>
+      <SortByIndicator />
       <StyledBox $layout={layout}>
-        {uniqueCategories.slice(0, numItems).map((task) => {
-          const numberOfTasks = tasks.filter((com) => com.category === task);
-          const completed = numberOfTasks.filter(
-            (item) => item.status === "completed"
+        {sortedCategories.slice(0, numItems).map((category) => {
+          const { progress, number } = calculateCategoryInfo(
+            category,
+            sortedTasks
           );
 
           return (
             <CategoriesItem
-              progress={(completed.length / numberOfTasks.length) * 100}
-              number={numberOfTasks.length}
-              name={task}
-              key={task}
+              progress={progress}
+              number={number}
+              name={category}
+              key={category}
             />
           );
         })}

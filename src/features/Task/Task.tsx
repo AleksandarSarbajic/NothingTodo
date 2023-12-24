@@ -19,6 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { compareTimes, isSameAsCurrentDate } from "../../utils/helpers";
 
 import useLoadSingleList from "../TaskList/useLoadSingleList";
+import useLoadSettings from "../settings/useLoadSettings";
+
+import useUpdateSettings from "../settings/useUpdateSettings";
 interface ItemProps {
   item: Database["public"]["Tables"]["Tasks"]["Row"];
   disabled: boolean;
@@ -51,14 +54,22 @@ const StyledContainer = styled.div<Status>`
   justify-content: space-between;
   padding: 3rem 2.5rem;
   border-radius: var(--border-radius-md);
-  background-color: var(--color-black-200);
+  background-color: var(--color-black-100);
   z-index: 2;
   transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--task-hover);
+  }
+
   ${(props) =>
     props.$priority &&
     css`
       color: var(--color-grey-100);
-      background-color: var(--color-black-50);
+      background-color: var(--color-black-250);
+      &:hover {
+        background-color: var(--color-black-300);
+      }
     `}
   ${(props) =>
     props.$timeHasPassed &&
@@ -66,6 +77,9 @@ const StyledContainer = styled.div<Status>`
       color: var(--color-grey-300);
       background-color: rgba(153, 27, 27, 0.3);
       text-decoration: line-through;
+      &:hover {
+        background-color: rgba(153, 27, 27, 0.5);
+      }
     `}
   ${(props) =>
     props.$status === "completed" &&
@@ -74,6 +88,10 @@ const StyledContainer = styled.div<Status>`
       background-color: var(--color-black-300);
       text-decoration: line-through;
       animation: ${CloseAnimation} 0.5s;
+      &:hover {
+        background-color: var(--color-black-100);
+        text-decoration: none;
+      }
     `}
 `;
 
@@ -140,8 +158,20 @@ const StyledListName = styled.p`
   font-weight: 600;
 `;
 
+interface SettingsType {
+  all_lists: boolean;
+  autohide_lists: boolean | null;
+  completed_array: string[] | null;
+
+  user_id: string | null;
+}
+
 function Task({ item, disabled, draggedItemStyle }: TaskProps) {
   const navigate = useNavigate();
+  const { settings = [] } = useLoadSettings();
+  const completedArray = (settings as SettingsType)?.completed_array || [];
+
+  const { updateSetting } = useUpdateSettings();
   const { updateTask, isPending } = useUpdateTask();
   const { list = [], equal } = useLoadSingleList(item.ListId?.toString());
 
@@ -169,13 +199,45 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
     : undefined;
 
   function handleChecked(type: string = "status") {
+    const currentDateWithoutMilliseconds = new Date();
+    currentDateWithoutMilliseconds.setMilliseconds(0);
     if (type === "status") {
       updateTask({
         newTask: {
           status: item.status === "completed" ? "incomplete" : "completed",
+          completed_at:
+            item.status === "completed"
+              ? null
+              : currentDateWithoutMilliseconds.toISOString(),
         },
         id: item.id,
       });
+
+      if (settings && completedArray !== undefined) {
+        if (item.status === "completed" && item.completed_at !== null) {
+          const indexOfItem = completedArray.indexOf(item.completed_at);
+          if (indexOfItem !== -1) {
+            const updatedCompletedArray = [
+              ...completedArray.slice(0, indexOfItem),
+              ...completedArray.slice(indexOfItem + 1),
+            ];
+            updateSetting({
+              updatedSettings: {
+                completed_array: updatedCompletedArray,
+              },
+            });
+          }
+        } else {
+          updateSetting({
+            updatedSettings: {
+              completed_array: [
+                ...completedArray,
+                currentDateWithoutMilliseconds.toISOString(),
+              ],
+            },
+          });
+        }
+      }
     } else {
       updateTask({
         newTask: {

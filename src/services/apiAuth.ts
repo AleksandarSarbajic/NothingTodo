@@ -114,3 +114,19 @@ export async function updateUserAvatar({ avatar }: Update) {
   if (error2) throw new Error(error2.message);
   return updatedUser;
 }
+
+export async function resetPasswordEmail(email: string) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:5173/resetPassword",
+  });
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+export async function resetUpdatePassword(new_password: string) {
+  const { error } = await supabase.auth.updateUser({ password: new_password });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}

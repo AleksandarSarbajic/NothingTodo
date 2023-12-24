@@ -10,6 +10,7 @@ import useCreateList from "../features/TaskList/useCreateList";
 import { useNavigate } from "react-router-dom";
 import useDeleteTask from "../features/Task/useDeleteTask";
 import useCreateTasks from "../features/Task/useCreateTasks";
+import SortByModal from "./SortByModal";
 
 const StyledTaskLayout = styled.div``;
 
@@ -52,7 +53,10 @@ function TaskLayout({ children, list }: TaskProps) {
                 <Modal.Open opens="rename">
                   <Menus.Button icon={<HiPencil />}>Rename list</Menus.Button>
                 </Modal.Open>
-                <Menus.Button icon={<HiEye />}>Sort by</Menus.Button>
+                <Modal.Open opens="sortBy">
+                  <Menus.Button icon={<HiEye />}>Sort by</Menus.Button>
+                </Modal.Open>
+
                 <Menus.Button
                   icon={<HiSquare2Stack />}
                   onClick={() => onDuplicateHandler()}
@@ -66,6 +70,9 @@ function TaskLayout({ children, list }: TaskProps) {
               </Menus.List>
             </Menus.Menu>
           </Menus>
+          <Modal.Window name="sortBy" padding={true}>
+            <SortByModal />
+          </Modal.Window>
           <Modal.Window name="rename">
             <AddEditList
               rename={true}

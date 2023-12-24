@@ -15,9 +15,10 @@ const StyledLink = styled(Link)`
   padding: 2.5rem 2rem;
   border-radius: var(--border-radius-md);
   background-color: var(--color-black-100);
-
+  box-shadow: var(--shadow-md);
   &:hover,
   &:active {
+    background-color: var(--color-black-200);
   }
 
   p {

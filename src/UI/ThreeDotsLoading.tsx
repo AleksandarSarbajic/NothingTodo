@@ -18,12 +18,12 @@ const Dot = styled.div<{ $isRed: boolean }>`
 
   border-radius: 50%;
   background-color: ${(props) =>
-    props.$isRed ? "#fff" : "rgba(120, 120, 120, 0.2)"};
+    props.$isRed ? "var(color-grey-0)" : "rgba(120, 120, 120, 0.2)"};
 
   ${(props) =>
     props.$isRed
       ? css`
-          background-color: #fff;
+          background-color: var(color-grey-0);
           box-shadow: 0px 0px 10px 3px rgba(255, 255, 255, 0.1);
         `
       : css`

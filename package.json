@@ -21,11 +21,13 @@
     "react": "^18.2.0",
     "react-datepicker": "^4.23.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^4.0.12",
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.18.0",
     "react-use": "^17.4.0",
+    "recharts": "^2.10.3",
     "styled-components": "^6.1.1"
   },
   "devDependencies": {

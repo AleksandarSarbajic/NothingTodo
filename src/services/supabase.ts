@@ -21,6 +21,7 @@ export interface Database {
         Row: {
           all_lists: boolean;
           autohide_lists: boolean | null;
+          completed_array: string[] | null;
           completed_lists: boolean;
           created_at: string;
           dueTodayTask: boolean;
@@ -34,6 +35,7 @@ export interface Database {
         Insert: {
           all_lists?: boolean;
           autohide_lists?: boolean | null;
+          completed_array?: string[] | null;
           completed_lists?: boolean;
           created_at?: string;
           dueTodayTask?: boolean;
@@ -47,6 +49,7 @@ export interface Database {
         Update: {
           all_lists?: boolean;
           autohide_lists?: boolean | null;
+          completed_array?: string[] | null;
           completed_lists?: boolean;
           created_at?: string;
           dueTodayTask?: boolean;
@@ -102,6 +105,7 @@ export interface Database {
       Tasks: {
         Row: {
           category: string | null;
+          completed_at: string | null;
           created_at: string | null;
           description: string | null;
           due_date: string | null;
@@ -117,6 +121,7 @@ export interface Database {
         };
         Insert: {
           category?: string | null;
+          completed_at?: string | null;
           created_at?: string | null;
           description?: string | null;
           due_date?: string | null;
@@ -132,6 +137,7 @@ export interface Database {
         };
         Update: {
           category?: string | null;
+          completed_at?: string | null;
           created_at?: string | null;
           description?: string | null;
           due_date?: string | null;

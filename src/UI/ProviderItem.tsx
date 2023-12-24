@@ -10,9 +10,9 @@ const StyledProviderItem = styled.button`
   padding: 1rem 0.5rem;
   border-radius: 5px;
   transition: all 0.3s;
-  border: 1px solid var(--color-grey-750);
+  border: 1px solid var(--color-grey-700);
   &:hover {
-    background-color: var(--color-grey-750);
+    background-color: var(--color-grey-700);
   }
 `;
 const StyledIconBox = styled.div`

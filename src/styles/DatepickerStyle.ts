@@ -12,7 +12,7 @@ export const PickerStyles = css`
   }
 
   .react-datepicker__time-container .react-datepicker__time {
-    background-color: #1c1c1cff;
+    background-color: var(--calendar-color);
   }
 
   .react-datepicker__time-container
@@ -21,8 +21,33 @@ export const PickerStyles = css`
     ul.react-datepicker__time-list
     li.react-datepicker__time-list-item {
     color: var(--color-grey-100);
+    overflow: hidden;
   }
 
+  ul.react-datepicker__time-list::-webkit-scrollbar {
+    display: none;
+  }
+  ul.react-datepicker__time-list {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item--selected {
+    background-color: var(--color-black-300);
+  }
+  .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box,
+  .react-datepicker__time,
+  .react-datepicker__header--time,
+  .react-datepicker__header--time--only,
+  ul.react-datepicker__time-list {
+    width: 15rem;
+  }
   .react-datepicker-time__header {
     font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
     font-size: 1.6rem;
@@ -30,8 +55,8 @@ export const PickerStyles = css`
     color: var(--color-grey-100);
   }
   .react-datepicker__header--time {
-    background-color: #1c1c1cff;
-    border-bottom: 1px solid #1c1c1cff;
+    background-color: var(--calendar-color);
+    border-bottom: 1px solid var(--calendar-color);
   }
 
   .react-datepicker {
@@ -64,17 +89,17 @@ export const PickerStyles = css`
   .react-datepicker__quarter-text--disabled,
   .react-datepicker__year-text--disabled {
     cursor: not-allowed;
-    color: var(--color-grey-750) !important;
+    color: var(--calendar-disabled) !important;
     @media (max-width: 400px), (max-height: 550px) {
       cursor: not-allowed;
-      color: var(--color-grey-750) !important;
+      color: var(--calendar-disabled) !important;
     }
   }
 
   .react-datepicker__portal .react-datepicker__month-container {
     width: 40rem;
     min-height: 35rem;
-    background-color: #1c1c1cff;
+    background-color: var(--calendar-color);
     border-radius: 2rem;
   }
 
@@ -105,7 +130,7 @@ export const PickerStyles = css`
   }
 
   .react-datepicker__portal .react-datepicker__header {
-    background-color: #1c1c1cff;
+    background-color: var(--calendar-color);
 
     padding: 2rem 0 1rem 0;
     border-top-left-radius: 5rem;

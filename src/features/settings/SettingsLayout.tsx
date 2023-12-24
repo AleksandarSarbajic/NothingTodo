@@ -16,13 +16,35 @@ import {
 } from "../../utils/constants";
 import SettingsLink from "../../UI/SettingsLink";
 
-import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
+import {
+  HiOutlineCalendarDays,
+  HiCheck,
+  HiOutlineStar,
+  HiOutlineSun,
+  HiOutlineMoon,
+} from "react-icons/hi2";
 import { PiInfinity } from "react-icons/pi";
+import Menus from "../../UI/Menus";
+import { useDarkMode } from "../../context/DarkModeContext";
+
 const StyledGeneralSettings = styled.ul`
   margin: 2.4rem 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
+  gap: 0.5rem;
+`;
+
+const StyledToggle = styled.div`
+  margin-left: -0.5rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  & p {
+    font-size: 1.8rem;
+  }
+  & span {
+    color: var(--color-grey-550);
+  }
 `;
 
 const iconsArray = [
@@ -33,6 +55,7 @@ const iconsArray = [
 ];
 
 function SettingsLayout() {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { user } = useUser();
   const { settings = [], isLoading } = useLoadSettings();
 
@@ -65,7 +88,6 @@ function SettingsLayout() {
         {filterKeys("Task").map((item, i) => {
           return (
             <ToggleRow
-              id={user?.id}
               type={item.key}
               key={item.key}
               state={item.value as boolean}
@@ -73,6 +95,31 @@ function SettingsLayout() {
             />
           );
         })}
+        <Menus>
+          <Menus.Toggle
+            id={"theme"}
+            text={
+              <StyledToggle>
+                <p>Theme</p>{" "}
+                <span>{isDarkMode ? "Dark theme" : "Light theme"}</span>
+              </StyledToggle>
+            }
+          />
+          <Menus.List id={"theme"}>
+            <Menus.Button
+              icon={<HiOutlineSun />}
+              onClick={() => toggleDarkMode(false)}
+            >
+              Light Theme
+            </Menus.Button>
+            <Menus.Button
+              icon={<HiOutlineMoon />}
+              onClick={() => toggleDarkMode(true)}
+            >
+              Dark Theme
+            </Menus.Button>
+          </Menus.List>
+        </Menus>
       </StyledGeneralSettings>
       <LineThru $margin={"form"} />
       <Heading as="h6" $caps={true} style={{ marginTop: "3rem" }}>
@@ -82,7 +129,6 @@ function SettingsLayout() {
         {[...filterKeys("lists")].map((item, i) => {
           return (
             <ToggleRow
-              id={user?.id}
               type={item.key}
               state={item.value as boolean}
               key={item.key}

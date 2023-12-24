@@ -101,6 +101,10 @@ const StyledLink = styled(Link)`
   align-items: center;
   font-size: 1.8rem;
   gap: 1.6rem;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--color-red-100);
+  }
 `;
 
 const StyledMobileBox = styled.div<MobileProps>`
@@ -193,7 +197,7 @@ function MainNav({ name, avatar }: UserProps) {
               </StyledLink>
             </li>
             <li>
-              <StyledLink to={"/settings"}>
+              <StyledLink to={"/analytics?q=day"}>
                 <HiOutlineChartPie /> Analytics
               </StyledLink>
             </li>

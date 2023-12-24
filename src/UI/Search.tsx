@@ -133,7 +133,7 @@ function Search() {
         <HiOutlineMagnifyingGlass />
       </StyledButton>
       <StyledCancel
-        $length={searchQuery.length > 2 && isOpen}
+        $length={searchQuery.length > 0 && isOpen}
         onClick={() => {
           handleFocus();
           deleteQuery();

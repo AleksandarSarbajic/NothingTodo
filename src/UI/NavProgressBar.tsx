@@ -20,17 +20,26 @@ const StyledProgressBox = styled.div<{ $value: number }>`
     ),
     conic-gradient(
       var(--color-red-100) ${({ $value }) => $value}%,
-      var(--color-black-50) 0
+      var(--color-black-300) 0
     );
   transition: all 0.4s;
   &:hover {
     z-index: 2;
+  }
+  &:hover div {
+    opacity: 1;
   }
 `;
 const StyledProgress = styled.progress`
   visibility: hidden;
   height: 0;
   width: 0;
+`;
+const StyledNumber = styled.div`
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 function NavProgressBar() {
@@ -43,7 +52,9 @@ function NavProgressBar() {
   return (
     <>
       <StyledProgressBox $value={progressValue}>
-        {progressValue.toFixed()}%
+        <StyledNumber>
+          {isNaN(progressValue) ? 0 : progressValue.toFixed()}%
+        </StyledNumber>
       </StyledProgressBox>
       <StyledProgress />
     </>

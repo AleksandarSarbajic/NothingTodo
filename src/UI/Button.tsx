@@ -28,21 +28,28 @@ const StyledButton = styled.button<Style>`
       border-radius: var(--border-radius-md--2);
       color: var(--color-grey-100);
       z-index: 3;
+      box-shadow: var(--shadow-lg);
+      scale: 1;
+      transition: all 0.3s;
       svg {
         width: 3.6rem;
         height: 3.6rem;
+      }
+      &:hover {
+        background-color: var(--color-red-50);
+        scale: 1.05;
       }
     `}
   ${(props) =>
     props.$primary === "form" &&
     css`
       font-size: 2rem;
-      padding: 2.2rem;
+      padding: 1rem;
       font-weight: 600;
       background-color: var(--color-red-100);
       border-radius: 3rem;
       color: var(--color-grey-100);
-      height: 7.5rem;
+
       &:hover {
         background-color: var(--color-red-50);
       }

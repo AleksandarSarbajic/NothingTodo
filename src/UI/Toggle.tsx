@@ -46,7 +46,7 @@ const Slider = styled.span<{ checked: boolean }>`
     width: 2.3rem;
     border-radius: 20px;
     left: 0.5rem;
-    bottom: 0.4rem;
+    bottom: 0.3rem;
     background-color: ${(props) =>
       props.checked ? "var(--color-blue-500)" : "var(--color-grey-550)"};
     transition: 0.4s;

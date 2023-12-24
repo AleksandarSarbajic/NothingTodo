@@ -3,6 +3,7 @@ import useSearchTasks from "../features/Task/useSearchTasks";
 import StyledHeader from "./Header";
 import Heading from "./Heading";
 import Menus from "./Menus";
+
 import TasksColumn from "./TasksColumn";
 
 function SearchPage({ query }: { query: string | null }) {
@@ -13,6 +14,7 @@ function SearchPage({ query }: { query: string | null }) {
       <StyledHeader $use="list">
         <Heading as="h1">Search for : {query}</Heading>
       </StyledHeader>
+
       <Menus>
         <TasksColumn>
           <DraggableContainer tasks={searchResults} isLoading={isLoading} />

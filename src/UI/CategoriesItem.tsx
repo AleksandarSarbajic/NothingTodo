@@ -12,9 +12,14 @@ const StyledCategoriesItem = styled(Link)`
   height: 21rem;
   overflow: hidden;
   transition: all 0.3s;
+  box-shadow: var(--shadow-md);
+  transform: scale(1);
+
   &:hover {
-    scale: 1.02;
-    background-color: var(--color-black-50);
+    transform: scale(1.02);
+
+    background-color: var(--color-black-300);
+    box-shadow: var(--shadow-lg);
   }
 `;
 const StyledNumberOfTasks = styled.p`
@@ -61,7 +66,7 @@ function CategoriesItem({
       </div>
       <div>
         <StyledPercentage>
-          {progress === 100 ? "Completed" : `${progress}%`}
+          {progress === 100 ? "Completed" : `${progress.toFixed(0)}%`}
         </StyledPercentage>
         <StyledProgressBar $progress={progress}>
           <div />

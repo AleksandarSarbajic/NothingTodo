@@ -1,11 +1,17 @@
 import {
   compareAsc,
+  eachDayOfInterval,
+  eachMonthOfInterval,
   formatDistance,
   isSameDay,
+  isSameMonth,
   parse,
   parseISO,
+  subDays,
+  subMonths,
 } from "date-fns";
 import { differenceInDays } from "date-fns/esm";
+import { Database } from "../services/supabase";
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (
@@ -77,3 +83,187 @@ export const compareTimes = (time1: string | null) => {
 
   return comparisonResult;
 };
+export function sortByStatus(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"]
+) {
+  if (a.status === "completed" && b.status === "incomplete") {
+    return 1;
+  } else if (a.status === "incomplete" && b.status === "completed") {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+export function sortByName(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  type: boolean
+) {
+  if (type) {
+    return a.task_name.localeCompare(b.task_name);
+  } else {
+    if (a.task_name > b.task_name) {
+      return -1;
+    } else if (a.task_name < b.task_name) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+}
+export function sortByCategory(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  type: boolean
+) {
+  const categoryA = a.category || "";
+  const categoryB = b.category || "";
+
+  if (type) {
+    return categoryA.localeCompare(categoryB);
+  } else {
+    if (categoryA > categoryB) {
+      return -1;
+    } else if (categoryA < categoryB) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+}
+
+export function sortByEditedAt(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  settings?: Database["public"]["Tables"]["settings"]["Row"]
+) {
+  const dateA = a.edited_at ? new Date(a.edited_at).getTime() : 0;
+  const dateB = b.edited_at ? new Date(b.edited_at).getTime() : 0;
+  if (settings?.newTaskOnTop) return dateB - dateA;
+
+  return dateA - dateB;
+}
+
+export function sortByDueDate(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  ascending: boolean = true
+) {
+  const timestampA = calculateTimestamp(a.due_date, a.end_time);
+  const timestampB = calculateTimestamp(b.due_date, b.end_time);
+
+  return ascending ? timestampA - timestampB : timestampB - timestampA;
+}
+
+function calculateTimestamp(date: string | null, time: string | null): number {
+  const combinedDateTime = date && time ? `${date}T${time}` : null;
+  return combinedDateTime ? parseISO(combinedDateTime).getTime() : 0;
+}
+
+export function sortByPriority(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  settings?: Database["public"]["Tables"]["settings"]["Row"],
+  type?: boolean
+) {
+  if (settings?.primaryTaskOnTop) {
+    return comparePriority(a.priority, b.priority);
+  } else {
+    if (type) {
+      return comparePriority(a.priority, b.priority);
+    } else {
+      return comparePriority(b.priority, a.priority);
+    }
+  }
+}
+
+function comparePriority(
+  priorityA: boolean | null,
+  priorityB: boolean | null
+): number {
+  if (priorityA === null && priorityB === null) {
+    return 0;
+  } else if (priorityA === null) {
+    return 1;
+  } else if (priorityB === null) {
+    return -1;
+  } else {
+    return priorityA ? -1 : priorityB ? 1 : 0;
+  }
+}
+
+interface Task {
+  category: string;
+  status: string;
+  completed_at: string;
+}
+
+export function sortByProgress(
+  a: Task,
+  b: Task,
+  tasks: Task[],
+  completedStatus: string = "completed",
+  descending: boolean = false
+): number {
+  const calculateProgress = (task: Task): number => {
+    const numberOfTasks = tasks.filter((t) => t.category === task.category);
+    const completed = numberOfTasks.filter(
+      (item) => item.status === completedStatus
+    );
+    return (completed.length / numberOfTasks.length) * 100;
+  };
+
+  const progressA = calculateProgress(a);
+  const progressB = calculateProgress(b);
+
+  const order = descending ? -1 : 1;
+  return order * (progressB - progressA);
+}
+
+export function analyticsInterval(numIntervals: number, type: string = "days") {
+  if (type === "month") {
+    const allMonths = eachMonthOfInterval({
+      start: subMonths(new Date(), numIntervals - 1),
+      end: new Date(),
+    });
+
+    return allMonths;
+  } else {
+    const allDates = eachDayOfInterval({
+      start: subDays(new Date(), numIntervals - 1),
+      end: new Date(),
+    });
+    return allDates;
+  }
+}
+
+export function completedTasksForInterval(
+  completedArray: string[] | null,
+  numIntervals: number,
+  type: string = "days"
+) {
+  const intervalStart =
+    type === "month"
+      ? subMonths(new Date(), numIntervals - 1)
+      : subDays(new Date(), numIntervals - 1);
+  const allIntervals =
+    type === "month"
+      ? eachMonthOfInterval({ start: intervalStart, end: new Date() })
+      : eachDayOfInterval({ start: intervalStart, end: new Date() });
+
+  const completedTasksPerInterval: number[] = allIntervals.map((interval) => {
+    const tasksCompletedInInterval = completedArray
+      ? completedArray.filter((completedDate) => {
+          const completedDateObj = new Date(completedDate);
+          return type === "month"
+            ? isSameMonth(completedDateObj, interval)
+            : isSameDay(completedDateObj, interval);
+        })
+      : [];
+
+    return tasksCompletedInInterval.length;
+  });
+
+  return completedTasksPerInterval;
+}

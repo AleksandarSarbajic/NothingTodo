@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { useOutsideClick } from "../hooks/useOutsideClick";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 
@@ -29,6 +29,7 @@ interface Opentype {
 
 interface WindowType extends ChildrenType {
   name: string;
+  padding?: boolean;
 }
 
 const Jump = keyframes`
@@ -44,7 +45,7 @@ const Jump = keyframes`
 }
 `;
 
-const StyledModal = styled.div`
+const StyledModal = styled.div<{ $padding: boolean }>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -52,11 +53,16 @@ const StyledModal = styled.div`
   background-color: var(--color-black-100);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
-  padding: 3.2rem 4rem;
   transition: all 0.5s;
   width: 90%;
   max-width: 45rem;
   animation: ${Jump} 0.35s;
+  padding: 3.2rem 4rem;
+  ${(props) =>
+    props.$padding &&
+    css`
+      padding: 3.2rem 0rem;
+    `}
 `;
 
 const Overlay = styled.div`
@@ -115,7 +121,7 @@ function Open({ children, opens: opensWindowName }: Opentype) {
   return cloneElement(children, { onClick: () => open(opensWindowName) });
 }
 
-function Window({ children, name }: WindowType) {
+function Window({ children, name, padding = false }: WindowType) {
   const { openName, close } = useContext(ModalContext);
   const ref = useOutsideClick<HTMLDivElement>(close);
 
@@ -123,7 +129,7 @@ function Window({ children, name }: WindowType) {
 
   return createPortal(
     <Overlay>
-      <StyledModal ref={ref}>
+      <StyledModal ref={ref} $padding={padding}>
         <Button onClick={close}>
           <HiXMark />
         </Button>

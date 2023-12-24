@@ -47,14 +47,20 @@ export async function createSettings(id?: string | undefined) {
 
 interface Settings {
   updatedSettings: Database["public"]["Tables"]["settings"]["Update"];
-  id?: string;
 }
 
-export async function updateSettings({ updatedSettings, id }: Settings) {
+export async function updateSettings({ updatedSettings }: Settings) {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) {
+    console.error(userError);
+    throw new Error("Could not get user");
+  }
+
   const { data, error } = await supabase
     .from("settings")
     .update({ ...updatedSettings })
-    .eq("user_id", id)
+    .eq("user_id", userData.user.id)
     .select();
 
   if (error) {

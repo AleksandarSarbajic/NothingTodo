@@ -10,20 +10,47 @@ interface Update {
 }
 
 const StyledLabel = styled.label`
+  position: relative;
   margin-top: 2.5rem;
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
+
+  &:hover::before {
+    display: block;
+  }
+
+  &:hover > img {
+    filter: blur(5px);
+  }
+
+  &::before {
+    content: "Change Avatar";
+    font-weight: 600;
+    line-height: 1.1;
+    font-family: "Noto Sans Mono", sans-serif;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 3;
+    cursor: pointer;
+  }
 `;
+
 const StyledAvatar = styled.img`
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
+  transition: filter 0.3s ease-in-out;
 `;
 
 function Avatar({ image }: AvatarProps) {
   const { updateAvatar } = useUpdateAvatar();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleImageClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();

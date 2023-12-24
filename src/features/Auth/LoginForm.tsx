@@ -73,14 +73,14 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button primary="form" type="submit" cased={true}>
-          {!isPending ? "Log in" : <SpinnerMini />}
+        <Button primary="form" type="submit">
+          {!isPending ? "Login" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
       <FormLink
         type="small"
         text="Can't remember your password?"
-        link="/login"
+        link="/enterEmail"
         linkText=" Recover it."
       />
       <LineThru $margin={"form"} />

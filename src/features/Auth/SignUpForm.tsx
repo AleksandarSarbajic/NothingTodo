@@ -96,16 +96,11 @@ function SignUpForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button primary="form" type="submit" cased={true}>
-          {!isPending || !isCreating ? "Sign up" : <SpinnerMini />}
+        <Button primary="form" type="submit">
+          {!isPending || isCreating ? "Sign up" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
-      <FormLink
-        type="small"
-        text="Can't remember your password?"
-        link="/login"
-        linkText=" Recover it."
-      />
+
       <LineThru $margin={"form"} />
       <FormLink
         type="medium"

@@ -19,6 +19,14 @@ import { useCloseMenus } from "../../UI/Menus";
 import EmptyTasks from "../../UI/EmptyTasks";
 import useLoadSettings from "../settings/useLoadSettings";
 import ThreeDotsLoading from "../../UI/ThreeDotsLoading";
+import {
+  sortByDueDate,
+  sortByEditedAt,
+  sortByPriority,
+  sortByStatus,
+} from "../../utils/helpers";
+import { useSearchParams } from "react-router-dom";
+import { sortByName } from "../../utils/helpers";
 
 interface ItemStyles {
   [itemId: number]: React.CSSProperties;
@@ -30,6 +38,8 @@ interface PropsTypes {
 }
 
 function DraggableContainer({ tasks, isLoading }: PropsTypes) {
+  const [searchPararms] = useSearchParams();
+  const sortBy = searchPararms.get("sortBy");
   const { settings } = useLoadSettings();
   const { deleteTask, isPending } = useDeleteTask();
   const { close } = useCloseMenus();
@@ -64,43 +74,28 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
     }
   }
 
-  function handleDragStart() {
-    close();
-  }
+  const sortTasksSortBy =
+    sortBy === "name-asc"
+      ? tasks?.slice().sort((a, b) => sortByName(a, b, true))
+      : sortBy === "name-desc"
+      ? tasks?.slice().sort((a, b) => sortByName(a, b, false))
+      : sortBy === "importance-asc"
+      ? tasks?.slice().sort((a, b) => sortByPriority(a, b, undefined, true))
+      : sortBy === "importance-desc"
+      ? tasks?.slice().sort((a, b) => sortByPriority(a, b, undefined, false))
+      : sortBy === "dueDate-asc"
+      ? tasks?.slice().sort((a, b) => sortByDueDate(a, b, true))
+      : sortBy === "dueDate-desc"
+      ? tasks?.slice().sort((a, b) => sortByDueDate(a, b, false))
+      : tasks?.slice().sort((a, b) => sortByEditedAt(a, b, settings));
 
-  function sortByStatus(
-    a: Database["public"]["Tables"]["Tasks"]["Row"],
-    b: Database["public"]["Tables"]["Tasks"]["Row"]
-  ) {
-    if (a.status === "completed" && b.status === "incomplete") {
-      return 1;
-    } else if (a.status === "incomplete" && b.status === "completed") {
-      return -1;
-    } else {
-      return 0;
-    }
-  }
-
-  function sortByEditedAt(
-    a: Database["public"]["Tables"]["Tasks"]["Row"],
-    b: Database["public"]["Tables"]["Tasks"]["Row"]
-  ) {
-    const dateA = a.edited_at ? new Date(a.edited_at).getTime() : 0;
-    const dateB = b.edited_at ? new Date(b.edited_at).getTime() : 0;
-    if (settings?.newTaskOnTop) return dateB - dateA;
-
-    return dateA - dateB;
-  }
-
-  function sortByPriority(
-    a: Database["public"]["Tables"]["Tasks"]["Row"],
-    b: Database["public"]["Tables"]["Tasks"]["Row"]
-  ) {
-    if (settings?.primaryTaskOnTop)
-      return a.priority === b.priority ? 0 : a.priority ? -1 : 1;
-
-    return a.priority === b.priority ? 0 : a.priority ? 1 : -1;
-  }
+  const sortedTasks = !sortBy
+    ? tasks
+        ?.slice()
+        .sort((a, b) => sortByEditedAt(a, b, settings))
+        .sort((a, b) => sortByPriority(a, b, settings))
+        .sort(sortByStatus)
+    : sortTasksSortBy;
 
   if (isLoading || !tasks) return <ThreeDotsLoading alone={true} />;
 
@@ -111,24 +106,18 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
-      onDragStart={handleDragStart}
+      onDragStart={() => close()}
       modifiers={[restrictToHorizontalAxis]}
       autoScroll={false}
     >
-      {tasks
-        ?.slice()
-        .sort(sortByEditedAt)
-        .sort(sortByPriority)
-        .sort(sortByStatus)
-
-        .map((item) => (
-          <Task
-            key={item.id}
-            item={item}
-            disabled={isPending || isLoading}
-            draggedItemStyle={draggedItemStyle[item.id] || {}}
-          />
-        ))}
+      {sortedTasks.map((item) => (
+        <Task
+          key={item.id}
+          item={item}
+          disabled={isPending || isLoading}
+          draggedItemStyle={draggedItemStyle[item.id] || {}}
+        />
+      ))}
     </DndContext>
   );
 }

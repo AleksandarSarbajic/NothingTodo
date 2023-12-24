@@ -5,13 +5,14 @@ interface HeadingProps {
   $caps?: boolean;
   $create?: boolean;
   $margin?: number;
+  $color?: string;
 }
 
 const Heading = styled.h1<HeadingProps>`
   font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
   line-height: 1.1;
   font-weight: 100;
-  color: #e6e6e6;
+  color: var(--color-grey-100);
 
   ${(props) =>
     props.as === "h1" &&
@@ -69,6 +70,7 @@ const Heading = styled.h1<HeadingProps>`
     `}
 
     margin-bottom: ${(props) => props.$margin}rem;
+  color: ${(props) => props.$color};
 `;
 
 export default Heading;

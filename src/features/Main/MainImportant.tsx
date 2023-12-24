@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 2.5rem;
   padding: 4.4rem 0 4rem 0;
-  border-bottom: 1px solid rgb(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--line-color);
 `;
 
 function MainImportant() {
@@ -27,6 +27,14 @@ function MainImportant() {
   const shouldHideCompleted = settings?.autohide_lists
     ? tasks.filter((item) => item.status === "completed").length !== 0
     : true;
+
+  if (
+    !(settings?.all_lists && shouldHideTasks) &&
+    !(settings?.primary_lists && shouldHidePriority) &&
+    !settings?.planned_lists &&
+    !(settings?.completed_lists && shouldHideCompleted)
+  )
+    return null;
 
   return (
     <StyledContainer>
