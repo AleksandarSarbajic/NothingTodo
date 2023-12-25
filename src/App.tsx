@@ -12,12 +12,11 @@ import { Toaster } from "react-hot-toast";
 
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./UI/AppLayout";
-
-import MainPage from "./pages/MainPage";
-
 import ProtectedRoute from "./UI/ProtectedRoute";
-import TaskListPage from "./pages/TaskListPage";
-import TaskPage from "./pages/TaskPage";
+
+const MainPage = lazy(() => import("./pages/MainPage"));
+const TaskListPage = lazy(() => import("./pages/TaskListPage"));
+const TaskPage = lazy(() => import("./pages/TaskPage"));
 
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 
@@ -30,8 +29,8 @@ const CategoriesPage = lazy(() => import("./pages/CategoriesPage"));
 const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 const AllPage = lazy(() => import("./pages/AllPage"));
 const CompletedPage = lazy(() => import("./pages/CompletedPage"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 
-import CategoryPage from "./pages/CategoryPage";
 import ErrorFallback from "./UI/ErrorFallback";
 import CompletedDatePage from "./pages/CompletedDatePage";
 import SpinnerFullPage from "./UI/SpinnerFullPage";
