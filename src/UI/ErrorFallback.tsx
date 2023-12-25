@@ -5,7 +5,6 @@ import Button from "./Button";
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,15 +15,12 @@ const Box = styled.div`
   background-color: var(--color-black-50);
   border: 1px solid var(--color-grey-600);
   border-radius: var(--border-radius-md);
-
   padding: 4.8rem;
   flex: 0 1 96rem;
   text-align: center;
-
   & h1 {
     margin-bottom: 2rem;
   }
-
   & p {
     color: var(--color-grey-550);
   }

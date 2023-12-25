@@ -112,26 +112,6 @@ export function sortByName(
     }
   }
 }
-export function sortByCategory(
-  a: Database["public"]["Tables"]["Tasks"]["Row"],
-  b: Database["public"]["Tables"]["Tasks"]["Row"],
-  type: boolean
-) {
-  const categoryA = a.category || "";
-  const categoryB = b.category || "";
-
-  if (type) {
-    return categoryA.localeCompare(categoryB);
-  } else {
-    if (categoryA > categoryB) {
-      return -1;
-    } else if (categoryA < categoryB) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-}
 
 export function sortByEditedAt(
   a: Database["public"]["Tables"]["Tasks"]["Row"],
@@ -193,20 +173,16 @@ function comparePriority(
   }
 }
 
-interface Task {
-  category: string;
-  status: string;
-  completed_at: string;
-}
-
 export function sortByProgress(
-  a: Task,
-  b: Task,
-  tasks: Task[],
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  tasks: Database["public"]["Tables"]["Tasks"]["Row"][],
   completedStatus: string = "completed",
   descending: boolean = false
 ): number {
-  const calculateProgress = (task: Task): number => {
+  const calculateProgress = (
+    task: Database["public"]["Tables"]["Tasks"]["Row"]
+  ): number => {
     const numberOfTasks = tasks.filter((t) => t.category === task.category);
     const completed = numberOfTasks.filter(
       (item) => item.status === completedStatus
@@ -217,8 +193,20 @@ export function sortByProgress(
   const progressA = calculateProgress(a);
   const progressB = calculateProgress(b);
 
-  const order = descending ? -1 : 1;
-  return order * (progressB - progressA);
+  return (progressB - progressA) * (descending ? -1 : 1);
+}
+
+export function sortByCategory(
+  a: Database["public"]["Tables"]["Tasks"]["Row"],
+  b: Database["public"]["Tables"]["Tasks"]["Row"],
+  descending: boolean
+): number {
+  const categoryA = a.category || "";
+  const categoryB = b.category || "";
+
+  return descending
+    ? categoryB.localeCompare(categoryA)
+    : categoryA.localeCompare(categoryB);
 }
 
 export function analyticsInterval(numIntervals: number, type: string = "days") {

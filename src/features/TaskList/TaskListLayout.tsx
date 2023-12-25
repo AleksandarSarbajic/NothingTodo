@@ -16,17 +16,17 @@ function TaskListLayout() {
   if (isLoading) return <Spinner />;
 
   return (
-    <TaskLayout list={list?.[0]}>
+    <TaskLayout list={list}>
       <StyledHeader $use="list">
         <Heading as="h2">
-          {list?.[0].list_name.length < 55
-            ? list?.[0].list_name
-            : `${list?.[0].list_name.slice(0, 55)}...`}
+          {list.list_name.length < 55
+            ? list.list_name
+            : `${list.list_name.slice(0, 55)}...`}
         </Heading>
       </StyledHeader>
-      <EditedAt date={list?.[0].edited_at} />
+      <EditedAt date={list.edited_at} />
       <Tasks />
-      <Button onClick={() => navigate(`createEditTask?q=${list?.[0].id}`)}>
+      <Button onClick={() => navigate(`createEditTask?q=${list.id}`)}>
         <HiPlus />
       </Button>
     </TaskLayout>

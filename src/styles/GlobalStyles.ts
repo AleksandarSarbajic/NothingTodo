@@ -139,7 +139,7 @@ const GlobalStyles = createGlobalStyle`
 html {
   font-size: 62.5%;
   overflow-x: hidden;
-  
+  background-color: var(--bg-color);
   @media only screen and (max-width:75em){ 
     font-size: 56.25%;
   }

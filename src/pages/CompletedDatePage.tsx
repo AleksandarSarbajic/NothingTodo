@@ -1,26 +1,34 @@
 import { useLocation, useSearchParams } from "react-router-dom";
-
 import useLoadList from "../features/TaskList/useLoadList";
 import GeneralTasksLayout from "../features/General/GeneralTasksLayout";
-import useLoadAllTasks from "../features/Task/useLoadAllTasks";
 import { format } from "date-fns";
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 
 function CompletedDatePage() {
   const { pathname } = useLocation();
   const [useParams] = useSearchParams();
   const query = useParams.get("date");
   const title = pathname.slice(11, 20);
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
+
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
   const filtered = tasks.filter((task) => {
-    if (query === "month") {
-      return format(new Date(task.completed_at), "MMM") === title;
-    } else {
-      return (
-        format(new Date(task.completed_at), "MMM dd").replace(/\s/g, "") ===
-        title
-      );
+    const completedAt = task.completed_at;
+
+    if (completedAt !== null) {
+      if (query === "month") {
+        return format(new Date(completedAt), "MMM") === title;
+      } else {
+        return (
+          format(new Date(completedAt), "MMM dd").replace(/\s/g, "") === title
+        );
+      }
     }
+
+    return false;
   });
 
   return (

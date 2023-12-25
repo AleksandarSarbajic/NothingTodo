@@ -173,7 +173,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
 
   const { updateSetting } = useUpdateSettings();
   const { updateTask, isPending } = useUpdateTask();
-  const { list = [], equal } = useLoadSingleList(item.ListId?.toString());
+  const { list, equal } = useLoadSingleList(item.ListId?.toString());
 
   const [ref, { width }] = useMeasure();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -282,7 +282,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
           </StyledCircle>
           <div>
             <StyledTitle>{item.task_name}</StyledTitle>
-            {equal && <StyledListName>{list[0]?.list_name}</StyledListName>}
+            {equal && <StyledListName>{list.list_name}</StyledListName>}
           </div>
         </StyledBox>
         {item.status === "incomplete" && (

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTask as apiCreateTask } from "../../services/apiTask";
+import { createUpdateTask } from "../../services/apiTask";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,7 @@ function useCreateTask() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate: createTask, isPending } = useMutation({
-    mutationFn: apiCreateTask,
+    mutationFn: createUpdateTask,
     onSuccess: () => {
       navigate(-1);
       queryClient.invalidateQueries({ queryKey: ["task"] });

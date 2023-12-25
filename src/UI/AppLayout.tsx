@@ -16,13 +16,11 @@ const Container = styled.div`
 
 function AppLayout() {
   return (
-    <>
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
-    </>
+    <Main>
+      <Container>
+        <Outlet />
+      </Container>
+    </Main>
   );
 }
 

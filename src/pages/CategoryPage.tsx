@@ -2,13 +2,15 @@ import { useSearchParams } from "react-router-dom";
 import GeneralTasksLayout from "../features/General/GeneralTasksLayout";
 
 import useLoadList from "../features/TaskList/useLoadList";
-import useLoadCategories from "../features/categories/useLoadCategories";
+
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 
 function CategoryPage() {
   const [useParams] = useSearchParams();
-  const query = useParams.get("ca");
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadCategories({
-    query,
+  const query = useParams.get("ca") || "";
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+    filterField: "category",
+    filterValue: query,
   });
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 

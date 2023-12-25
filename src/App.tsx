@@ -3,30 +3,38 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { DarkModeProvider } from "./context/DarkModeContext";
+import { Toaster } from "react-hot-toast";
 
 import GlobalStyles from "./styles/GlobalStyles";
 import AppLayout from "./UI/AppLayout";
+
 import MainPage from "./pages/MainPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import LoginPage from "./pages/LoginPage";
+
 import ProtectedRoute from "./UI/ProtectedRoute";
-import { Toaster } from "react-hot-toast";
-import SignUpPage from "./pages/SignUpPage";
 import TaskListPage from "./pages/TaskListPage";
 import TaskPage from "./pages/TaskPage";
-import FavoritesPage from "./pages/FavoritesPage";
-import SettingsPage from "./pages/SettingsPage";
-import AllPage from "./pages/AllPage";
-import CompletedPage from "./pages/CompletedPage";
+
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+
+const SignUpPage = lazy(() => import("./pages/SignUpPage"));
+const Settings = lazy(() => import("./pages/SettingsPage"));
+const Analytics = lazy(() => import("./pages/AnalyticsPage"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPassowordPage"));
+const EnterEmailPage = lazy(() => import("./pages/EnterEmailPage"));
+const CategoriesPage = lazy(() => import("./pages/CategoriesPage"));
+const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
+const AllPage = lazy(() => import("./pages/AllPage"));
+const CompletedPage = lazy(() => import("./pages/CompletedPage"));
+
 import CategoryPage from "./pages/CategoryPage";
-import CategoriesPage from "./pages/CategoriesPage";
-import EnterEmailPage from "./pages/EnterEmailPage";
-import ResetPassowordPage from "./pages/ResetPassowordPage";
 import ErrorFallback from "./UI/ErrorFallback";
-import { DarkModeProvider } from "./context/DarkModeContext";
-import AnalyticsPage from "./pages/AnalyticsPage";
 import CompletedDatePage from "./pages/CompletedDatePage";
+import SpinnerFullPage from "./UI/SpinnerFullPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,7 +64,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/settings",
-        element: <SettingsPage />,
+        element: <Settings />,
       },
       {
         path: "/favorites",
@@ -80,7 +88,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/analytics",
-        element: <AnalyticsPage />,
+        element: <Analytics />,
       },
       {
         path: "/analytics/:day",
@@ -116,7 +124,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/resetPassword",
-    element: <ResetPassowordPage />,
+    element: <ResetPasswordPage />,
     errorElement: <ErrorFallback />,
   },
   {
@@ -129,33 +137,35 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
+      <GlobalStyles />
       <DarkModeProvider>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <GlobalStyles />
-          <RouterProvider router={router} />
-          <Toaster
-            position="top-center"
-            gutter={12}
-            containerStyle={{ margin: "8px" }}
-            toastOptions={{
-              success: {
-                duration: 3000,
-              },
-              error: {
-                duration: 5000,
-              },
-              style: {
-                fontFamily: "NotoSans, sans-serif",
-                fontSize: "16px",
-                maxWidth: "500px",
-                padding: "16px 24px",
-                backgroundColor: "#1E2022ff",
-                color: "#c1c2c3",
-              },
-            }}
-          />
-        </QueryClientProvider>
+        <Suspense fallback={<SpinnerFullPage />}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <RouterProvider router={router} />
+            <Toaster
+              position="top-center"
+              gutter={12}
+              containerStyle={{ margin: "8px" }}
+              toastOptions={{
+                success: {
+                  duration: 3000,
+                },
+                error: {
+                  duration: 5000,
+                },
+                style: {
+                  fontFamily: "NotoSans, sans-serif",
+                  fontSize: "16px",
+                  maxWidth: "500px",
+                  padding: "16px 24px",
+                  backgroundColor: "#1E2022ff",
+                  color: "#c1c2c3",
+                },
+              }}
+            />
+          </QueryClientProvider>
+        </Suspense>
       </DarkModeProvider>
     </>
   );

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import AddCategoryItem from "./AddCategoryItem";
-import useLoadAllTasks from "../features/Task/useLoadAllTasks";
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 
 const StyledContainer = styled.div`
   margin: 2rem 0;
@@ -11,17 +11,23 @@ const StyledContainer = styled.div`
 `;
 
 function AddCategoryBox({ onClick }: { onClick: (value: string) => void }) {
-  const { tasks = [] } = useLoadAllTasks();
+  const { tasks = [] } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
 
-  const uniqueCategories = [...new Set(tasks.map((task) => task.category))];
+  const uniqueCategories = [
+    ...new Set(tasks.map((task) => task.category)),
+  ].filter((category): category is string => category !== null);
 
-  if (!tasks.length) return null;
+  if (!tasks.length || !uniqueCategories.length) return null;
+
   return (
     <StyledContainer>
-      {uniqueCategories.map((task) => (
+      {uniqueCategories.map((category) => (
         <AddCategoryItem
-          key={task}
-          value={task}
+          key={category}
+          value={category}
           onClick={(value) => onClick(value)}
         />
       ))}

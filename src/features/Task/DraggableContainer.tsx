@@ -93,8 +93,8 @@ function DraggableContainer({ tasks, isLoading }: PropsTypes) {
     ? tasks
         ?.slice()
         .sort((a, b) => sortByEditedAt(a, b, settings))
-        .sort((a, b) => sortByPriority(a, b, settings))
         .sort(sortByStatus)
+        .sort((a, b) => sortByPriority(a, b, settings))
     : sortTasksSortBy;
 
   if (isLoading || !tasks) return <ThreeDotsLoading alone={true} />;

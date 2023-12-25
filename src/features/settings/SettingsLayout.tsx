@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Heading from "../../UI/Heading";
 import LineThru from "../../UI/LineThru";
-import Spinner from "../../UI/Spinner";
 
 import ToggleRow from "../../UI/ToggleRow";
 import { useUser } from "../Auth/useUser";
@@ -26,6 +25,7 @@ import {
 import { PiInfinity } from "react-icons/pi";
 import Menus from "../../UI/Menus";
 import { useDarkMode } from "../../context/DarkModeContext";
+import SpinnerFullPage from "../../UI/SpinnerFullPage";
 
 const StyledGeneralSettings = styled.ul`
   margin: 2.4rem 0 0 0;
@@ -35,15 +35,20 @@ const StyledGeneralSettings = styled.ul`
 `;
 
 const StyledToggle = styled.div`
-  margin-left: -0.5rem;
+  margin-left: -1.5rem;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
   & p {
     font-size: 1.8rem;
   }
   & span {
     color: var(--color-grey-550);
+  }
+  &:hover {
+    background-color: var(--line-color);
   }
 `;
 
@@ -63,7 +68,7 @@ function SettingsLayout() {
     Object.entries(settings)
       .filter(([key]) => key.includes(targetWord))
       .map(([key, value]) => ({ key, value }));
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <SpinnerFullPage />;
 
   return (
     <>

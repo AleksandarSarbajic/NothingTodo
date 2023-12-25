@@ -37,13 +37,14 @@ export async function outhLogin({
 }: {
   provider: Provider;
 }) {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: provider,
-  });
+  const { data: providerData, error: providerError } =
+    await supabase.auth.signInWithOAuth({
+      provider: provider,
+    });
 
-  if (error) throw new Error(error.message);
+  if (providerError) throw new Error(providerError.message);
 
-  return data;
+  return providerData;
 }
 
 export async function getCurrentUser() {

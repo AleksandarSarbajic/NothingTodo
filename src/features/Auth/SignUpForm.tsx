@@ -57,7 +57,6 @@ function SignUpForm() {
           disabled={isPending}
         />
       </FormRowVertical>
-
       <FormRowVertical
         label="Email address"
         error={errors?.email?.message?.toString()}
@@ -76,7 +75,6 @@ function SignUpForm() {
           disabled={isPending}
         />
       </FormRowVertical>
-
       <FormRowVertical
         label="Password (min 8 characters)"
         error={errors?.password?.message?.toString()}

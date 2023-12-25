@@ -32,9 +32,7 @@ function LoginForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
       <ProviderRow />
-
       <LineThru $margin={"form"} />
-
       <FormRowVertical
         label="Email address"
         error={errors?.email?.message?.toString()}
@@ -53,7 +51,6 @@ function LoginForm() {
           disabled={isPending}
         />
       </FormRowVertical>
-
       <FormRowVertical
         label="Password"
         error={errors?.password?.message?.toString()}

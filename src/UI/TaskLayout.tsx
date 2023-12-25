@@ -44,7 +44,7 @@ function TaskLayout({ children, list }: TaskProps) {
 
   return (
     <StyledTaskLayout>
-      <TaskNav center={false}>
+      <TaskNav center={false} direction="/dashboard">
         <Modal>
           <Menus>
             <Menus.Menu>

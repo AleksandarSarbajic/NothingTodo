@@ -4,8 +4,9 @@ import TaskListItem from "../TaskList/TaskListItem";
 import { HiOutlineCalendarDays, HiCheck, HiOutlineStar } from "react-icons/hi2";
 import { PiInfinity } from "react-icons/pi";
 import useLoadSettings from "../settings/useLoadSettings";
-import useLoadAllTasks from "../Task/useLoadAllTasks";
+
 import ThreeDotsLoading from "../../UI/ThreeDotsLoading";
+import useLoadTasks from "../Task/useLoadTasksV2";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -17,7 +18,10 @@ const StyledContainer = styled.div`
 
 function MainImportant() {
   const { settings, isLoading } = useLoadSettings();
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
 
   if (isLoading || isLoadingTasks) return <ThreeDotsLoading alone={true} />;
   const shouldHideTasks = settings?.autohide_lists ? tasks.length !== 0 : true;

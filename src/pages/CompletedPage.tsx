@@ -1,10 +1,14 @@
 import GeneralTasksLayout from "../features/General/GeneralTasksLayout";
-import useLoadCompleted from "../features/General/useLoadCompleted";
+
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 
 import useLoadList from "../features/TaskList/useLoadList";
 
 function CompletedPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadCompleted();
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+    filterField: "status",
+    filterValue: "completed",
+  });
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (

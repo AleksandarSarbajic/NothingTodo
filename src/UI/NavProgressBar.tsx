@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import useLoadAllTasks from "../features/Task/useLoadAllTasks";
+
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 
 const StyledProgressBox = styled.div<{ $value: number }>`
   font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
@@ -43,7 +44,11 @@ const StyledNumber = styled.div`
 `;
 
 function NavProgressBar() {
-  const { tasks = [] } = useLoadAllTasks();
+  const { tasks = [] } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
+
   const completedTasks = tasks.filter(
     (item) => item.status === "completed"
   ).length;

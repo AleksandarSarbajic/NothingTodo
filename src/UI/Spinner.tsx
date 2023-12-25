@@ -6,7 +6,7 @@ const rotate = keyframes`
   }
 `;
 
-const Spinner = styled.div`
+const SpinnerInside = styled.div`
   margin: 4.8rem auto;
 
   width: 6.4rem;
@@ -27,5 +27,22 @@ const Spinner = styled.div`
   );
   animation: ${rotate} 1.5s infinite linear;
 `;
+
+const SpinnerBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2.5rem;
+  height: calc(100dvh - 5rem);
+  background-color: var(--bg-color);
+`;
+
+function Spinner() {
+  return (
+    <SpinnerBox>
+      <SpinnerInside />
+    </SpinnerBox>
+  );
+}
 
 export default Spinner;

@@ -1,21 +1,30 @@
 import supabase from "./supabase";
 import { Database } from "./supabase";
 
-export async function createTask(
-  newTask: Database["public"]["Tables"]["Tasks"]["Insert"]
-) {
-  const { data, error } = await supabase
-    .from("Tasks")
-    .insert([{ ...newTask }])
-    .select();
+export async function createUpdateTask({
+  newTask,
+  id,
+}: {
+  newTask?:
+    | Database["public"]["Tables"]["Tasks"]["Insert"]
+    | Database["public"]["Tables"]["Tasks"]["Update"];
+  id?: number;
+}) {
+  const date = new Date().toISOString();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Task could not be created");
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let query: any = supabase.from("Tasks");
+  if (!id) query = query.insert([{ ...newTask }]);
+
+  if (id) query = query.update({ ...newTask, edited_at: date }).eq("id", id);
+
+  const { data, error } = await query.select().single();
+
+  if (error) throw new Error("Task could not be updated");
 
   return data;
 }
+
 export async function createDuplicatedTasks({
   newId,
   listId,
@@ -28,10 +37,7 @@ export async function createDuplicatedTasks({
     .select()
     .eq("ListId", listId);
 
-  if (oldError) {
-    console.error(oldError);
-    throw new Error("Task could not be created");
-  }
+  if (oldError) throw new Error("Task could not be created");
 
   const newTasksData = oldTasks.map((task) => ({
     ListId: newId,
@@ -74,10 +80,7 @@ export async function getTask(
       .eq("id", id)
       .single();
 
-    if (error) {
-      console.error("Supabase error:", error);
-      throw new Error("Task could not be loaded");
-    }
+    if (error) throw new Error("Task could not be loaded");
 
     return data ?? null;
   } catch (error) {
@@ -86,70 +89,36 @@ export async function getTask(
   }
 }
 
-export async function getAllTasks() {
-  const { data, error } = await supabase.from("Tasks").select("*");
-
-  if (error) {
-    console.error(error);
-    throw new Error("Tasks could not be loaded");
-  }
-
-  return data;
+interface GetTasksProps {
+  filter: {
+    method?: string;
+    field: string;
+    value: string | number | boolean;
+  } | null;
 }
-export async function getFavorites() {
-  const { data, error } = await supabase
-    .from("Tasks")
-    .select()
-    .eq("priority", true);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Favorite Tasks could not be loaded");
-  }
+export async function getTasks({
+  filter,
+}: GetTasksProps): Promise<Database["public"]["Tables"]["Tasks"]["Row"][]> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let query: any = supabase.from("Tasks").select();
 
-  return data;
-}
-export async function getCompleted() {
-  const { data, error } = await supabase
-    .from("Tasks")
-    .select()
-    .eq("status", "completed");
+  if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Favorite Tasks could not be loaded");
-  }
+  const { data, error } = await query;
 
-  return data;
-}
-export async function getCategories({ query }: { query: string | null }) {
-  const { data, error } = await supabase
-    .from("Tasks")
-    .select()
-    .eq("category", query);
-
-  if (error) {
-    console.error(error);
-    throw new Error("Favorite Tasks could not be loaded");
-  }
-
-  return data;
-}
-export async function getTasks(
-  id: number
-): Promise<Database["public"]["Tables"]["Tasks"]["Row"][]> {
-  const { data, error } = await supabase
-    .from("Tasks")
-    .select()
-    .eq("ListId", id);
-
-  if (error) {
-    console.error(error);
-    throw new Error("Tasks could not be loaded");
-  }
+  if (error) throw new Error("Tasks could not be loaded");
 
   return data as Database["public"]["Tables"]["Tasks"]["Row"][];
 }
+export async function getAllTasks() {
+  const { data, error } = await supabase.from("Tasks").select("*");
+
+  if (error) throw new Error("Tasks could not be loaded");
+
+  return data;
+}
+
 export async function deleteTask({
   id,
   ListId,
@@ -162,33 +131,7 @@ export async function deleteTask({
     .delete()
     .eq(id ? "id" : "ListId", id ? id : ListId);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Tasks could not be deleted");
-  }
-}
-
-export async function updateTask({
-  newTask,
-  id,
-}: {
-  newTask?: Database["public"]["Tables"]["Tasks"]["Update"];
-  id?: number;
-}) {
-  const date = new Date().toISOString();
-
-  const { data, error } = await supabase
-    .from("Tasks")
-    .update({ ...newTask, edited_at: date })
-    .eq("id", id)
-    .select();
-
-  if (error) {
-    console.error(error);
-    throw new Error("Task could not be updated");
-  }
-
-  return data;
+  if (error) throw new Error("Tasks could not be deleted");
 }
 
 export async function searchTasks({ query }: { query: string | null }) {
@@ -198,10 +141,7 @@ export async function searchTasks({ query }: { query: string | null }) {
       .select()
       .ilike("task_name", `%${query}%`);
 
-    if (error) {
-      console.error(error);
-      throw new Error("Tasks could not be loaded");
-    }
+    if (error) throw new Error("Tasks could not be loaded");
 
     return data;
   } catch (error) {

@@ -4,8 +4,8 @@ import TaskListItem from "./TaskListItem";
 
 import { HiListBullet } from "react-icons/hi2";
 import useLoadList from "./useLoadList";
-import useLoadAllTasks from "../Task/useLoadAllTasks";
 import EmptyTasks from "../../UI/EmptyTasks";
+import useLoadTasks from "../Task/useLoadTasksV2";
 
 const StyledContainer = styled.div`
   margin: 4rem 0;
@@ -18,7 +18,10 @@ const StyledContainer = styled.div`
 
 function TaskList() {
   const { taskList } = useLoadList();
-  const { tasks } = useLoadAllTasks();
+  const { tasks = [] } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
 
   if (taskList?.length === 0) return <EmptyTasks />;
 

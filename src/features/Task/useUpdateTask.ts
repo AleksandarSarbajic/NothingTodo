@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateTask as updateTaskApi } from "../../services/apiTask";
+import { createUpdateTask } from "../../services/apiTask";
 import { toast } from "react-hot-toast";
 
 function useUpdateTask(id?: number) {
   const queryClient = useQueryClient();
   const { mutate: updateTask, isPending } = useMutation({
-    mutationFn: updateTaskApi,
+    mutationFn: createUpdateTask,
     onSuccess: () => {
       queryClient.invalidateQueries();
     },

@@ -2,9 +2,11 @@ import styled, { css } from "styled-components";
 import CategoriesItem from "./CategoriesItem";
 import Heading from "./Heading";
 import { Link, useSearchParams } from "react-router-dom";
-import useLoadAllTasks from "../features/Task/useLoadAllTasks";
+
 import { sortByCategory, sortByProgress } from "../utils/helpers";
 import SortByIndicator from "./SortByIndicator";
+import useLoadTasks from "../features/Task/useLoadTasksV2";
+import { Database } from "../services/supabase";
 
 interface Props {
   $layout?: boolean;
@@ -46,10 +48,6 @@ const StyledLink = styled(Link)`
     opacity: 1;
   }
 `;
-interface Task {
-  category: string;
-  status: string;
-}
 
 interface Props {
   $layout?: boolean;
@@ -60,7 +58,10 @@ interface CategoryInfo {
   number: number;
 }
 
-function calculateCategoryInfo(category: string, tasks: Task[]): CategoryInfo {
+function calculateCategoryInfo(
+  category: string | null,
+  tasks: Database["public"]["Tables"]["Tasks"]["Row"][]
+): CategoryInfo {
   const numberOfTasks = tasks.filter((task) => task.category === category);
   const completed = numberOfTasks.filter((item) => item.status === "completed");
 
@@ -70,16 +71,19 @@ function calculateCategoryInfo(category: string, tasks: Task[]): CategoryInfo {
   };
 }
 
-// ... (previous code)
-
 function CategoriesBox({ layout = false }: { layout?: boolean }) {
   const [searchParams] = useSearchParams();
   const sortQuery = searchParams.get("sortBy");
 
-  const { tasks = [] } = useLoadAllTasks();
-  const uniqueCategories: string[] = [
-    ...new Set(tasks.map((task) => task.category)),
-  ];
+  const { tasks = [] } = useLoadTasks({
+    filterField: "",
+    filterValue: "all",
+  });
+
+  const uniqueCategories: string[] = Array.from(
+    new Set(tasks.map((task) => task.category))
+  ).filter((category): category is string => category !== null);
+
   const numItems: number = layout ? uniqueCategories.length : 2;
 
   if (tasks.length === 0) return null;
@@ -117,7 +121,7 @@ function CategoriesBox({ layout = false }: { layout?: boolean }) {
 
   const sortedCategories: string[] = [
     ...new Set(sortedTasks.map((task) => task.category)),
-  ];
+  ].filter((category): category is string => category !== null);
 
   return (
     <>

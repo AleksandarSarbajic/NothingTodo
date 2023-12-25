@@ -74,7 +74,6 @@ function AnalyticsLayout() {
   return (
     <StyledContainer>
       <TaskNav direction="/dashboard" />
-
       <Heading as="h1" style={{ textAlign: "center", marginTop: "5rem" }}>
         Analytics
       </Heading>

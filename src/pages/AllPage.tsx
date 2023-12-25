@@ -1,10 +1,14 @@
 import GeneralTasksLayout from "../features/General/GeneralTasksLayout";
 
-import useLoadAllTasks from "../features/Task/useLoadAllTasks";
+import useLoadTasks from "../features/Task/useLoadTasksV2";
 import useLoadList from "../features/TaskList/useLoadList";
 
 function AllPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadAllTasks();
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+    filterValue: "all",
+    filterField: "",
+  });
+  console.log(tasks);
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (

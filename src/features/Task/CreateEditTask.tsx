@@ -1,13 +1,12 @@
 import { useForm } from "react-hook-form";
 import FormRowVertical from "../../UI/FormRowVertical";
 import Input from "../../UI/Input";
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import TextArea from "../../UI/TextArea";
 import Button from "../../UI/Button";
 import ReactDatePicker from "react-datepicker";
 import SpinnerMini from "../../UI/SpinnerMini";
-import { forwardRef, useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
 import { format, set, subDays } from "date-fns";
 import useCreateTask from "./useCreateTask";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -16,11 +15,8 @@ import useLoadTask from "./useLoadTask";
 import { formatTimeToDate } from "../../utils/helpers";
 import useUpdateTask from "./useUpdateTask";
 import AddCategoryBox from "../../UI/AddCategoryBox";
+import DatePickerInput, { StyledPicker } from "../../UI/DatePickerInput";
 
-interface PickerTypes {
-  value?: string;
-  onClick?: () => void;
-}
 interface FormData {
   task_name: string;
   description: string;
@@ -45,30 +41,6 @@ const StyledBox = styled.div`
   display: flex;
   gap: 4rem;
   height: 12.5rem;
-`;
-
-const StyledProps = css`
-  text-align: left;
-  border: none;
-  background-color: var(--color-grey-750);
-  border-radius: var(--border-radius-md);
-  padding: 1.4rem;
-  box-shadow: var(--shadow-sm);
-  color: var(--color-grey-100);
-  height: 5.2rem;
-  &::placeholder {
-    color: var(--color-grey-400);
-  }
-`;
-
-const StyledInput = styled.button`
-  ${StyledProps}
-  width: 100%;
-`;
-
-const StyledPicker = styled(ReactDatePicker)`
-  ${StyledProps}
-  width: 100%;
 `;
 
 function CreateEditTask() {
@@ -162,7 +134,9 @@ function CreateEditTask() {
     if (!task) {
       createTask(
         {
-          ...newTask,
+          newTask: {
+            ...newTask,
+          },
         },
         {
           onSettled: () => {
@@ -194,13 +168,6 @@ function CreateEditTask() {
     }
     updateList({ id: Number(id) });
   }
-  const ExampleCustomInput = forwardRef<HTMLButtonElement, PickerTypes>(
-    ({ value, onClick }, ref) => (
-      <StyledInput type="button" onClick={onClick} ref={ref}>
-        {value}
-      </StyledInput>
-    )
-  );
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>
@@ -225,7 +192,7 @@ function CreateEditTask() {
             timeCaption="Time"
             dateFormat="h:mm aa"
             showPopperArrow={false}
-            customInput={<ExampleCustomInput />}
+            customInput={<DatePickerInput />}
           />
         </FormRowVertical>
         <FormRowVertical label="End Time">
@@ -238,7 +205,7 @@ function CreateEditTask() {
             timeCaption="Time"
             dateFormat="h:mm aa"
             showPopperArrow={false}
-            customInput={<ExampleCustomInput />}
+            customInput={<DatePickerInput />}
           />
         </FormRowVertical>
       </StyledBox>
@@ -251,7 +218,7 @@ function CreateEditTask() {
           withPortal
           portalId="root-portal"
           formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
-          customInput={<ExampleCustomInput />}
+          customInput={<DatePickerInput />}
           minDate={subDays(new Date(), 0)}
         />
       </FormRowVertical>
