@@ -13,10 +13,7 @@ export async function loadSettings(): Promise<
     .eq("user_id", userData.user.id)
     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be loaded");
-  }
+  if (error) throw new Error("Settings could not be loaded");
 
   return data;
 }
@@ -37,10 +34,7 @@ export async function createSettings(id?: string | undefined) {
     .insert([{ created_at: new Date().toISOString(), user_id: id }])
     .select();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be created");
-  }
+  if (error) throw new Error("Settings could not be created");
 
   return data;
 }
@@ -52,10 +46,7 @@ interface Settings {
 export async function updateSettings({ updatedSettings }: Settings) {
   const { data: userData, error: userError } = await supabase.auth.getUser();
 
-  if (userError) {
-    console.error(userError);
-    throw new Error("Could not get user");
-  }
+  if (userError) throw new Error("Could not get user");
 
   const { data, error } = await supabase
     .from("settings")
@@ -63,10 +54,7 @@ export async function updateSettings({ updatedSettings }: Settings) {
     .eq("user_id", userData.user.id)
     .select();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Settings could not be updated");
-  }
+  if (error) throw new Error("Settings could not be updated");
 
   return data;
 }

@@ -3,7 +3,6 @@ import Heading from "./Heading";
 import { Link, useLocation } from "react-router-dom";
 import {
   HiBars3,
-  HiOutlineBell,
   HiOutlineChartPie,
   HiOutlineCog6Tooth,
   HiXMark,
@@ -13,6 +12,7 @@ import Search from "./Search";
 import { useEffect, useState } from "react";
 import Logout from "./Logout";
 import NavProgressBar from "./NavProgressBar";
+import Notification from "./Notification";
 
 interface UserProps {
   name: string;
@@ -220,7 +220,7 @@ function MainNav({ name, avatar }: UserProps) {
         </StyledMobileBox>
         <StyledSearchBox>
           <Search />
-          <HiOutlineBell />
+          <Notification />
         </StyledSearchBox>
       </StyledLayout>
     </StyledNav>

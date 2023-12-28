@@ -28,10 +28,11 @@ interface IdProps extends ChildrenProps {
   text?: React.ReactElement;
 }
 
-interface ButtonProps extends ChildrenProps {
-  icon: React.ReactElement;
+interface ButtonProps {
+  icon?: React.ReactElement;
   onClick?: () => void;
   disabled?: boolean;
+  children?: React.ReactElement | React.ReactNode;
 }
 
 const ShowUp = keyframes`
@@ -69,7 +70,7 @@ const StyledToggle = styled.button`
 const StyledList = styled.ul<ListPostion>`
   max-width: 100%;
   position: fixed;
-
+  overflow: hidden;
   background-color: var(--color-grey-750);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-sm);
@@ -104,11 +105,11 @@ const StyledButton = styled.button`
   }
 `;
 
-const CustomIcon = styled.span`
-  & svg {
-    color: var(--color-grey-600);
-  }
-`;
+// const CustomIcon = styled.span`
+//   & svg {
+//     color: var(--color-grey-600);
+//   }
+// `;
 
 const MenusContext = createContext({} as MenusProps);
 
@@ -146,13 +147,7 @@ function Toggle({ id, icon, text }: IdProps) {
 
   return (
     <StyledToggle onClick={handleClick}>
-      {icon ? (
-        <CustomIcon>{icon}</CustomIcon>
-      ) : text ? (
-        ""
-      ) : (
-        <HiEllipsisVertical />
-      )}
+      {icon ? <>{icon}</> : text ? "" : <HiEllipsisVertical />}
       {text}
     </StyledToggle>
   );

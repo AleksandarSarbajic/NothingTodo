@@ -23,7 +23,8 @@ function TaskList() {
     filterValue: "all",
   });
 
-  if (taskList?.length === 0) return <EmptyTasks />;
+  if (taskList?.length === 0)
+    return <EmptyTasks text="Create your first task!" />;
 
   return (
     <StyledContainer>

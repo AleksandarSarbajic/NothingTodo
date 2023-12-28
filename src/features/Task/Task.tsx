@@ -282,7 +282,11 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
           </StyledCircle>
           <div>
             <StyledTitle>{item.task_name}</StyledTitle>
-            {equal && <StyledListName>{list.list_name}</StyledListName>}
+            {equal && list ? (
+              <StyledListName>{list.list_name}</StyledListName>
+            ) : (
+              ""
+            )}
           </div>
         </StyledBox>
         {item.status === "incomplete" && (

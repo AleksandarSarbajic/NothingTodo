@@ -8,10 +8,11 @@ import useLoadTasks from "../features/Task/useLoadTasksV2";
 function CategoryPage() {
   const [useParams] = useSearchParams();
   const query = useParams.get("ca") || "";
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+  const filter = {
     filterField: "category",
     filterValue: query,
-  });
+  };
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (
@@ -23,6 +24,7 @@ function CategoryPage() {
       name={query}
       id={"category"}
       query="ca"
+      filter={filter}
     />
   );
 }

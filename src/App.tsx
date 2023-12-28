@@ -17,9 +17,7 @@ import ProtectedRoute from "./UI/ProtectedRoute";
 const MainPage = lazy(() => import("./pages/MainPage"));
 const TaskListPage = lazy(() => import("./pages/TaskListPage"));
 const TaskPage = lazy(() => import("./pages/TaskPage"));
-
 const LoginPage = lazy(() => import("./pages/LoginPage"));
-
 const SignUpPage = lazy(() => import("./pages/SignUpPage"));
 const Settings = lazy(() => import("./pages/SettingsPage"));
 const Analytics = lazy(() => import("./pages/AnalyticsPage"));
@@ -30,9 +28,10 @@ const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 const AllPage = lazy(() => import("./pages/AllPage"));
 const CompletedPage = lazy(() => import("./pages/CompletedPage"));
 const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const CompletedDatePage = lazy(() => import("./pages/CompletedDatePage"));
+const PlannedPage = lazy(() => import("./pages/PlannedPage"));
 
 import ErrorFallback from "./UI/ErrorFallback";
-import CompletedDatePage from "./pages/CompletedDatePage";
 import SpinnerFullPage from "./UI/SpinnerFullPage";
 
 const queryClient = new QueryClient({
@@ -76,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/completed",
         element: <CompletedPage />,
+      },
+      {
+        path: "/planned",
+        element: <PlannedPage />,
       },
       {
         path: "/category",
@@ -158,7 +161,7 @@ function App() {
                   fontSize: "16px",
                   maxWidth: "500px",
                   padding: "16px 24px",
-                  backgroundColor: "#1E2022ff",
+                  backgroundColor: "var(--color-black-100)",
                   color: "#c1c2c3",
                 },
               }}

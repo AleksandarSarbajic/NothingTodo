@@ -11,7 +11,7 @@ function useLoadTasks({
   filterField: string;
 }) {
   const location = useLocation();
-  const query = location.pathname.slice(6, 8);
+  const query = location.pathname.slice(6, 11);
 
   const filter =
     !filterValue || filterValue === "all"

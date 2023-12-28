@@ -25,6 +25,10 @@ const StyledBox = styled.div<Props>`
     css`
       border-bottom: none;
     `}
+
+  @media only screen and (max-width: 25em) {
+    gap: 2rem;
+  }
 `;
 
 const StyledRow = styled.div<Props>`

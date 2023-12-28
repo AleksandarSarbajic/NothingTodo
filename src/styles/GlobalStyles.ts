@@ -100,10 +100,10 @@ const GlobalStyles = createGlobalStyle`
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 1rem 2.4rem rgba(0, 0, 0, 0.12);
-  --shadow-img: 0 1rem 1.5rem 5px  rgba(0,0,0,0.15);
+  --shadow-lg: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+  --shadow-img: 0 1rem 1.5rem 5px  rgba(0,0,0,0.1);
 
-  --shadow-item: 0 0.2rem 1rem 2px rgba(0,0,0,0.1);
+  --shadow-item: 0 0.2rem 0.5rem 2px rgba(0,0,0,0.1);
 
   --image-grayscale: 10%;
   --image-opacity: 90%;
@@ -170,6 +170,13 @@ label,
 select {
   font: inherit;
   color: inherit;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 button {

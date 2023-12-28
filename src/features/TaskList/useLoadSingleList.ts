@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 function useLoadSingleList(id?: string | undefined) {
   const location = useLocation();
   const equal = location.pathname.includes("dashboard");
-  const query = id ? id : location.pathname.slice(6, 10);
+  const query = id ? id : location.pathname.slice(6, 11);
 
   const {
     data: list,

@@ -9,10 +9,11 @@ function CompletedDatePage() {
   const [useParams] = useSearchParams();
   const query = useParams.get("date");
   const title = pathname.slice(11, 20);
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+  const filter = {
     filterField: "",
     filterValue: "all",
-  });
+  };
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
 
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
   const filtered = tasks.filter((task) => {
@@ -40,6 +41,7 @@ function CompletedDatePage() {
       name={title}
       id={"date"}
       query="date"
+      filter={filter}
     />
   );
 }

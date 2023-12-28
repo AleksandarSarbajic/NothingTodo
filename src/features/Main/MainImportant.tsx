@@ -65,12 +65,19 @@ function MainImportant() {
         ""
       )}
       {settings?.planned_lists && (
-        <TaskListItem>
+        <TaskListItem path={""} link={"planned"}>
           <div>
             <HiOutlineCalendarDays />
             <p>Planned</p>
           </div>
-          <span>69</span>
+          <span>
+            {
+              tasks.filter(
+                (item) =>
+                  (item.due_date || item.start_time || item.end_time) !== null
+              ).length
+            }
+          </span>
         </TaskListItem>
       )}
       {settings?.completed_lists && shouldHideCompleted ? (

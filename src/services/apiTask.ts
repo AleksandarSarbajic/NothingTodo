@@ -48,9 +48,7 @@ export async function createDuplicatedTasks({
     due_date: task.due_date,
     edited_at: task.edited_at,
     end_time: task.end_time,
-    priority: task.priority,
     start_time: task.start_time,
-    status: task.status,
     user_id: task.user_id,
   }));
 
@@ -59,10 +57,7 @@ export async function createDuplicatedTasks({
     .insert(newTasksData)
     .select();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Task could not be created");
-  }
+  if (error) throw new Error("Task could not be created");
 
   return data;
 }
@@ -117,6 +112,24 @@ export async function getAllTasks() {
   if (error) throw new Error("Tasks could not be loaded");
 
   return data;
+}
+interface DeleteProps {
+  filter: {
+    filterField: string;
+    filterValue: string | boolean | number;
+  };
+}
+
+export async function deleteTasks({ filter }: DeleteProps) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let query: any = supabase.from("Tasks").delete();
+
+  if (filter.filterValue !== "all")
+    query = query.eq(filter.filterField, filter.filterValue);
+  if (filter.filterValue === "all") query = query.neq("id", 0);
+
+  const { error } = await query;
+  if (error) throw new Error("Tasks could not be deleted");
 }
 
 export async function deleteTask({

@@ -4,11 +4,13 @@ import useLoadTasks from "../features/Task/useLoadTasksV2";
 import useLoadList from "../features/TaskList/useLoadList";
 
 function AllPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+  const filter = {
     filterValue: "all",
     filterField: "",
-  });
-  console.log(tasks);
+  };
+
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
+
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (
@@ -20,6 +22,7 @@ function AllPage() {
       name={"All Tasks"}
       id={"all"}
       query="a"
+      filter={filter}
     />
   );
 }

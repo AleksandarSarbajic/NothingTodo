@@ -11,10 +11,10 @@ const CenterDiv = styled.div`
   padding-top: 25%;
 `;
 
-function EmptyTasks() {
+function EmptyTasks({ text }: { text?: string }) {
   return (
     <CenterDiv>
-      <Heading>Nothing to-do. Enjoy!</Heading>
+      <Heading as={"h4"}>{text ? text : "Nothing to-do. Enjoy!"}</Heading>
     </CenterDiv>
   );
 }

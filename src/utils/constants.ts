@@ -34,3 +34,4 @@ export const ABOUT_SETTINGS_ARRAY = [
   { link: "/thirdparty", text: "Third Party Notices" },
   { link: "/version", text: "Version: 1.000000 build #1" },
 ];
+export const DEFAULT_NOTIFICATIONS_ARRAY = [5, 10, 15, 25, 50, 75, 100];

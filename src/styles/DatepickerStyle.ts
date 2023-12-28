@@ -191,4 +191,18 @@ export const PickerStyles = css`
     color: var(--color-grey-750) !important;
     background-color: transparent !important;
   }
+  .react-datepicker__same--day {
+    position: relative;
+    &::before {
+      content: " ";
+      position: absolute;
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background-color: var(--color-red-100) !important;
+
+      bottom: -2px;
+      left: 1.6rem;
+    }
+  }
 `;

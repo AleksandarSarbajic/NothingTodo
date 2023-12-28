@@ -5,10 +5,11 @@ import useLoadTasks from "../features/Task/useLoadTasksV2";
 import useLoadList from "../features/TaskList/useLoadList";
 
 function CompletedPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+  const filter = {
     filterField: "status",
     filterValue: "completed",
-  });
+  };
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
   return (
@@ -20,6 +21,7 @@ function CompletedPage() {
       name={"Completed Tasks"}
       id={"completed"}
       query="c"
+      filter={filter}
     />
   );
 }

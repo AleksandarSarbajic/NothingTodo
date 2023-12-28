@@ -4,10 +4,11 @@ import useLoadTasks from "../features/Task/useLoadTasksV2";
 import useLoadList from "../features/TaskList/useLoadList";
 
 function FavoritesPage() {
-  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks({
+  const filter = {
     filterValue: true,
     filterField: "priority",
-  });
+  };
+  const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
 
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
 
@@ -20,9 +21,9 @@ function FavoritesPage() {
       name={"Favorites"}
       id={"favorite"}
       query={"f"}
+      filter={filter}
     />
   );
 }
 
 export default FavoritesPage;
-// "priority", true

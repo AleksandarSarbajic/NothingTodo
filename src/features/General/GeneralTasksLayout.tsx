@@ -3,7 +3,7 @@ import EditedAt from "../../UI/EditedAt";
 import StyledHeader from "../../UI/Header";
 import { useNavigate } from "react-router-dom";
 import Heading from "../../UI/Heading";
-import { HiEye, HiPlus } from "react-icons/hi2";
+import { HiEye, HiPlus, HiTrash } from "react-icons/hi2";
 import TaskNav from "../../UI/TaskNav";
 import TasksColumn from "../../UI/TasksColumn";
 import DraggableContainer from "../Task/DraggableContainer";
@@ -13,6 +13,8 @@ import EmptyTasks from "../../UI/EmptyTasks";
 import SortByIndicator from "../../UI/SortByIndicator";
 import Modal from "../../UI/Modal";
 import SortByModal from "../../UI/SortByModal";
+import ConfirmDelete from "../../UI/ConfrmDelete";
+import useDeleteTask from "../Task/useDeleteTasks";
 
 interface GeneralOptions {
   id: string;
@@ -24,6 +26,7 @@ interface GeneralOptions {
   isLoadingList: boolean;
   name: string | null;
   query: string;
+  filter: { filterValue: string | boolean | number; filterField: string };
 }
 
 function GeneralTasksLayout({
@@ -34,8 +37,10 @@ function GeneralTasksLayout({
   isLoadingList,
   isLoadingTasks,
   query = "f",
+  filter,
 }: GeneralOptions) {
   const navigate = useNavigate();
+  const { deleteTasks, isPending } = useDeleteTask();
 
   if (isLoadingList || isLoadingTasks) return <Spinner />;
 
@@ -43,7 +48,6 @@ function GeneralTasksLayout({
     return (
       <div>
         <TaskNav direction="/dashboard" />
-
         <EmptyTasks />
       </div>
     );
@@ -58,9 +62,24 @@ function GeneralTasksLayout({
               <Modal.Open opens="sortBy">
                 <Menus.Button icon={<HiEye />}>Sort by</Menus.Button>
               </Modal.Open>
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<HiTrash />}>Delete All</Menus.Button>
+              </Modal.Open>
             </Menus.List>
             <Modal.Window name="sortBy" padding={true}>
               <SortByModal />
+            </Modal.Window>
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                disabled={isPending}
+                resourceName={name || "All"}
+                onConfirm={() => {
+                  deleteTasks(
+                    { filter },
+                    { onSuccess: () => navigate("/dashboard") }
+                  );
+                }}
+              />
             </Modal.Window>
           </TaskNav>
           <StyledHeader $use="list">

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import styled from "styled-components";
+import { useShowToastOnSuccess } from "../hooks/useShowToastOnSucsses";
 
 const Main = styled.main`
   background-color: var(--bg-color);
@@ -15,6 +16,8 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  useShowToastOnSuccess();
+
   return (
     <Main>
       <Container>
