@@ -64,7 +64,6 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
     <>
       <StyledBox>
         <Avatar image={avatar} />
-
         <StyledBoxed onSubmit={handleSubmit(onSubmitHandler)}>
           <FormRowVertical label="Email Adress">
             <Input

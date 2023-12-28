@@ -7,7 +7,11 @@ export function useUpdateAvatar() {
 
   const { mutate: updateAvatar, isPending: isUpdating } = useMutation({
     mutationFn: updateUserAvatar,
+    onMutate: () => {
+      toast.loading("Updating avatar...");
+    },
     onSuccess: ({ user }) => {
+      toast.dismiss();
       toast.success("User account successfully updated");
       queryClient.setQueryData(["user"], user);
     },
