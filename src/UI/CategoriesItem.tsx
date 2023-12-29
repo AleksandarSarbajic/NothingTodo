@@ -59,7 +59,7 @@ function CategoriesItem({
   number = 0,
 }: CategoryProps) {
   return (
-    <StyledCategoriesItem to={`/category?ca=${name}`}>
+    <StyledCategoriesItem to={`/category?ca=${name.trim()}`}>
       <div>
         <Heading as="h6">{name}</Heading>
         <StyledNumberOfTasks>{number} tasks</StyledNumberOfTasks>
