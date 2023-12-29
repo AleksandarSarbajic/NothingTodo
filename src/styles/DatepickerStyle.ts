@@ -196,13 +196,13 @@ export const PickerStyles = css`
     &::before {
       content: " ";
       position: absolute;
-      width: 0.8rem;
-      height: 0.8rem;
+      width: 1rem;
+      height: 1rem;
       border-radius: 50%;
       background-color: var(--color-red-100) !important;
 
       bottom: -2px;
-      left: 1.6rem;
+      left: 1.5rem;
     }
   }
 `;

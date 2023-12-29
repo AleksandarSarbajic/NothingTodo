@@ -16,7 +16,11 @@ import { useMeasure } from "react-use";
 import useUpdateTask from "./useUpdateTask";
 import Menus from "../../UI/Menus";
 import { useNavigate } from "react-router-dom";
-import { compareTimes, isSameAsCurrentDate } from "../../utils/helpers";
+import {
+  compareTimes,
+  formatTime,
+  isSameAsCurrentDate,
+} from "../../utils/helpers";
 
 import useLoadSingleList from "../TaskList/useLoadSingleList";
 import useLoadSettings from "../settings/useLoadSettings";
@@ -173,7 +177,9 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
 
   const { updateSetting } = useUpdateSettings();
   const { updateTask, isPending } = useUpdateTask();
-  const { list, equal } = useLoadSingleList(item.ListId?.toString());
+  const { list, equal, plannedEqual } = useLoadSingleList(
+    item.ListId?.toString()
+  );
 
   const [ref, { width }] = useMeasure();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -284,9 +290,13 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
             <StyledTitle>{item.task_name}</StyledTitle>
             {equal && list ? (
               <StyledListName>{list.list_name}</StyledListName>
-            ) : (
-              ""
-            )}
+            ) : plannedEqual &&
+              item.start_time !== null &&
+              item.end_time !== null ? (
+              <StyledListName>
+                {formatTime(item.start_time)} - {formatTime(item.end_time)}
+              </StyledListName>
+            ) : null}
           </div>
         </StyledBox>
         {item.status === "incomplete" && (

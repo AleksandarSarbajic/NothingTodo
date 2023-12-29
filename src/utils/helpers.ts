@@ -2,6 +2,7 @@ import {
   compareAsc,
   eachDayOfInterval,
   eachMonthOfInterval,
+  format,
   formatDistance,
   isSameDay,
   isSameMonth,
@@ -40,6 +41,14 @@ export function isSameAsCurrentDate(dateToCheck: string | null): boolean {
 interface Options {
   end?: boolean;
 }
+
+export const formatTime = (timeString: string | null) => {
+  if (timeString === null) {
+    return timeString;
+  }
+  const date = new Date(`2000-01-01T${timeString}`);
+  return format(date, "h:mm a");
+};
 
 export const getToday = function (options: Options = {}): string {
   const today = new Date();
