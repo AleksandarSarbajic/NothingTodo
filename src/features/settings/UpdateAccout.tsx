@@ -9,6 +9,7 @@ import ButtonRow from "../../UI/ButtonRow";
 import { useUpdateUser } from "../Auth/useUpdateUser";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 interface FormData {
   fullName: string;
   password: string;
@@ -43,6 +44,7 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
 
   useEffect(() => {
     setPasswordsMatch(password === confirmPassword);
+    console.log(passwordsMatch);
   }, [password, watch, confirmPassword, passwordsMatch]);
 
   function onSubmitHandler({ password, fullName }: FormData) {
@@ -54,12 +56,16 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
         }
       );
     } else {
-      updateUser(
-        { password, userName: fullName },
-        {
-          onSuccess: () => reset({ password: "", confirmPassword: "" }),
-        }
-      );
+      if (!passwordsMatch) {
+        toast.error("Passwords dont match");
+      } else {
+        updateUser(
+          { password, userName: fullName },
+          {
+            onSuccess: () => reset({ password: "", confirmPassword: "" }),
+          }
+        );
+      }
     }
   }
 
