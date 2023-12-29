@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "transparent",
-    "background_color": "transparent",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
     "start_url": "https://nothing-todos.netlify.app/dashboard",
     "display": "standalone"
 }
