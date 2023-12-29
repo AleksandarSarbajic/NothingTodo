@@ -186,7 +186,10 @@ function MainNav({ name, avatar }: UserProps) {
           <StyledHeader>
             <AvatarBox>
               <NavProgressBar />
-              <StyledAvatar src={avatar || "default-user.jpg"} />
+              <StyledAvatar
+                src={avatar || "default-user.jpg"}
+                alt="Avatar image"
+              />
             </AvatarBox>
             <Heading as="h3">{name}</Heading>
           </StyledHeader>

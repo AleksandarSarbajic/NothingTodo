@@ -26,6 +26,7 @@ import useLoadSingleList from "../TaskList/useLoadSingleList";
 import useLoadSettings from "../settings/useLoadSettings";
 
 import useUpdateSettings from "../settings/useUpdateSettings";
+import { useState } from "react";
 interface ItemProps {
   item: Database["public"]["Tables"]["Tasks"]["Row"];
   disabled: boolean;
@@ -171,6 +172,8 @@ interface SettingsType {
 }
 
 function Task({ item, disabled, draggedItemStyle }: TaskProps) {
+  const [status, setStatus] = useState(item.status);
+
   const navigate = useNavigate();
   const { settings = [] } = useLoadSettings();
   const completedArray = (settings as SettingsType)?.completed_array || [];
@@ -208,6 +211,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
     const currentDateWithoutMilliseconds = new Date();
     currentDateWithoutMilliseconds.setMilliseconds(0);
     if (type === "status") {
+      setStatus((cur) => (cur === "completed" ? "incomplete" : "completed"));
       updateTask({
         newTask: {
           status: item.status === "completed" ? "incomplete" : "completed",
@@ -259,7 +263,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
   return (
     <Box>
       <StyledContainer
-        $status={item.status}
+        $status={status}
         $priority={item.priority}
         $timeHasPassed={
           item.due_date && item.end_time
@@ -282,9 +286,9 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
         <StyledBox>
           <StyledCircle
             onClick={() => handleChecked("status")}
-            $status={item.status}
+            $status={status}
           >
-            {item.status !== "incomplete" && <HiOutlineCheckCircle />}
+            {status !== "incomplete" && <HiOutlineCheckCircle />}
           </StyledCircle>
           <div>
             <StyledTitle>{item.task_name}</StyledTitle>
@@ -299,7 +303,7 @@ function Task({ item, disabled, draggedItemStyle }: TaskProps) {
             ) : null}
           </div>
         </StyledBox>
-        {item.status === "incomplete" && (
+        {status === "incomplete" && (
           <Menus.Menu>
             <Menus.Toggle id={item.id} icon={<PiDotsSixVerticalBold />} />
             <Menus.List id={item.id}>

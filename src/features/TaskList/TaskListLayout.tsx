@@ -3,17 +3,17 @@ import Button from "../../UI/Button";
 import EditedAt from "../../UI/EditedAt";
 import StyledHeader from "../../UI/Header";
 import Heading from "../../UI/Heading";
-import Spinner from "../../UI/Spinner";
 import TaskLayout from "../../UI/TaskLayout";
 import useLoadSingleList from "./useLoadSingleList";
 import { useNavigate } from "react-router-dom";
 import Tasks from "../Task/Tasks";
+import SpinnerFullPage from "../../UI/SpinnerFullPage";
 
 function TaskListLayout() {
   const { list, isLoading } = useLoadSingleList();
   const navigate = useNavigate();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <SpinnerFullPage />;
 
   return (
     <TaskLayout list={list}>

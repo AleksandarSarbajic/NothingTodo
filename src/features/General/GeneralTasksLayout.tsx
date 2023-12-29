@@ -8,13 +8,14 @@ import TaskNav from "../../UI/TaskNav";
 import TasksColumn from "../../UI/TasksColumn";
 import DraggableContainer from "../Task/DraggableContainer";
 import Menus from "../../UI/Menus";
-import Spinner from "../../UI/Spinner";
+
 import EmptyTasks from "../../UI/EmptyTasks";
 import SortByIndicator from "../../UI/SortByIndicator";
 import Modal from "../../UI/Modal";
 import SortByModal from "../../UI/SortByModal";
 import ConfirmDelete from "../../UI/ConfrmDelete";
 import useDeleteTask from "../Task/useDeleteTasks";
+import SpinnerFullPage from "../../UI/SpinnerFullPage";
 
 interface GeneralOptions {
   id: string;
@@ -42,7 +43,7 @@ function GeneralTasksLayout({
   const navigate = useNavigate();
   const { deleteTasks, isPending } = useDeleteTask();
 
-  if (isLoadingList || isLoadingTasks) return <Spinner />;
+  if (isLoadingList || isLoadingTasks) return <SpinnerFullPage />;
 
   if (!taskList || taskList?.length === 0)
     return (
