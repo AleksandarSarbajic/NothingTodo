@@ -100,7 +100,7 @@ function CreateEditTask() {
     const newTask = {
       task_name,
       description: description.length === 0 ? null : description,
-      category,
+      category: category.trim(),
       due_date: startDate
         ? set(startDate, {
             hours: 23,
