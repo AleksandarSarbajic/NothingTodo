@@ -44,7 +44,6 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
 
   useEffect(() => {
     setPasswordsMatch(password === confirmPassword);
-    console.log(passwordsMatch);
   }, [password, watch, confirmPassword, passwordsMatch]);
 
   function onSubmitHandler({ password, fullName }: FormData) {
