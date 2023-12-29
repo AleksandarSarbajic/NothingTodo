@@ -15,7 +15,7 @@ function CategoryPage() {
   };
   const { tasks = [], isLoading: isLoadingTasks } = useLoadTasks(filter);
   const { taskList = [], isLoading: isLoadingList } = useLoadList();
-
+  console.log(query);
   return (
     <GeneralTasksLayout
       tasks={tasks}
