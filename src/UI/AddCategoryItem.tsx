@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledItem = styled.button`
   font-family: "NDOT 47 (inspired by NOTHING)", sans-serif;
-  width: min-content;
+
   padding: 0.6rem 2.4rem;
   background-color: var(--color-black-50);
   border-radius: 0.5rem;

@@ -34,8 +34,12 @@ const slideIn = keyframes`
 }
 `;
 const StyledForm = styled.form`
+  min-height: calc(100dvh - 10rem);
   margin-top: 2rem;
   animation: ${slideIn} 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 const StyledBox = styled.div`
   display: flex;
@@ -171,87 +175,91 @@ function CreateEditTask() {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitHandler)}>
-      <FormRowVertical
-        label="Title"
-        error={errors?.task_name?.message?.toString()}
-      >
-        <Input
-          type="text"
-          id="task_name"
-          {...register("task_name", { required: "This field is required" })}
-        />
-      </FormRowVertical>
-      <StyledBox>
-        <FormRowVertical label="Start time">
-          <StyledPicker
-            selected={startTime}
-            onChange={(date) => setStartTime(date)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-            showPopperArrow={false}
-            customInput={<DatePickerInput />}
+      <div>
+        <FormRowVertical
+          label="Title"
+          error={errors?.task_name?.message?.toString()}
+        >
+          <Input
+            type="text"
+            id="task_name"
+            {...register("task_name", { required: "This field is required" })}
           />
         </FormRowVertical>
-        <FormRowVertical label="End Time">
-          <StyledPicker
-            selected={endTime}
-            onChange={(date) => setEndTime(date)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={30}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
-            showPopperArrow={false}
-            customInput={<DatePickerInput />}
-          />
-        </FormRowVertical>
-      </StyledBox>
+        <StyledBox>
+          <FormRowVertical label="Start time">
+            <StyledPicker
+              selected={startTime}
+              onChange={(date) => setStartTime(date)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+              showPopperArrow={false}
+              customInput={<DatePickerInput />}
+            />
+          </FormRowVertical>
+          <FormRowVertical label="End Time">
+            <StyledPicker
+              selected={endTime}
+              onChange={(date) => setEndTime(date)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={30}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+              showPopperArrow={false}
+              customInput={<DatePickerInput />}
+            />
+          </FormRowVertical>
+        </StyledBox>
 
-      <FormRowVertical label="Add due date">
-        <ReactDatePicker
-          dateFormat={"EEEE, MMMM dd yyyy"}
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          withPortal
-          portalId="root-portal"
-          formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
-          customInput={<DatePickerInput />}
-          minDate={subDays(new Date(), 0)}
+        <FormRowVertical label="Add due date">
+          <ReactDatePicker
+            dateFormat={"EEEE, MMMM dd yyyy"}
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            withPortal
+            portalId="root-portal"
+            formatWeekDay={(nameOfDay) => nameOfDay.slice(0, 3)}
+            customInput={<DatePickerInput />}
+            minDate={subDays(new Date(), 0)}
+          />
+        </FormRowVertical>
+        <FormRowVertical
+          label="Add Category"
+          error={errors?.category?.message?.toString()}
+        >
+          <Input
+            type="text"
+            id="category"
+            {...register("category", { required: "This field is required" })}
+          />
+        </FormRowVertical>
+        <AddCategoryBox
+          onClick={(value) => {
+            reset({ category: value.trim() });
+          }}
         />
-      </FormRowVertical>
-      <FormRowVertical
-        label="Add Category"
-        error={errors?.category?.message?.toString()}
-      >
-        <Input
-          type="text"
-          id="category"
-          {...register("category", { required: "This field is required" })}
-        />
-      </FormRowVertical>
-      <AddCategoryBox
-        onClick={(value) => {
-          reset({ category: value });
-        }}
-      />
-      <FormRowVertical
-        label="Description"
-        error={errors?.description?.message?.toString()}
-      >
-        <TextArea id="description" {...register("description")} />
-      </FormRowVertical>
-      <FormRowVertical>
-        <Button primary="form" type="submit" disabled={isCreating}>
-          {!isCreating || !isUpdating || !isLoadingTask ? (
-            "Create a new task"
-          ) : (
-            <SpinnerMini />
-          )}
-        </Button>
-      </FormRowVertical>
+        <FormRowVertical
+          label="Description"
+          error={errors?.description?.message?.toString()}
+        >
+          <TextArea id="description" {...register("description")} />
+        </FormRowVertical>
+      </div>
+      <div>
+        <FormRowVertical>
+          <Button primary="form" type="submit" disabled={isCreating}>
+            {!isCreating || !isUpdating || !isLoadingTask ? (
+              "Create a new task"
+            ) : (
+              <SpinnerMini />
+            )}
+          </Button>
+        </FormRowVertical>
+      </div>
     </StyledForm>
   );
 }
