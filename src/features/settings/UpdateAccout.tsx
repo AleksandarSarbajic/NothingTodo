@@ -10,7 +10,7 @@ import { useUpdateUser } from "../Auth/useUpdateUser";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 interface FormData {
-  name: string;
+  fullName: string;
   password: string;
   confirmPassword: string;
 }
@@ -31,11 +31,11 @@ interface Account {
 }
 function UpdateAccout({ email, fullName: Name, avatar }: Account) {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [fullName, setFullName] = useState(Name);
 
   const { updateUser, isUpdating } = useUpdateUser();
-  const { register, reset, formState, handleSubmit, watch } =
-    useForm<FormData>();
+  const { register, reset, formState, handleSubmit, watch } = useForm<FormData>(
+    { defaultValues: { fullName: Name } }
+  );
 
   const { errors } = formState;
   const password = watch("password");
@@ -45,21 +45,24 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
     setPasswordsMatch(password === confirmPassword);
   }, [password, watch, confirmPassword, passwordsMatch]);
 
-  function onSubmitHandler({ password }: FormData) {
+  function onSubmitHandler({ password, fullName }: FormData) {
     if (password.length === 0) {
       updateUser(
         { userName: fullName },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => reset({ password: "", confirmPassword: "" }),
         }
       );
     } else {
       updateUser(
         { password, userName: fullName },
-        { onSuccess: () => reset() }
+        {
+          onSuccess: () => reset({ password: "", confirmPassword: "" }),
+        }
       );
     }
   }
+
   return (
     <>
       <StyledBox>
@@ -73,12 +76,16 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
               defaultValue={email}
             />
           </FormRowVertical>
-          <FormRowVertical label="Full name">
+          <FormRowVertical
+            label="Username"
+            error={errors?.fullName?.message?.toString()}
+          >
             <Input
               type="text"
-              id="name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              id="fullName"
+              autoComplete="fullName"
+              {...register("fullName", { required: "This field is required" })}
+              disabled={isUpdating}
             />
           </FormRowVertical>
 
@@ -96,6 +103,7 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
                   message: "Password needs a minimum of 8 characters",
                 },
               })}
+              disabled={isUpdating}
             />
           </FormRowVertical>
           <FormRowVertical
@@ -116,6 +124,7 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
                   message: "Password needs a minimum of 8 characters",
                 },
               })}
+              disabled={isUpdating}
             />
           </FormRowVertical>
 
@@ -124,9 +133,9 @@ function UpdateAccout({ email, fullName: Name, avatar }: Account) {
               type="button"
               primary="modal"
               onClick={() => {
-                reset();
-                setFullName(Name);
+                reset({ password: "", confirmPassword: "" });
               }}
+              disabled={isUpdating}
             >
               Cancel
             </Button>
