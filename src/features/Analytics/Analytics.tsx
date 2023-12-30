@@ -79,6 +79,7 @@ function Analytics({ data }: AnalyticsProps) {
 
         <Bar
           dataKey="completedTasks"
+          name="Completed Tasks"
           stroke={colors.completedTasks.stroke}
           fill={colors.completedTasks.fill}
           radius={[10, 10, 0, 0]}

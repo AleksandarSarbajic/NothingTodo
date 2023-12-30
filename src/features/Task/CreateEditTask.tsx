@@ -16,6 +16,7 @@ import { formatTimeToDate } from "../../utils/helpers";
 import useUpdateTask from "./useUpdateTask";
 import AddCategoryBox from "../../UI/AddCategoryBox";
 import DatePickerInput, { StyledPicker } from "../../UI/DatePickerInput";
+import toast from "react-hot-toast";
 
 interface FormData {
   task_name: string;
@@ -97,6 +98,9 @@ function CreateEditTask() {
   }, [task, reset]);
 
   function onSubmitHandler({ task_name, description, category }: FormData) {
+    const formatedStartTime = startTime ? format(startTime, "HH:mm") : null;
+    const formatedEndTime = endTime ? format(endTime, "HH:mm") : null;
+
     const newTask = {
       task_name,
       description: description.length === 0 ? null : description,
@@ -117,8 +121,8 @@ function CreateEditTask() {
           }).toISOString()
         : null,
       edited_at: new Date().toISOString(),
-      start_time: startTime ? format(startTime, "HH:mm") : null,
-      end_time: endTime ? format(endTime, "HH:mm") : null,
+      start_time: formatedStartTime,
+      end_time: formatedEndTime,
       ListId: Number(id),
       status: task
         ? task.status
@@ -135,42 +139,52 @@ function CreateEditTask() {
         ? true
         : false,
     };
-    if (!task) {
-      createTask(
-        {
-          newTask: {
-            ...newTask,
+
+    if (
+      (formatedStartTime &&
+        formatedEndTime &&
+        formatedStartTime <= formatedEndTime) ||
+      (formatedStartTime === null && formatedEndTime === null)
+    ) {
+      if (!task) {
+        createTask(
+          {
+            newTask: {
+              ...newTask,
+            },
           },
-        },
-        {
-          onSettled: () => {
-            reset();
-            setStartDate(null);
-            setStartTime(null);
-            setEndTime(null);
+          {
+            onSettled: () => {
+              reset();
+              setStartDate(null);
+              setStartTime(null);
+              setEndTime(null);
+            },
+          }
+        );
+      } else {
+        updateTask(
+          {
+            newTask: {
+              ...newTask,
+            },
+            id: task.id,
           },
-        }
-      );
+          {
+            onSettled: () => {
+              navigate(-1);
+              reset();
+              setStartDate(null);
+              setStartTime(null);
+              setEndTime(null);
+            },
+          }
+        );
+      }
+      updateList({ id: Number(id) });
     } else {
-      updateTask(
-        {
-          newTask: {
-            ...newTask,
-          },
-          id: task.id,
-        },
-        {
-          onSettled: () => {
-            navigate(-1);
-            reset();
-            setStartDate(null);
-            setStartTime(null);
-            setEndTime(null);
-          },
-        }
-      );
+      toast.error("Start and end time must be correctly provided");
     }
-    updateList({ id: Number(id) });
   }
 
   return (
