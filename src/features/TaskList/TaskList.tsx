@@ -13,7 +13,33 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 3rem;
   max-height: 40dvh;
-  overflow: scroll;
+  overflow-y: scroll;
+
+  scrollbar-gutter: initial;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: var(--color-grey-100);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-grey-100);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-black-200);
+    border: 2px solid var(--color-grey-650);
+    border-radius: 2px;
+  }
+  @media only screen and (max-width: 45em) {
+    &::-webkit-scrollbar {
+      width: 0;
+      display: none;
+    }
+  }
 `;
 
 function TaskList() {
