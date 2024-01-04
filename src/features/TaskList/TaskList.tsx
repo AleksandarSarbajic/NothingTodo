@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  max-height: 40dvh;
+  max-height: 45dvh;
   overflow-y: scroll;
 
   scrollbar-gutter: initial;
@@ -35,6 +35,7 @@ const StyledContainer = styled.div`
     border-radius: 2px;
   }
   @media only screen and (max-width: 45em) {
+    max-height: 42.5rem;
     &::-webkit-scrollbar {
       width: 0;
       display: none;

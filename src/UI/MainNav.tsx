@@ -191,7 +191,7 @@ function MainNav({ name, avatar }: UserProps) {
                 alt="Avatar image"
               />
             </AvatarBox>
-            <Heading as="h3">{name}</Heading>
+            <Heading as="h3">{name || "User"}</Heading>
           </StyledHeader>
           <StyledList>
             <li>

@@ -44,7 +44,7 @@ function MainLayout() {
       {searchQuery === null ? (
         <>
           <StyledHeader>
-            <Heading as={"h1"}>What's up, {userName}!</Heading>
+            <Heading as={"h1"}>What's up, {userName || "User"}!</Heading>
           </StyledHeader>
           <CategoriesBox />
           <MainImportant />
