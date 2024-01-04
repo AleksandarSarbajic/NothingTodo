@@ -18,13 +18,14 @@
   
 <a href="#quicstart" >Quickstart</a> • <a href="#technologies-used" align="center">Technologies Used</a> •  <a href="#screenshot" align="center"> Screenshot </a> • <a href="#you-may-also-like" align="center"> •  <a href="#how-it-works" align="center"> How it works </a> • <a align="center" href="you-may-also-like"> You may also like  </a> •  <a href="#license" align="center"> License  </a>
 
-•<a href="https://the-wild-oasis-aleksandar.netlify.app/" align="Center">Live Server</a>
+•<a href="https://nothing-todos.netlify.app/login" align="Center">Live Server</a>
 
 </div>
 
 ## Technologies Used
 
 - [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [React Router Dom](https://reactrouter.com/en/main)
 - [Styled componenets](https://styled-components.com/)
 - [React Query](https://tanstack.com/query/v3/)
