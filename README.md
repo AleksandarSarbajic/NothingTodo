@@ -1,18 +1,24 @@
 <div align="center">
- <img  src="https://github.com/AleksandarSarbajic/the-wild-oasis/blob/main/public/logo-dark.png"/>
+ <img width="300"  src="https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/90f4baee-7f51-4e11-a66e-76d121dac4ee"/>
  </div>
+
+<div align="center">
+ <h1>NothingTodo</h1>
+</div>
+
 
 <div align="center">
 <img src="https://img.shields.io/npm/v/npm.svg?logo=npm"/>
 <img src="https://img.shields.io/badge/react-v18.2.0-blue?logo=react"/>
-<img src="https://img.shields.io/badge/reactrouterdom-v6.14.2-red?logo=reactrouter"/>
-<img src="https://img.shields.io/badge/styledcomponents-v6.0.7-pink?logo=styledcomponents"/>
-<img src="https://img.shields.io/badge/reactquery-v4.32.6-red?logo=reactquery"/>
-<img src="https://img.shields.io/badge/reacthookform-v7.45.4-red?logo=reacthookform"/>
-<img src="https://img.shields.io/badge/supabase-v2.31.0-green?logo=supabase"/>
+<img src="https://img.shields.io/badge/typescript-v18.2.15-blue?logo=typescript"/>
+<img src="https://img.shields.io/badge/reactrouterdom-v6.18.0-red?logo=reactrouter"/>
+<img src="https://img.shields.io/badge/styledcomponents-v6.1.1-pink?logo=styledcomponents"/>
+<img src="https://img.shields.io/badge/reactquery-v5.8.4-red?logo=reactquery"/>
+<img src="https://img.shields.io/badge/reacthookform-v7.48.2-pink?logo=reacthookform"/>
+<img src="https://img.shields.io/badge/supabase-v2.38.4-green?logo=supabase"/>
 </div>
 
-<p align="center">The Wild Oasis app enables you to check in/out bookings and gain a complete understanding of bookings, sales, check-ins, occupancy rates.</p>
+<p align="center">NothingTodo is a todo list app that is inspired by the design of Nothing Company.</p>
 
 <div align="center">
   
@@ -30,11 +36,13 @@
 - [Styled componenets](https://styled-components.com/)
 - [React Query](https://tanstack.com/query/v3/)
 - [React Hook Form](https://www.react-hook-form.com/)
+- [Dnd-Kit](https://dndkit.com/)
+- [Recharts](https://recharts.org/en-US/)
 - [Supabase](https://supabase.com/)
 
 ## Screenshot
 
-![dashboard](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/ac4271e4-6d28-4d7a-bdb6-7bbe47b3367d)
+![dashboardTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/e158fe48-e859-481e-970c-67f63d0a8b88)
 
 ## Quicstart
 
@@ -42,10 +50,10 @@ To clone and run this application, you'll need [Git](https://git-scm.com/) and [
 
 ```
 # Clone this repository
-$ git clone https://github.com/AleksandarSarbajic/the-wild-oasis
+$ git clone https://github.com/AleksandarSarbajic/NothingTodo
 
 # Go into the repository
-$ cd the-wild-oasis
+$ cd NothingTodo
 
 # Install dependencies
 $ npm install
@@ -63,41 +71,30 @@ $ npm run start
 
 On Dashboard you can see the number of bookings, sales, number of check ins and occupancy rate for last 7, 30, 90 days. Today guests that that arriving or departing and from the dashboard, you can check in or check out guests. Stay Duration duration summary and sales chart for chosen number of days.
 
-![Screenshot 2023-09-30 164953](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/a83c7c15-6d3b-48a1-8a6b-f669f492ab6f)
-
-### Bookings Page
-
-On bookings page you can see all bookings that are checked out, checked in and unconfirmed. For the bookings you can sort them by date and the amount. For every booking you can see the details, delete them or check in or check out if needed.
-
-![Screenshot 2023-10-02 121822](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/5238b22f-402d-4d4a-8023-42508933bae0)
-
-When we open a single booking we can can see for how long will they stay, in which cabin are they staying ,name of the person that booked a nights, how many guests, email, national id, total price and if its paid or not.
-
-We can add an breakfast for that booking if they want, confirm if the guest has paid the amount needed and afterwards we can check in or check out a booking or delete it.
-
-![checkingBooking](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/f47d124f-a0b3-450e-b557-5867fa5d8e2e)
-
-### Create a new user page
-
-You can create new accounts for others colleagues.
-
-![Screenshot 2023-10-02 220009](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/74658280-d4b7-4bdc-b479-6558df497955)
+![dashboardTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/e158fe48-e859-481e-970c-67f63d0a8b88)
 
 ### Settings page
 
 You can adjust settings for minimum and maximum nights/bookings, maximum guest/booking and breakfast % price
 
-![Screenshot 2023-10-02 220025](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/9539e49d-6418-4736-a4e6-83da3afce218)
+![settingsTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/0821ef74-e2f4-4b13-8bb8-925588dab1f2)
 
-### Account page
+### Categories
 
-On account page you can change your password, email address, full name and change avatar image.
+![categoriesTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/8b48f443-eda8-4bd8-9aab-4652e6f2f745)
 
-![Screenshot 2023-10-02 220122](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/251dc81b-d9b4-4a65-9684-04d314f03e64)
+### Search
 
-The Wild Oasis also supports light and dark mode!
+![searchTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/406ef79c-184f-4e01-b4d6-6bf1a953fb89)
 
-![mode](https://github.com/AleksandarSarbajic/the-wild-oasis/assets/114814838/d4ac3936-edf7-4fe4-b82e-98102f3f5352)
+### Login
+
+![loginTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/bc3217ee-4e4e-4b7e-aa1d-e2db5f8da8d6)
+
+### Analytics
+![analyticsTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/9965c37e-e02f-4831-9b5e-9c1de2f296b7)
+
+
 
 ## You may also like...
 
