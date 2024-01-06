@@ -81,7 +81,6 @@ ReactQuery is used across the entire project to provide the fastest performance,
 
 ### Settings page
 
-You can adjust settings for minimum and maximum nights/bookings, maximum guest/booking and breakfast % price
 
 ![settingsTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/0821ef74-e2f4-4b13-8bb8-925588dab1f2)
 
