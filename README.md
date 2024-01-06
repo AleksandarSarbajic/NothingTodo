@@ -67,9 +67,15 @@ $ npm run start
 
 ## How It Works
 
-### Dashboard page
 
-On Dashboard you can see the number of bookings, sales, number of check ins and occupancy rate for last 7, 30, 90 days. Today guests that that arriving or departing and from the dashboard, you can check in or check out guests. Stay Duration duration summary and sales chart for chosen number of days.
+
+The Nothing To-Do is a React-TypeScript application build for task management. This was my first big project using TypeScript with React. This application includes a lot of connections with Supabase so everyone can have the same overall experience to stay updated with their tasks.
+
+I chose React for this application because I wanted to practice using React with TypeScript. For data base I chose Supabase with incredible support for TypeScript and very good combination with ReactQuery.
+
+ReactQuery is used across the entire project to provide the fastest performance, because we can store stale data in it and as we go to the same page that is using that data loading will be significantly faster. Reach Hook Form came first in mind for using the forms, because how fast and easy you can work with it. In this project I went for mobile first option for responsive using styled components. Netlify is also an obvious choice for deployment because of its speed and reliability.
+
+### Dashboard page
 
 ![dashboardTodo](https://github.com/AleksandarSarbajic/NothingTodo/assets/114814838/e158fe48-e859-481e-970c-67f63d0a8b88)
 
